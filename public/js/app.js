@@ -84,6 +84,7 @@ const quickBeachBtn = document.getElementById("quick-beach");
 const quickRandomBtn = document.getElementById("quick-random");
 const buildRouteBtn = document.getElementById("build-route");
 const routeListEl = document.getElementById("route-list");
+let detailReturnFocus = null;
 
 function setStatus(message, stateClass) {
   statusEl.textContent = message;
@@ -280,7 +281,15 @@ function placeCard(p) {
     "li",
     {
       class: "place-card" + (state.selectedId === p.id ? " is-selected" : ""),
+      tabindex: "0",
+      "aria-label": `Visa ${p.name}`,
       onClick: () => openDetail(p.id),
+      onKeydown: (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openDetail(p.id);
+        }
+      },
     },
     [
       el("span", { class: "place-icon", text: cat?.emoji || "📍" }),
@@ -571,7 +580,11 @@ function openDetail(id) {
     ])
   );
 
+  if (detailSheet.hidden && document.activeElement instanceof HTMLElement) {
+    detailReturnFocus = document.activeElement;
+  }
   detailSheet.hidden = false;
+  detailClose.focus();
   focusPlace(p.id);
   render(); // markera valt kort
 }
@@ -580,6 +593,10 @@ function closeDetail() {
   detailSheet.hidden = true;
   state.selectedId = null;
   render();
+  if (detailReturnFocus && detailReturnFocus.isConnected) {
+    detailReturnFocus.focus();
+  }
+  detailReturnFocus = null;
 }
 
 // Panorera kartan till en plats och öppna dess markör.
@@ -722,6 +739,22 @@ detailSheet.addEventListener("click", (e) => {
 });
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && !detailSheet.hidden) closeDetail();
+  if (e.key !== "Tab" || detailSheet.hidden) return;
+
+  const focusable = Array.from(
+    detailSheet.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])')
+  ).filter((node) => !node.hasAttribute("disabled"));
+  if (focusable.length === 0) return;
+
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
 });
 
 // ---------------------------------------------------------------------------
