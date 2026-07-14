@@ -1,154 +1,120 @@
-# Gotlandsguiden – Agent Instructions
+# Gotlandsguiden - Agent Instructions
 
-A Swedish location/place guide for Gotland with interactive Leaflet mapping, category filtering, search, and favorites management.
+Detta dokument ar den primara kontexten for AI-agenter som jobbar i repot.
 
-## Project Overview
+## System Snapshot
 
-- **Framework**: Vanilla JavaScript + Leaflet.js (mapping library)
-- **Architecture**: Single-page app with state management (see `state` object in `js/app.js`)
-- **Styling**: CSS custom properties (mobile-first, responsive)
-- **Data**: Currently mock data from OpenStreetMap; can be replaced with API via `loadPlaces()`
-- **Language**: Swedish (sv)
-- **Key Features**:
-  - Interactive map centered on Gotland (57.4684°N, 18.4867°E)
-  - Place search & filtering by category (beaches, attractions, food & drink, hidden gems)
-  - User location detection + map centering
-  - Favorites system (localStorage: `gg_favorites`)
-  - Category-specific markers with color and emoji
+- Frontend: Vanilla JavaScript + Leaflet i `public/`
+- Backend: Node.js + Express + SQLite i `backend/`
+- Deploy: Docker Compose i `deploy/proxmox/`
+- Driftmiljo: Proxmox LXC CT 201 (`gotlandsguiden`)
+- Publik doman: `https://gotland.tobtech.se`
+- Edge-routing: Cloudflare Tunnel (konfig i separat CT 200)
+- Git remote: `https://github.com/spiddeer/gotlandguiden.git`
 
-## Code Organization
+## Arkitektur
 
-```
-index.html              # Single HTML page; Leaflet CSS injected; semantic structure
-css/style.css           # Mobile-first responsive design; CSS custom properties (--color-*, --shadow-*, --radius)
-js/app.js               # Core logic: map, markers, state management, event handlers
-js/places-data.js       # Place data (mock) + category definitions (emoji, color, label)
-```
+### Applikationsflode
 
-## State Management
+1. Browser laddar frontend via Nginx-container (`web`).
+2. Frontend kallar `/api/places`.
+3. Nginx proxyar `/api/*` till Express-container (`backend:8080`).
+4. Backend laser/skriver SQLite i monterad volym `deploy/proxmox/data/places.db`.
 
-All app state lives in the `state` object (top of `app.js`):
+### Frontendfiler
 
-```javascript
-const state = {
-  places: [],              // All places from loadPlaces()
-  userLatLng: null,        // User's current position (from geolocation)
-  activeCategory: "all",   // Filter: "all" | "favorites" | category key (e.g., "strand")
-  query: "",               // Current search term (lowercased)
-  favorites: {},           // User's favorited place IDs (from localStorage)
-  selectedId: null,        // Currently selected place (for detail panel)
-};
-```
+- `public/index.html`: Struktur, Leaflet/cluster script includes.
+- `public/css/style.css`: Mobil-forst, modern UI, dark mode, detaljpanel.
+- `public/js/app.js`: State, rendering, filter, favorites, geolocation, detail sheet.
+- `public/js/places-data.js`: Kategorier + fallback/mock-dataset.
 
-**Pattern**: All UI is derived from `state` via `render()`. Modify state, then call `render()` to update the DOM.
+### Backendfiler
 
-## Key Functions & Hooks
+- `backend/server.js`: API-endpoints (`GET /api/places`, `POST /api/places`).
+- `backend/db.js`: SQLite init + schema.
+- `backend/seed.js`: Seed vid containerstart.
+- `backend/seed-data.json`: Seed-dataset.
 
-### Data Loading
+## State & Rendering-kontrakt
 
-- **`loadPlaces()`**: Returns `Promise<Array>` of place objects. Edit this to swap mock data for an API call.
-- **Place schema**: `{ id, name, category, lat, lng, description }`
+I `public/js/app.js` ar huvudprincipen: uppdatera state -> kalla `render()`.
 
-### Rendering & DOM
+Aktuell state-nycklar:
 
-- **`render()`**: Main render function. Rebuilds the places list UI based on current filters and search.
-- **`updateMapMarkers()`**: Adds/removes Leaflet markers for visible places.
-- **`renderDetailPanel(placeId)`**: Shows place details (name, description, distance).
+- `places`
+- `userLatLng`
+- `activeCategory`
+- `query`
+- `favorites`
+- `selectedId`
 
-### Filtering & Search
+Bryt inte detta monster utan bra skal.
 
-- **`filterPlaces()`**: Applies `activeCategory` and `query` filters to `state.places`.
-- **`setActiveCategory(key)`**: Updates `activeCategory`, re-filters, re-renders.
-- **`setSearchQuery(text)`**: Updates `query`, re-filters, re-renders.
+## Data-kontrakt
 
-### Favorites
+Platsobjekt ska alltid vara:
 
-- **`toggleFavorite(placeId)`**: Adds/removes place from favorites, persists to localStorage (`gg_favorites`).
-- **`loadFavorites()`**: Reads favorites from localStorage on app init.
+`{ id, name, category, lat, lng, description }`
 
-### Map & Location
+Kategori-nycklar maste finnas i `CATEGORIES` i `public/js/places-data.js`.
 
-- **`map`**: Global Leaflet map instance (L.map).
-- **`locateUser()`**: Uses Geolocation API; centers map on user's position.
-- **`GOTLAND_CENTER`**: Default map center `[57.4684, 18.4867]`.
-- **Zoom levels**: `DEFAULT_ZOOM: 9` (island view), `LOCATED_ZOOM: 12` (user found), `FOCUS_ZOOM: 14` (place detail).
+## Drift och infrastruktur
 
-## Categories
+### Proxmox
 
-Defined in `places-data.js`:
+- CT 201: Korer applikationen (`/opt/gotlandsguiden`)
+- CT 200: Korer cloudflared tunnel-process
 
-```javascript
-const CATEGORIES = {
-  strand:          { label: "Stränder", color: "#3f9bc0", emoji: "🏖️" },
-  sevardhet:       { label: "Sevärdheter", color: "#e0a458", emoji: "🏛️" },
-  mat:             { label: "Mat & dryck", color: "#c0603f", emoji: "🍽️" },
-  smultronStallen: { label: "Smultronställen", color: "#60a074", emoji: "🌿" },
-};
+### Cloudflare
+
+- Hostname: `gotland.tobtech.se`
+- Tunnel ingress target: `http://192.168.1.224:3003` (CT 201)
+
+### Compose services
+
+- `backend` (Node/Express, intern 8080)
+- `web` (Nginx, publiceras pa port 3003 i CT 201)
+
+## Standardoperativa kommandon
+
+I CT 201:
+
+```bash
+cd /opt/gotlandsguiden
+./deploy/proxmox/deploy.sh
 ```
 
-When adding/modifying categories, update both the `CATEGORIES` object and the Leaflet marker logic.
+Backup manuellt:
 
-## Common Tasks
-
-### Adding a New Place
-
-1. Add entry to `MOCK_PLACES` in `places-data.js`:
-   ```javascript
-   { id: "unique-id", name: "Place Name", category: "strand", lat: 57.xxx, lng: 18.xxx, description: "Short description" }
-   ```
-2. Ensure category key exists in `CATEGORIES`.
-3. Call `render()` to refresh UI (automatic on app load).
-
-### Connecting a Backend API
-
-Edit `loadPlaces()` in `app.js`:
-
-```javascript
-async function loadPlaces() {
-  const res = await fetch("/api/places");
-  return await res.json();
-}
+```bash
+cd /opt/gotlandsguiden/deploy/proxmox
+./backup.sh
 ```
 
-Ensure returned data matches the place schema: `{ id, name, category, lat, lng, description }`.
+Timerstatus:
 
-### Modifying Styling
+```bash
+systemctl status gotlandsguiden-backup.timer
+systemctl list-timers --all | grep gotlandsguiden-backup
+```
 
-- **Colors**: Edit CSS custom properties in `:root` (top of `style.css`).
-- **Responsive**: Media queries target `(max-width: 1023px)` for tablet/desktop.
-- **Typography**: System font stack; adjust `font-family` or add Google Fonts.
+## AI-agent policy (viktigt)
 
-### Adding a Feature
+1. Andra aldrig API-schemat utan att uppdatera frontend + seed + docs.
+2. Bevara mobilforst-design, responsivitet och svensk copy.
+3. Undvik hardkodad runtime-data i git (`deploy/proxmox/data/`, `backups/`).
+4. Anvand befintligt deployscript i stallet for ad-hoc deploykommando.
+5. Om Cloudflare-routing andras: dokumentera ny ingress i denna fil och i `deploy/proxmox/README.md`.
+6. Vid nya driftsattningssteg: uppdatera samtliga markdownfiler i repot.
 
-1. **Plan the state**: Does it require new properties in the `state` object?
-2. **Add event listeners**: Attach to buttons/inputs in `index.html` or dynamically in `app.js`.
-3. **Update state**: Modify `state` properties in response to user input.
-4. **Implement render logic**: Add/update rendering logic in `render()` or related functions.
-5. **Test on mobile**: Use mobile viewport or device emulation.
+## Snabb felsokning
 
-## Performance & Accessibility
+- Inget svar publikt: verifiera cloudflared i CT 200 och ingress-regel.
+- Frontend uppe men tom data: kontrollera `GET /api/places` i CT 201.
+- DB-problem: kontrollera att `deploy/proxmox/data/places.db` finns och ar skrivbar.
+- Styling bruten: kontrollera att endast `public/css/style.css` andrats for UI.
 
-- **Accessibility**: Semantic HTML (`<button>`, `<input>`), `aria-label`, `aria-hidden` attributes on decorative elements.
-- **Performance**: Limit places rendered in DOM (consider pagination or virtualization if >500 places).
-- **Mobile first**: Test on small screens; `100dvh` respects mobile browser UI.
-- **Leaflet optimization**: Marker clustering available via Leaflet.markercluster plugin if needed for large datasets.
+## Relaterad dokumentation
 
-## Browser Support
-
-- Modern browsers (Chrome, Firefox, Safari, Edge).
-- Relies on: Geolocation API, localStorage, ES6+ JavaScript.
-- Leaflet: Supports IE 11+, but project targets modern browsers.
-
-## Development Workflow
-
-1. **Edit files** directly (no build step).
-2. **Open `index.html`** in a browser (local server recommended to avoid CORS issues with geolocation).
-3. **Check console** for errors (`F12` → Console).
-4. **Test search, filtering, favorites, map interaction** on mobile emulation.
-
-## Debugging Tips
-
-- **State inspection**: Open console, type `state` to inspect current app state.
-- **Geolocation issues**: May fail if page isn't HTTPS or user denies permission.
-- **Marker rendering**: Check `markersById` object for marker references; compare with `state.places`.
-- **Search edge cases**: Query is lowercased; ensure place names and descriptions are searchable.
+- `deploy/proxmox/README.md`: drift/runbook
+- `.github/hooks/README.md`: hooksystem och kvalitetsregler

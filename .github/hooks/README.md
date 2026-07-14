@@ -1,170 +1,108 @@
-# Project-Specific Hooks for Gotlandsguiden
+# Project Hooks for Gotlandsguiden
 
-This directory contains automated validation and quality checks that run during code edits. Each hook enforces project-specific conventions and catches common issues early.
+Detta dokument forklarar hur hooks i `.github/hooks` hjalper AI-tjanster och utvecklare att halla projektet stabilt.
 
-## Available Hooks
+## Syfte
 
-### 1. **data-validation.json**
-Validates place data schema, category consistency, and coordinate bounds.
+Hooks ska minska regressionsrisk i tre kritiska ytor:
 
-**Triggers:**
-- `BeforeEdit`: Alerts before modifying `places-data.js`
-- `AfterEdit`: Validates schema matches `{ id, name, category, lat, lng, description }`
+1. Datakvalitet i `public/js/places-data.js`
+2. State/render-disciplin i `public/js/app.js`
+3. Frontendkvalitet i `public/index.html` och `public/css/style.css`
 
-**Use case:** Ensures place data integrity when adding or modifying the MOCK_PLACES array.
+## Aktiva hookfiler
 
----
+### `data-validation.json`
 
-### 2. **code-quality.json**
-Enforces code style, detects common pitfalls, and ensures consistency.
+Validerar platsdata-schema, kategori-nycklar och koordinater.
 
-**Triggers:**
-- `BeforeEdit` (JavaScript): Reminds about best practices
-- `AfterEdit` (app.js): Detects console.log, floating promises, missing render() calls
-- `AfterEdit` (style.css): Enforces CSS custom properties, checks for responsive design
+Skyddar mot:
 
-**Use case:** Catches bugs like state mutations without render(), mixed async/await patterns, and hard-coded colors.
+- Fel kategorinamn
+- Saknade obligatoriska falt (`id`, `name`, `category`, `lat`, `lng`, `description`)
+- Orimliga koordinater
 
----
+### `code-quality.json`
 
-### 3. **performance-checks.json**
-Detects blocking operations, unoptimized rendering, and performance anti-patterns.
+Fokuserar pa kodhygien och konsekvens.
 
-**Triggers:**
-- `AfterEdit` (app.js): Detects render() in loops, large datasets, missing debouncing
-- `AfterEdit` (index.html): Checks for inline styles, missing integrity attributes, async/defer tags
+Skyddar mot:
 
-**Use case:** Prevents performance regressions like rendering on every state change or loading large datasets synchronously.
+- Oavsiktliga `console.log`
+- Missad `render()` efter state-andring
+- Oonskad stil-drift i CSS
 
----
+### `performance-checks.json`
 
-### 4. **accessibility-seo.json**
-Validates semantic HTML, ARIA labels, and accessibility attributes.
+Hittar vanliga prestandafallor i frontendlogiken.
 
-**Triggers:**
-- `AfterEdit` (index.html): Checks for semantic elements, aria-labels, lang attribute, meta description
-- `AfterEdit` (app.js): Checks for keyboard navigation, ARIA live regions, focus management
+Skyddar mot:
 
-**Use case:** Ensures the app is accessible to screen readers and keyboard users, improves SEO.
+- `render()` i loopar
+- Tung synkron logik i UI-flode
+- HTML-andringar som riskerar laddningsprestanda
 
----
+### `accessibility-seo.json`
 
-### 5. **category-consistency.json**
-Ensures place categories are consistent and data structure integrity.
+Validerar tillganglighet och semantik.
 
-**Triggers:**
-- `AfterEdit` (places-data.js): Detects undefined/unused categories, validates category definitions
+Skyddar mot:
 
-**Use case:** Catches typos in category keys (e.g., "strnad" instead of "strand") and orphaned category definitions.
+- Saknade `aria-*` attribut
+- Svag semantisk struktur
+- Vanliga SEO-basmissar i HTML
 
----
+### `category-consistency.json`
 
-## How Hooks Work
+Verifierar att alla kategorier ar konsistenta mellan definition och anvandning.
 
-Hooks run automatically when you edit files matching their `path` glob patterns. They:
+Skyddar mot:
 
-1. **Check** your code against project conventions
-2. **Warn** if issues are found (non-blocking)
-3. **Exit with code 1** if critical issues are detected (can block operations)
+- Stavfel i kategori-nycklar
+- Oanvanda kategori-definitioner
 
-### Example Scenarios
+## Hur AI-tjanster ska anvanda hooks
 
-**Adding a new place:**
-```javascript
-{ id: "my-place", name: "My Beach", category: "strnad", ... }
-//                                      ↑
-// Hook will catch: ⚠ Category 'strnad' used but not defined
-```
+1. Se hook-varningar som krav, inte bara forslag.
+2. Om hook signalerar schemafel: justera dataforandringen direkt.
+3. Om hook signalerar render/state-fel: los problemet innan fler features laggs till.
+4. Om hook signalerar CSS/HTML-problem: bevara mobilforst och tillganglighet.
 
-**Modifying CSS colors:**
-```css
-.card {
-  background: #3f9bc0;  /* Hard-coded color */
-}
-```
-**Hook will suggest:** ⚠ Hard-coded colors detected (use CSS variables)
+## Praktiska regler vid redigering
 
-**Calling render() in a loop:**
-```javascript
-for (let place of places) {
-  updateUI(place);
-  render();  // ← Performance issue!
-}
-```
-**Hook will catch:** ⚠ render() called in loop (will cause performance issues)
+1. Vid andring i `public/js/places-data.js`: kontrollera kategorier och schema.
+2. Vid andring i `public/js/app.js`: kontrollera att state-forandringar foljs av `render()`.
+3. Vid andring i `public/css/style.css`: behall variabelbaserad design och mobilforst-beteende.
+4. Vid andring i `public/index.html`: behall semantik och ARIA-kvalitet.
 
----
+## Vanliga felbilder
 
-## Customizing Hooks
+### Kategori-stavfel
 
-Each hook is a standalone JSON file. To modify:
+Exempel: `strnad` i stallet for `strand`.
 
-1. **Edit the JSON** file (no special syntax needed)
-2. **Update the `command`** field with your validation logic
-3. **Test** by editing a matching file (hook runs automatically)
+Effekt: filter, markorer och listvy blir inkonsekventa.
 
-### Adding a New Hook
+### Render-regression
 
-Create a new `.json` file in this directory:
+Exempel: state andras men `render()` gloms.
 
-```json
-{
-  "name": "my-hook",
-  "description": "Validates X when editing Y",
-  "hooks": [
-    {
-      "trigger": "AfterEdit",
-      "path": "**/my-file.js",
-      "command": "node -e \"console.log('My validation logic')\"",
-      "description": "What this checks"
-    }
-  ]
-}
-```
+Effekt: UI verkar trasig trots korrekt state.
 
----
+### Hardkodad design-drift
 
-## Integration with AI Agents
+Exempel: ny hardkodad hexfarg i komponent.
 
-These hooks help AI coding agents:
+Effekt: designen blir inkonsekvent mellan ljust/morkt lage.
 
-1. **Catch mistakes** before code review (console.log left behind, wrong categories, etc.)
-2. **Learn conventions** through repeated feedback
-3. **Improve code quality** incrementally with project-specific guardrails
+## Nar du lagger till en ny hook
 
-**For agents:** Hooks are non-intrusive. They provide guidance via console warnings but don't block operations unless critical issues are found.
+1. Hall kommandot snabbt (<2 sekunder normalt).
+2. Skriv tydlig `description`.
+3. Scopea `path` sa smalt som mojligt.
+4. Testa med en medvetet felaktig andring for att verifiera signal.
 
----
+## Relaterade dokument
 
-## Troubleshooting
-
-### Hooks not running?
-- Verify the file path matches your glob pattern in the hook definition
-- Check that the hook trigger matches your action (BeforeEdit, AfterEdit, etc.)
-
-### Hook command not working?
-- Test the Node.js command directly in a terminal
-- Ensure file paths in the command are properly quoted
-- Use `{FILE}` placeholder to reference the file being edited
-
-### Too many warnings?
-- Review the hook command logic (conditions are in the Node script)
-- Adjust severity levels or disable specific checks as needed
-
----
-
-## Performance Notes
-
-Hooks run synchronously and should complete within 1-2 seconds. If a hook takes too long:
-
-1. Simplify the validation logic
-2. Use faster alternatives (regex instead of parsing entire AST)
-3. Cache results across sequential edits if applicable
-
----
-
-## Related
-
-- [AGENTS.md](../AGENTS.md) — Project overview and architecture
-- [places-data.js](../../js/places-data.js) — Place data schema and categories
-- [app.js](../../js/app.js) — Core state management and render logic
+- `AGENTS.md`
+- `deploy/proxmox/README.md`
