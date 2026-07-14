@@ -1,0 +1,23 @@
+services:
+  backend:
+    build: ./backend
+    container_name: gotlandsguiden_api
+    restart: unless-stopped
+    environment:
+      - DB_PATH=/data/places.db
+      - PORT=8080
+      - API_KEY=${API_KEY:-}
+    volumes:
+      - ./data:/data
+
+  web:
+    image: nginx:alpine
+    container_name: gotlandsguiden_web
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "3003:80"
+    volumes:
+      - ./public:/usr/share/nginx/html:ro
+      - ./deploy/nginx.conf:/etc/nginx/conf.d/default.conf:ro

@@ -1,0 +1,24 @@
+{
+  "name": "code-quality",
+  "description": "Enforces code style, detects common pitfalls, and ensures consistency in JavaScript and CSS",
+  "hooks": [
+    {
+      "trigger": "BeforeEdit",
+      "path": "**/js/**",
+      "command": "echo '📋 JS Quality Check: Looking for console.log, floating promises, global state mutations'",
+      "description": "Reminds about JS best practices before editing"
+    },
+    {
+      "trigger": "AfterEdit",
+      "path": "**/js/app.js",
+      "command": "node -e \"\nconst fs = require('fs');\nconst file = '{FILE}';\nconst content = fs.readFileSync(file, 'utf8');\nconst issues = [];\n\n// Check for console.log (dev code)\nif (/console\\.log/g.test(content)) issues.push('⚠ console.log found (remove in production)');\n\n// Check for floating promises (common bug)\nif (/await.*\\.then\\(|Promise.*\\.then.*\\(/.test(content)) issues.push('⚠ Mixed async/await with .then() (simplify)');\n\n// Check for mutation outside state\nif (/const state = .*?;/s.test(content) && /state\\.[a-zA-Z]+ =/g.test(content)) {\n  if (!content.includes('render()')) issues.push('⚠ State mutation detected without render() call');\n}\n\nif (issues.length > 0) {\n  console.warn(issues.join('\\\\n'));\n  process.exit(1);\n} else {\n  console.log('✓ JS code quality check passed');\n}\n\" -- '{FILE}' || true",
+      "description": "Detects common JS pitfalls after edits to app.js"
+    },
+    {
+      "trigger": "AfterEdit",
+      "path": "**/css/style.css",
+      "command": "node -e \"\nconst fs = require('fs');\nconst file = '{FILE}';\nconst content = fs.readFileSync(file, 'utf8');\nconst issues = [];\n\n// Check for hard-coded colors (should use CSS custom properties)\nif (/#[0-9a-fA-F]{3,6}(?!.*:root)/g.test(content)) issues.push('⚠ Hard-coded colors detected (use CSS variables)');\n\n// Check for responsive breakpoints\nif (!/@media/.test(content)) issues.push('ℹ Note: No media queries found (mobile-first design expected)');\n\nif (issues.length > 0) {\n  console.warn(issues.join('\\\\n'));\n} else {\n  console.log('✓ CSS style check passed');\n}\n\" -- '{FILE}' || true",
+      "description": "Enforces CSS custom properties and responsive design"
+    }
+  ]
+}

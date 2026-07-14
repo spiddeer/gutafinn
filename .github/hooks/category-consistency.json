@@ -1,0 +1,12 @@
+{
+  "name": "category-consistency",
+  "description": "Ensures place categories are consistent, markers match category definitions, and data structure integrity",
+  "hooks": [
+    {
+      "trigger": "AfterEdit",
+      "path": "**/places-data.js",
+      "command": "node -e \"\nconst fs = require('fs');\nconst file = '{FILE}';\nconst content = fs.readFileSync(file, 'utf8');\nconst issues = [];\n\n// Extract category keys\nconst categoryMatch = content.match(/const CATEGORIES = \\{([^}]+)\\}/s);\nconst definedCategories = [];\nif (categoryMatch) {\n  const cats = categoryMatch[1].split(',');\n  cats.forEach(c => {\n    const m = c.match(/(\\w+)\\s*:/);\n    if (m) definedCategories.push(m[1]);\n  });\n}\n\n// Extract used categories in MOCK_PLACES\nconst usedCategories = new Set();\nconst placeMatches = content.match(/category:\\s*['\\\"]([^'\\\"]+)['\\\"]|category:\\s*(\\w+)/g);\nif (placeMatches) {\n  placeMatches.forEach(m => {\n    const cat = m.replace(/category:\\s*|['\\\"]|,/g, '');\n    usedCategories.add(cat);\n  });\n}\n\n// Check for undefined categories\nusedCategories.forEach(cat => {\n  if (!definedCategories.includes(cat)) {\n    issues.push(`⚠ Category '${cat}' used but not defined in CATEGORIES`);\n  }\n});\n\n// Check for unused categories\ndefinedCategories.forEach(cat => {\n  if (!usedCategories.has(cat)) {\n    issues.push(`ℹ Category '${cat}' defined but not used in any place`);\n  }\n});\n\nif (issues.length > 0) {\n  console.warn(issues.join('\\\\n'));\n} else {\n  console.log(`✓ Category consistency check passed (${definedCategories.length} categories, ${usedCategories.size} in use)`);\n}\n\" -- '{FILE}' || true",
+      "description": "Detects undefined or unused categories"
+    }
+  ]
+}

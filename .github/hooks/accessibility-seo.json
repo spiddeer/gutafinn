@@ -1,0 +1,18 @@
+{
+  "name": "accessibility-seo",
+  "description": "Validates semantic HTML, ARIA labels, accessibility attributes, and SEO best practices",
+  "hooks": [
+    {
+      "trigger": "AfterEdit",
+      "path": "**/index.html",
+      "command": "node -e \"\nconst fs = require('fs');\nconst file = '{FILE}';\nconst content = fs.readFileSync(file, 'utf8');\nconst issues = [];\n\n// Check for semantic HTML elements\nif (!/<main|<section|<article|<nav|<aside|<header|<footer/.test(content)) {\n  issues.push('⚠ Missing semantic HTML elements (use <main>, <section>, <header>, etc.)');\n}\n\n// Check for aria-label on interactive elements without text\nif (/<button[^>]*>\\s*<svg|<button[^>]*>\\s*<i/.test(content) && !/<button[^>]*aria-label/.test(content)) {\n  issues.push('⚠ Icon-only buttons missing aria-label attribute');\n}\n\n// Check for form labels\nif (/<input[^>]*type=\\\"(text|search)/.test(content) && !/<label[^>]*for=/.test(content)) {\n  issues.push('⚠ Input elements should have associated <label> elements');\n}\n\n// Check for lang attribute\nif (!/<html[^>]*lang/.test(content)) issues.push('⚠ <html> tag missing lang attribute (use lang=\\\"sv\\\" for Swedish)');\n\n// Check for meta description\nif (!/<meta[^>]*name=\\\"description/.test(content)) issues.push('ℹ No meta description found (improves SEO)');\n\n// Check for aria-hidden on decorative elements\nif (/<svg[^>]*>.*<\\/svg>/.test(content) && !/<svg[^>]*aria-hidden/.test(content)) {\n  issues.push('ℹ Decorative <svg> elements should have aria-hidden=\\\"true\\\"');\n}\n\nif (issues.length > 0) {\n  console.warn(issues.join('\\\\n'));\n} else {\n  console.log('✓ Accessibility & SEO check passed');\n}\n\" -- '{FILE}' || true",
+      "description": "Validates semantic HTML and accessibility attributes"
+    },
+    {
+      "trigger": "AfterEdit",
+      "path": "**/js/app.js",
+      "command": "node -e \"\nconst fs = require('fs');\nconst file = '{FILE}';\nconst content = fs.readFileSync(file, 'utf8');\nconst issues = [];\n\n// Check for keyboard navigation support\nif (/addEventListener.*click/g.test(content) && !/addEventListener.*keydown|addEventListener.*keypress/.test(content)) {\n  issues.push('ℹ Check that keyboard navigation is supported for click handlers');\n}\n\n// Check for ARIA live regions (for dynamic content)\nif (/render\\(\\)|updateMapMarkers\\(\\)/.test(content) && !/(aria-live|aria-atomic|role=)/.test(content)) {\n  issues.push('ℹ Dynamic content updates may benefit from aria-live regions');\n}\n\n// Check for focus management\nif (!/(focus\\(\\)|document\\.activeElement)/.test(content)) {\n  issues.push('ℹ Consider focus management after modal/panel changes');\n}\n\nif (issues.length > 0) {\n  console.warn(issues.join('\\\\n'));\n} else {\n  console.log('✓ JavaScript accessibility check passed');\n}\n\" -- '{FILE}' || true",
+      "description": "Checks JS for keyboard navigation and ARIA support"
+    }
+  ]
+}

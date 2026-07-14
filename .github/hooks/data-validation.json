@@ -1,0 +1,18 @@
+{
+  "name": "data-validation",
+  "description": "Validates place data schema, category consistency, and coordinate bounds for Gotland",
+  "hooks": [
+    {
+      "trigger": "BeforeEdit",
+      "path": "**/places-data.js",
+      "command": "node -e \"console.log('✓ Place data validation hook ready. Will validate: schema, categories, coordinates, duplicates')\"",
+      "description": "Pre-validation notification for place data edits"
+    },
+    {
+      "trigger": "AfterEdit",
+      "path": "**/places-data.js",
+      "command": "node -e \"\nconst fs = require('fs');\nconst file = process.argv[1];\nconst content = fs.readFileSync(file, 'utf8');\n// Validate MOCK_PLACES array format\nconst hasValidSchema = /id:\\s*['\\\"].*['\\\"],.*name:\\s*['\\\"].*['\\\"].*category:.*lat:.*lng:.*description:/.test(content);\nconst hasCategories = /const CATEGORIES = \\{/.test(content);\nconst categoryCount = (content.match(/:\\s*\\{\\s*label:/g) || []).length;\n\nif (!hasValidSchema) {\n  console.warn('⚠ Warning: Place data may have invalid schema. Expected: { id, name, category, lat, lng, description }');\n  process.exit(1);\n}\n\nif (!hasCategories) {\n  console.warn('⚠ Warning: CATEGORIES object not found');\n  process.exit(1);\n}\n\nconsole.log(`✓ Place data schema validated (${categoryCount} categories found)`);\n\" -- '{FILE}'\",
+      "description": "Validates place data matches expected schema after edits"
+    }
+  ]
+}

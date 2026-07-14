@@ -1,0 +1,18 @@
+{
+  "name": "performance-checks",
+  "description": "Detects blocking operations, unoptimized rendering, and performance anti-patterns",
+  "hooks": [
+    {
+      "trigger": "AfterEdit",
+      "path": "**/js/app.js",
+      "command": "node -e \"\nconst fs = require('fs');\nconst file = '{FILE}';\nconst content = fs.readFileSync(file, 'utf8');\nconst issues = [];\n\n// Check for render calls in loops\nif (/for\\s*\\(.*\\)\\s*\\{[^}]*render\\(\\)/.test(content)) {\n  issues.push('⚠ render() called in loop (will cause performance issues)');\n}\n\n// Check for synchronous DOM operations\nif (/document\\.querySelector.*\\s*=\\s*['\\\"][^'\\\"]*['\\\"];/g.test(content)) {\n  issues.push('ℹ Cache DOM queries outside event handlers if possible');\n}\n\n// Check for large array operations\nif (/MOCK_PLACES.*length\\s*>\\s*500|places\\.length\\s*>\\s*500/.test(content)) {\n  issues.push('⚠ Large dataset detected (>500 places) - consider pagination or virtualization');\n}\n\n// Check for updateMapMarkers debouncing\nif (/updateMapMarkers/g.test(content) && !/(debounce|throttle)/.test(content)) {\n  issues.push('ℹ updateMapMarkers called frequently - consider debouncing');\n}\n\nif (issues.length > 0) {\n  console.warn(issues.join('\\\\n'));\n} else {\n  console.log('✓ Performance check passed');\n}\n\" -- '{FILE}' || true",
+      "description": "Detects blocking and unoptimized operations"
+    },
+    {
+      "trigger": "AfterEdit",
+      "path": "**/index.html",
+      "command": "node -e \"\nconst fs = require('fs');\nconst file = '{FILE}';\nconst content = fs.readFileSync(file, 'utf8');\nconst issues = [];\n\n// Check for inline styles\nif (/style=\\\"/.test(content)) issues.push('⚠ Inline styles detected (use CSS classes)');\n\n// Check for unminified Leaflet CDN\nif (!content.includes('integrity=') && content.includes('leaflet')) {\n  issues.push('⚠ Leaflet CSS/JS should include integrity attribute');\n}\n\n// Check for async/defer on scripts\nif (/<script.*src=.*(?!async|defer)/g.test(content)) {\n  issues.push('ℹ Consider async/defer on script tags for performance');\n}\n\nif (issues.length > 0) {\n  console.warn(issues.join('\\\\n'));\n} else {\n  console.log('✓ HTML performance check passed');\n}\n\" -- '{FILE}' || true",
+      "description": "Checks HTML for performance anti-patterns"
+    }
+  ]
+}

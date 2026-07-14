@@ -1,0 +1,4650 @@
+[
+  {
+    "id": "50-kvadrat-n315871488",
+    "name": "50 kvadrat",
+    "category": "mat",
+    "lat": 57.6387,
+    "lng": 18.29311,
+    "description": "Restaurang"
+  },
+  {
+    "id": "adelita-n13059901192",
+    "name": "Adelita",
+    "category": "mat",
+    "lat": 57.63805,
+    "lng": 18.29529,
+    "description": "Bar"
+  },
+  {
+    "id": "ali-s-kiosk-grill-n12909510711",
+    "name": "Ali's Kiosk & Grill",
+    "category": "mat",
+    "lat": 57.63812,
+    "lng": 18.29898,
+    "description": "Snabbmat"
+  },
+  {
+    "id": "alma-s-n12897016626",
+    "name": "Alma's",
+    "category": "mat",
+    "lat": 57.64115,
+    "lng": 18.29029,
+    "description": "Restaurang"
+  },
+  {
+    "id": "amarillo-mat-n2973071646",
+    "name": "Amarillo Mat",
+    "category": "mat",
+    "lat": 57.63971,
+    "lng": 18.29584,
+    "description": "Restaurang"
+  },
+  {
+    "id": "amici-belli-n317437554",
+    "name": "Amici Belli",
+    "category": "mat",
+    "lat": 57.63969,
+    "lng": 18.2921,
+    "description": "Restaurang · Italian"
+  },
+  {
+    "id": "apisaras-thaimat-n318353046",
+    "name": "Apisaras thaimat",
+    "category": "mat",
+    "lat": 57.64591,
+    "lng": 18.3191,
+    "description": "Restaurang"
+  },
+  {
+    "id": "aron-s-kaffebar-n639299814",
+    "name": "Aron's Kaffebar",
+    "category": "mat",
+    "lat": 57.52078,
+    "lng": 18.69335,
+    "description": "Café"
+  },
+  {
+    "id": "bad-wolf-n5595023609",
+    "name": "Bad Wolf",
+    "category": "mat",
+    "lat": 57.63558,
+    "lng": 18.2924,
+    "description": "Restaurang · American"
+  },
+  {
+    "id": "bagarns-n11080928116",
+    "name": "Bagarns",
+    "category": "mat",
+    "lat": 57.23868,
+    "lng": 18.37558,
+    "description": "Café"
+  },
+  {
+    "id": "bageriet-n6620794508",
+    "name": "Bageriet",
+    "category": "mat",
+    "lat": 57.64092,
+    "lng": 18.29605,
+    "description": "Restaurang"
+  },
+  {
+    "id": "bakfickan-n413208650",
+    "name": "Bakfickan",
+    "category": "mat",
+    "lat": 57.64064,
+    "lng": 18.29517,
+    "description": "Restaurang · Seafood"
+  },
+  {
+    "id": "baren-n12385236001",
+    "name": "Baren",
+    "category": "mat",
+    "lat": 57.63731,
+    "lng": 18.29469,
+    "description": "Pub"
+  },
+  {
+    "id": "baroque-n12892445119",
+    "name": "Baroque",
+    "category": "mat",
+    "lat": 57.64073,
+    "lng": 18.29528,
+    "description": "Restaurang"
+  },
+  {
+    "id": "bella-fenicia-pizzeria-och-salladbar-n11053360257",
+    "name": "Bella Fenicia Pizzeria Och Salladbar",
+    "category": "mat",
+    "lat": 57.23949,
+    "lng": 18.37608,
+    "description": "Restaurang · Pizza"
+  },
+  {
+    "id": "bistra-haren-n4256200604",
+    "name": "Bistra haren",
+    "category": "mat",
+    "lat": 57.64384,
+    "lng": 18.29841,
+    "description": "Restaurang · Barbecue"
+  },
+  {
+    "id": "bistro-albatross-w496794609",
+    "name": "Bistro Albatross",
+    "category": "mat",
+    "lat": 57.93358,
+    "lng": 19.16513,
+    "description": "Restaurang"
+  },
+  {
+    "id": "bistro-borgen-n12909476464",
+    "name": "Bistro Borgen",
+    "category": "mat",
+    "lat": 57.63845,
+    "lng": 18.29801,
+    "description": "Restaurang"
+  },
+  {
+    "id": "bjorkhaga-standby-restaurang-n10743405608",
+    "name": "Björkhaga Standby & Restaurang",
+    "category": "mat",
+    "lat": 57.40405,
+    "lng": 18.17115,
+    "description": "Restaurang"
+  },
+  {
+    "id": "black-sheep-arms-n316826432",
+    "name": "Black Sheep Arms",
+    "category": "mat",
+    "lat": 57.64203,
+    "lng": 18.29494,
+    "description": "Restaurang"
+  },
+  {
+    "id": "bok-cafeet-porten-n12909501920",
+    "name": "Bok Caféet Porten",
+    "category": "mat",
+    "lat": 57.63868,
+    "lng": 18.2985,
+    "description": "Café"
+  },
+  {
+    "id": "bolaget-n315871852",
+    "name": "Bolaget",
+    "category": "mat",
+    "lat": 57.64066,
+    "lng": 18.29673,
+    "description": "Restaurang"
+  },
+  {
+    "id": "boston-diner-w1087504450",
+    "name": "Boston Diner",
+    "category": "mat",
+    "lat": 57.6098,
+    "lng": 18.24425,
+    "description": "Snabbmat"
+  },
+  {
+    "id": "brasseri-lickershamn-n454148702",
+    "name": "Brasseri Lickershamn",
+    "category": "mat",
+    "lat": 57.82527,
+    "lng": 18.51437,
+    "description": "Restaurang"
+  },
+  {
+    "id": "broman-son-n13068058213",
+    "name": "Broman & Son",
+    "category": "mat",
+    "lat": 57.50579,
+    "lng": 18.1127,
+    "description": "Restaurang"
+  },
+  {
+    "id": "bruket-n454154932",
+    "name": "Bruket",
+    "category": "mat",
+    "lat": 57.73814,
+    "lng": 18.4049,
+    "description": "Café"
+  },
+  {
+    "id": "bruna-dorren-n559420073",
+    "name": "Bruna Dörren",
+    "category": "mat",
+    "lat": 57.33032,
+    "lng": 18.71026,
+    "description": "Snabbmat · Pizza"
+  },
+  {
+    "id": "bryggeriet-mat-malt-n11891776071",
+    "name": "Bryggeriet Mat & Malt",
+    "category": "mat",
+    "lat": 57.63315,
+    "lng": 18.29972,
+    "description": "Restaurang"
+  },
+  {
+    "id": "brodboden-n766160688",
+    "name": "Brödboden",
+    "category": "mat",
+    "lat": 57.63499,
+    "lng": 18.29214,
+    "description": "Café"
+  },
+  {
+    "id": "brodernas-n11091668944",
+    "name": "Brödernas",
+    "category": "mat",
+    "lat": 57.63988,
+    "lng": 18.29236,
+    "description": "Restaurang · Burger"
+  },
+  {
+    "id": "bungenas-matsal-n6651668114",
+    "name": "Bungenäs matsal",
+    "category": "mat",
+    "lat": 57.82342,
+    "lng": 19.07967,
+    "description": "Restaurang"
+  },
+  {
+    "id": "burgsviks-krog-n1369232280",
+    "name": "Burgsviks krog",
+    "category": "mat",
+    "lat": 57.03062,
+    "lng": 18.27467,
+    "description": "Restaurang"
+  },
+  {
+    "id": "cafe-borgen-w1087504455",
+    "name": "Cafe Borgen",
+    "category": "mat",
+    "lat": 57.61042,
+    "lng": 18.24418,
+    "description": "Café"
+  },
+  {
+    "id": "cafe-amalia-n315981698",
+    "name": "Café Amalia",
+    "category": "mat",
+    "lat": 57.63949,
+    "lng": 18.29632,
+    "description": "Café"
+  },
+  {
+    "id": "cafe-kubanen-n10977852005",
+    "name": "Café Kubanen",
+    "category": "mat",
+    "lat": 57.58106,
+    "lng": 18.22521,
+    "description": "Café"
+  },
+  {
+    "id": "cafe-maffen-w431979394",
+    "name": "Café Maffen",
+    "category": "mat",
+    "lat": 57.86335,
+    "lng": 19.05592,
+    "description": "Café · Smörgåsar"
+  },
+  {
+    "id": "cafe-amalia-n12131257780",
+    "name": "Café amalia",
+    "category": "mat",
+    "lat": 57.63963,
+    "lng": 18.2931,
+    "description": "Café"
+  },
+  {
+    "id": "capisci-n2649622677",
+    "name": "Capisci",
+    "category": "mat",
+    "lat": 57.33332,
+    "lng": 18.7041,
+    "description": "Restaurang"
+  },
+  {
+    "id": "carlssons-n4308983757",
+    "name": "Carlssons",
+    "category": "mat",
+    "lat": 57.95531,
+    "lng": 19.24511,
+    "description": "Restaurang"
+  },
+  {
+    "id": "chili-n318925573",
+    "name": "Chili",
+    "category": "mat",
+    "lat": 57.63623,
+    "lng": 18.32746,
+    "description": "Restaurang"
+  },
+  {
+    "id": "chocolateria-n1814884756",
+    "name": "Chocolateria",
+    "category": "mat",
+    "lat": 57.24952,
+    "lng": 18.64051,
+    "description": "Café"
+  },
+  {
+    "id": "coffee-art-gotland-n11961361623",
+    "name": "Coffee & Art Gotland",
+    "category": "mat",
+    "lat": 57.64163,
+    "lng": 18.29421,
+    "description": "Café · Cafferia"
+  },
+  {
+    "id": "creperie-kuten-w450812650",
+    "name": "Creperie Kuten",
+    "category": "mat",
+    "lat": 57.93415,
+    "lng": 19.16452,
+    "description": "Restaurang"
+  },
+  {
+    "id": "creperie-logi-n305501226",
+    "name": "Crêperie & logi",
+    "category": "mat",
+    "lat": 57.63867,
+    "lng": 18.29558,
+    "description": "Restaurang"
+  },
+  {
+    "id": "creperie-fide-n12091684091",
+    "name": "Crêperie Fide",
+    "category": "mat",
+    "lat": 57.09386,
+    "lng": 18.30293,
+    "description": "Restaurang"
+  },
+  {
+    "id": "danskens-cafe-n11159076440",
+    "name": "Danskens Café",
+    "category": "mat",
+    "lat": 57.64009,
+    "lng": 18.29196,
+    "description": "Snabbmat"
+  },
+  {
+    "id": "demeter-farm-with-cafe-n1814883620",
+    "name": "Demeter Farm with Cafe",
+    "category": "mat",
+    "lat": 57.87614,
+    "lng": 18.89018,
+    "description": "Café"
+  },
+  {
+    "id": "east-coast-n446780014",
+    "name": "East Coast",
+    "category": "mat",
+    "lat": 57.63998,
+    "lng": 18.29278,
+    "description": "Restaurang"
+  },
+  {
+    "id": "ebbas-mat-kaffe-w223117654",
+    "name": "Ebbas Mat & Kaffe",
+    "category": "mat",
+    "lat": 57.95738,
+    "lng": 19.23749,
+    "description": "Restaurang · Swedish"
+  },
+  {
+    "id": "eden-n12877364873",
+    "name": "Eden",
+    "category": "mat",
+    "lat": 57.6408,
+    "lng": 18.2967,
+    "description": "Bar"
+  },
+  {
+    "id": "effes-n318923465",
+    "name": "Effes",
+    "category": "mat",
+    "lat": 57.63536,
+    "lng": 18.29299,
+    "description": "Pub"
+  },
+  {
+    "id": "elsies-cafe-w496794610",
+    "name": "Elsies Café",
+    "category": "mat",
+    "lat": 57.93413,
+    "lng": 19.16494,
+    "description": "Café"
+  },
+  {
+    "id": "espegards-konditori-n2666739810",
+    "name": "Espegards Konditori",
+    "category": "mat",
+    "lat": 57.33224,
+    "lng": 18.70456,
+    "description": "Café"
+  },
+  {
+    "id": "espresso-house-n11691721486",
+    "name": "Espresso House",
+    "category": "mat",
+    "lat": 57.63732,
+    "lng": 18.30179,
+    "description": "Café · Coffee shop"
+  },
+  {
+    "id": "ett-litet-creperie-n5777656025",
+    "name": "Ett litet Crêperie",
+    "category": "mat",
+    "lat": 57.79303,
+    "lng": 18.5323,
+    "description": "Restaurang"
+  },
+  {
+    "id": "fiket-n5726695650",
+    "name": "Fiket",
+    "category": "mat",
+    "lat": 57.63836,
+    "lng": 18.29829,
+    "description": "Café"
+  },
+  {
+    "id": "fransan-n476025510",
+    "name": "Fransan",
+    "category": "mat",
+    "lat": 57.24459,
+    "lng": 18.64752,
+    "description": "Restaurang"
+  },
+  {
+    "id": "frida-s-bakery-coffee-n11093796779",
+    "name": "Frida’s Bakery & Coffee",
+    "category": "mat",
+    "lat": 57.63898,
+    "lng": 18.29698,
+    "description": "Café"
+  },
+  {
+    "id": "fridhems-cafe-w230631257",
+    "name": "Fridhems café",
+    "category": "mat",
+    "lat": 57.59976,
+    "lng": 18.21446,
+    "description": "Café"
+  },
+  {
+    "id": "farogarden-n6741686385",
+    "name": "Fårögården",
+    "category": "mat",
+    "lat": 57.95249,
+    "lng": 19.22143,
+    "description": "Restaurang · Regional"
+  },
+  {
+    "id": "farohus-w485430511",
+    "name": "Fåröhus",
+    "category": "mat",
+    "lat": 57.91349,
+    "lng": 19.12681,
+    "description": "Restaurang"
+  },
+  {
+    "id": "farosunds-fastning-n1079495895",
+    "name": "Fårösunds Fästning",
+    "category": "mat",
+    "lat": 57.84639,
+    "lng": 19.07862,
+    "description": "Restaurang"
+  },
+  {
+    "id": "german-beer-hall-visby-n6620794509",
+    "name": "German Beer Hall Visby",
+    "category": "mat",
+    "lat": 57.64103,
+    "lng": 18.29552,
+    "description": "Restaurang · Bavarian"
+  },
+  {
+    "id": "glassmagasinet-n763160584",
+    "name": "Glassmagasinet",
+    "category": "mat",
+    "lat": 57.63727,
+    "lng": 18.28743,
+    "description": "Glass"
+  },
+  {
+    "id": "glassmagasinet-n11093796579",
+    "name": "Glassmagasinet",
+    "category": "mat",
+    "lat": 57.63896,
+    "lng": 18.29705,
+    "description": "Glass"
+  },
+  {
+    "id": "glassvillan-n9895722511",
+    "name": "Glassvillan",
+    "category": "mat",
+    "lat": 57.64453,
+    "lng": 18.29648,
+    "description": "Café · Ice cream"
+  },
+  {
+    "id": "glassvillan-n11057066243",
+    "name": "Glassvillan",
+    "category": "mat",
+    "lat": 57.64456,
+    "lng": 18.29638,
+    "description": "Glass"
+  },
+  {
+    "id": "gothems-cantina-y-casitas-n3605921615",
+    "name": "Gothems Cantina y Casitas",
+    "category": "mat",
+    "lat": 57.57919,
+    "lng": 18.72887,
+    "description": "Restaurang · Tacos"
+  },
+  {
+    "id": "gotlands-korvfabrik-n13073506493",
+    "name": "Gotlands Korvfabrik",
+    "category": "mat",
+    "lat": 57.50748,
+    "lng": 18.45037,
+    "description": "Snabbmat"
+  },
+  {
+    "id": "gotlands-bryggeri-n6611013493",
+    "name": "Gotlands bryggeri",
+    "category": "mat",
+    "lat": 57.64175,
+    "lng": 18.29482,
+    "description": "Bar"
+  },
+  {
+    "id": "gotlandsvafflan-n685981446",
+    "name": "Gotlandsvåfflan",
+    "category": "mat",
+    "lat": 57.79179,
+    "lng": 18.78857,
+    "description": "Restaurang"
+  },
+  {
+    "id": "gotlandsvafflan-n7786971620",
+    "name": "Gotlandsvåfflan",
+    "category": "mat",
+    "lat": 57.83073,
+    "lng": 18.78788,
+    "description": "Restaurang · Waffle"
+  },
+  {
+    "id": "gotlato-n13868459001",
+    "name": "Gotlato",
+    "category": "mat",
+    "lat": 57.64034,
+    "lng": 18.29675,
+    "description": "Glass"
+  },
+  {
+    "id": "graute-w601007507",
+    "name": "Graute",
+    "category": "mat",
+    "lat": 57.66545,
+    "lng": 18.63392,
+    "description": "Café · Ice cream"
+  },
+  {
+    "id": "gula-huset-n2320588955",
+    "name": "Gula Huset",
+    "category": "mat",
+    "lat": 57.6428,
+    "lng": 18.29542,
+    "description": "Café"
+  },
+  {
+    "id": "gusto-n12100420853",
+    "name": "Gusto",
+    "category": "mat",
+    "lat": 57.60927,
+    "lng": 18.24429,
+    "description": "Restaurang · Italian"
+  },
+  {
+    "id": "gute-glass-bar-n12087098876",
+    "name": "Gute Glass-bar",
+    "category": "mat",
+    "lat": 57.63845,
+    "lng": 18.2957,
+    "description": "Glass"
+  },
+  {
+    "id": "gute-glass-w707078442",
+    "name": "Gute glass",
+    "category": "mat",
+    "lat": 57.49159,
+    "lng": 18.12781,
+    "description": "Glass"
+  },
+  {
+    "id": "gutekallaren-n415765920",
+    "name": "Gutekällaren",
+    "category": "mat",
+    "lat": 57.6409,
+    "lng": 18.29541,
+    "description": "Pub"
+  },
+  {
+    "id": "h10-bar-cafe-n6412104186",
+    "name": "H10 Bar & Cafe",
+    "category": "mat",
+    "lat": 57.63842,
+    "lng": 18.2939,
+    "description": "Café"
+  },
+  {
+    "id": "hablingbo-cafe-w438460842",
+    "name": "Hablingbo Café",
+    "category": "mat",
+    "lat": 57.18702,
+    "lng": 18.25979,
+    "description": "Café"
+  },
+  {
+    "id": "hamnkafeet-n632446392",
+    "name": "Hamnkaféet",
+    "category": "mat",
+    "lat": 57.38901,
+    "lng": 18.18579,
+    "description": "Café"
+  },
+  {
+    "id": "hamnkrogen-herrvik-n4359022692",
+    "name": "Hamnkrogen Herrvik",
+    "category": "mat",
+    "lat": 57.42209,
+    "lng": 18.91664,
+    "description": "Restaurang"
+  },
+  {
+    "id": "hamra-krog-n13041296101",
+    "name": "Hamra Krog",
+    "category": "mat",
+    "lat": 56.97894,
+    "lng": 18.31549,
+    "description": "Restaurang · French"
+  },
+  {
+    "id": "hemse-krog-bar-n11054456586",
+    "name": "Hemse Krog & Bar",
+    "category": "mat",
+    "lat": 57.23967,
+    "lng": 18.37632,
+    "description": "Pub"
+  },
+  {
+    "id": "hesselby-jernvagskafe-w427277626",
+    "name": "Hesselby Jernvägskafé",
+    "category": "mat",
+    "lat": 57.54406,
+    "lng": 18.53117,
+    "description": "Café"
+  },
+  {
+    "id": "husman-n933085037",
+    "name": "Husman",
+    "category": "mat",
+    "lat": 57.64585,
+    "lng": 18.32804,
+    "description": "Restaurang"
+  },
+  {
+    "id": "hwitstjarna-n273770560",
+    "name": "Hwitstjärna",
+    "category": "mat",
+    "lat": 57.61537,
+    "lng": 18.2843,
+    "description": "Restaurang"
+  },
+  {
+    "id": "i-love-pizza-n763160583",
+    "name": "I love pizza",
+    "category": "mat",
+    "lat": 57.63658,
+    "lng": 18.29394,
+    "description": "Restaurang · Pizza"
+  },
+  {
+    "id": "icander-n12907583546",
+    "name": "Icander",
+    "category": "mat",
+    "lat": 57.62363,
+    "lng": 18.32312,
+    "description": "Restaurang"
+  },
+  {
+    "id": "ihre-gard-cafe-n454142152",
+    "name": "Ihre Gård Café",
+    "category": "mat",
+    "lat": 57.83079,
+    "lng": 18.60821,
+    "description": "Café"
+  },
+  {
+    "id": "indian-corner-n11691721492",
+    "name": "Indian Corner",
+    "category": "mat",
+    "lat": 57.638,
+    "lng": 18.29931,
+    "description": "Restaurang · Indian"
+  },
+  {
+    "id": "irmas-cafe-n2397150489",
+    "name": "Irmas Café",
+    "category": "mat",
+    "lat": 57.59595,
+    "lng": 18.51492,
+    "description": "Café"
+  },
+  {
+    "id": "isola-bella-n315872054",
+    "name": "Isola Bella",
+    "category": "mat",
+    "lat": 57.64115,
+    "lng": 18.29705,
+    "description": "Restaurang · Italian"
+  },
+  {
+    "id": "italienaren-n3034228932",
+    "name": "Italienaren",
+    "category": "mat",
+    "lat": 57.63894,
+    "lng": 18.29166,
+    "description": "Restaurang · Italian"
+  },
+  {
+    "id": "jessens-saluhall-bar-n4324785897",
+    "name": "Jessens Saluhall & Bar",
+    "category": "mat",
+    "lat": 57.63904,
+    "lng": 18.29714,
+    "description": "Restaurang · Fish"
+  },
+  {
+    "id": "jidapha-thai-n11080905748",
+    "name": "Jidapha Thai",
+    "category": "mat",
+    "lat": 57.23825,
+    "lng": 18.37479,
+    "description": "Restaurang · Thai"
+  },
+  {
+    "id": "kaffestuga-n6620946716",
+    "name": "Kaffestuga",
+    "category": "mat",
+    "lat": 56.99187,
+    "lng": 18.24711,
+    "description": "Café"
+  },
+  {
+    "id": "kafe-strandporten-n2975327257",
+    "name": "Kafé Strandporten",
+    "category": "mat",
+    "lat": 57.6401,
+    "lng": 18.29267,
+    "description": "Café"
+  },
+  {
+    "id": "kafe-tva-tanter-n2397150493",
+    "name": "Kafé Två Tanter",
+    "category": "mat",
+    "lat": 57.70473,
+    "lng": 18.80512,
+    "description": "Café"
+  },
+  {
+    "id": "kalkladan-n2973076805",
+    "name": "Kalkladan",
+    "category": "mat",
+    "lat": 57.82322,
+    "lng": 19.0808,
+    "description": "Restaurang"
+  },
+  {
+    "id": "kapitelhusgarden-n14000982103",
+    "name": "Kapitelhusgården",
+    "category": "mat",
+    "lat": 57.64181,
+    "lng": 18.29594,
+    "description": "Restaurang"
+  },
+  {
+    "id": "kappelshamns-veranda-n454128977",
+    "name": "Kappelshamns Veranda",
+    "category": "mat",
+    "lat": 57.85249,
+    "lng": 18.78171,
+    "description": "Restaurang"
+  },
+  {
+    "id": "karaoke-baren-visby-n2970715907",
+    "name": "Karaoke Baren Visby",
+    "category": "mat",
+    "lat": 57.63609,
+    "lng": 18.29328,
+    "description": "Bar"
+  },
+  {
+    "id": "karlsorestaurangen-n2342987596",
+    "name": "Karlsörestaurangen",
+    "category": "mat",
+    "lat": 57.28926,
+    "lng": 17.97025,
+    "description": "Restaurang"
+  },
+  {
+    "id": "kasai-n13007309861",
+    "name": "Kasai",
+    "category": "mat",
+    "lat": 57.63915,
+    "lng": 18.2967,
+    "description": "Restaurang · Japanese"
+  },
+  {
+    "id": "katthammarsviks-rokeri-n434439713",
+    "name": "Katthammarsviks rökeri",
+    "category": "mat",
+    "lat": 57.43574,
+    "lng": 18.85225,
+    "description": "Restaurang"
+  },
+  {
+    "id": "kitchen-table-altan-n2973536550",
+    "name": "Kitchen & Table Altan",
+    "category": "mat",
+    "lat": 57.63885,
+    "lng": 18.29125,
+    "description": "Bar"
+  },
+  {
+    "id": "konditori-norrgatt-n3819165500",
+    "name": "Konditori Norrgatt",
+    "category": "mat",
+    "lat": 57.64492,
+    "lng": 18.30621,
+    "description": "Café"
+  },
+  {
+    "id": "konditori-siesta-n6641676408",
+    "name": "Konditori Siesta",
+    "category": "mat",
+    "lat": 57.63793,
+    "lng": 18.3002,
+    "description": "Café"
+  },
+  {
+    "id": "krakas-n1313840985",
+    "name": "Krakas",
+    "category": "mat",
+    "lat": 57.44593,
+    "lng": 18.70953,
+    "description": "Restaurang"
+  },
+  {
+    "id": "krokstade-troskvandring-n1313923830",
+    "name": "Krokstäde Tröskvandring",
+    "category": "mat",
+    "lat": 57.49404,
+    "lng": 18.14433,
+    "description": "Café"
+  },
+  {
+    "id": "krukmakarens-hus-kafe-n11691721475",
+    "name": "Krukmakarens Hus Kafe",
+    "category": "mat",
+    "lat": 57.63989,
+    "lng": 18.29348,
+    "description": "Café"
+  },
+  {
+    "id": "krusmyntagarden-n454154943",
+    "name": "Krusmyntagården",
+    "category": "mat",
+    "lat": 57.7199,
+    "lng": 18.38304,
+    "description": "Restaurang"
+  },
+  {
+    "id": "kustgrillen-n1489148260",
+    "name": "Kustgrillen",
+    "category": "mat",
+    "lat": 57.38749,
+    "lng": 18.2004,
+    "description": "Snabbmat · Burger"
+  },
+  {
+    "id": "kutens-bensin-creperie-tati-n2459477953",
+    "name": "Kutens Bensin/Crêperie Tati",
+    "category": "mat",
+    "lat": 57.934,
+    "lng": 19.16302,
+    "description": "Restaurang"
+  },
+  {
+    "id": "korsbarsgarden-n12090492989",
+    "name": "Körsbärsgården",
+    "category": "mat",
+    "lat": 56.93249,
+    "lng": 18.16902,
+    "description": "Restaurang"
+  },
+  {
+    "id": "lgs-mosbar-w61349668",
+    "name": "LGs Mosbar",
+    "category": "mat",
+    "lat": 57.63561,
+    "lng": 18.29044,
+    "description": "Restaurang · Grill"
+  },
+  {
+    "id": "la-fontana-n317537755",
+    "name": "La Fontana",
+    "category": "mat",
+    "lat": 57.63905,
+    "lng": 18.2964,
+    "description": "Restaurang · Pizza"
+  },
+  {
+    "id": "ladans-langos-w1310433690",
+    "name": "Ladans Langos",
+    "category": "mat",
+    "lat": 57.49237,
+    "lng": 18.14582,
+    "description": "Restaurang"
+  },
+  {
+    "id": "lagunen-pool-club-w1087514350",
+    "name": "Lagunen Pool Club",
+    "category": "mat",
+    "lat": 57.60833,
+    "lng": 18.24286,
+    "description": "Snabbmat"
+  },
+  {
+    "id": "lauters-n448288824",
+    "name": "Lauters",
+    "category": "mat",
+    "lat": 57.95462,
+    "lng": 19.10332,
+    "description": "Café"
+  },
+  {
+    "id": "leva-kungslador-n6716236938",
+    "name": "Leva Kungslador",
+    "category": "mat",
+    "lat": 57.61848,
+    "lng": 18.27118,
+    "description": "Café"
+  },
+  {
+    "id": "lilla-bjers-n6668096812",
+    "name": "Lilla Bjers",
+    "category": "mat",
+    "lat": 57.58265,
+    "lng": 18.23298,
+    "description": "Restaurang"
+  },
+  {
+    "id": "lilla-fide-n5297357205",
+    "name": "Lilla FIDE",
+    "category": "mat",
+    "lat": 57.63788,
+    "lng": 18.29873,
+    "description": "Restaurang"
+  },
+  {
+    "id": "lion-bar-visby-n12871863901",
+    "name": "Lion Bar Visby",
+    "category": "mat",
+    "lat": 57.63792,
+    "lng": 18.29516,
+    "description": "Restaurang · Burger"
+  },
+  {
+    "id": "ljugarns-strandcafe-restaurang-n2649612279",
+    "name": "Ljugarns Strandcafé & Restaurang",
+    "category": "mat",
+    "lat": 57.33335,
+    "lng": 18.71194,
+    "description": "Restaurang"
+  },
+  {
+    "id": "larbro-cafe-bar-n12169645732",
+    "name": "Lärbro Cafe & Bar",
+    "category": "mat",
+    "lat": 57.78439,
+    "lng": 18.79001,
+    "description": "Restaurang"
+  },
+  {
+    "id": "larbro-pizzeria-n448315616",
+    "name": "Lärbro pizzeria",
+    "category": "mat",
+    "lat": 57.79218,
+    "lng": 18.78871,
+    "description": "Snabbmat"
+  },
+  {
+    "id": "magasinet-n8902078296",
+    "name": "Magasinet",
+    "category": "mat",
+    "lat": 57.86502,
+    "lng": 19.05773,
+    "description": "Restaurang · Thai"
+  },
+  {
+    "id": "magazinet-n1313897479",
+    "name": "Magazinet",
+    "category": "mat",
+    "lat": 57.18742,
+    "lng": 18.25423,
+    "description": "Restaurang"
+  },
+  {
+    "id": "majstregarden-w481313991",
+    "name": "Majstregården",
+    "category": "mat",
+    "lat": 56.9228,
+    "lng": 18.1325,
+    "description": "Restaurang"
+  },
+  {
+    "id": "maltfabriken-n280183044",
+    "name": "Maltfabriken",
+    "category": "mat",
+    "lat": 57.6394,
+    "lng": 18.28884,
+    "description": "Restaurang"
+  },
+  {
+    "id": "marco-polo-n6623681645",
+    "name": "Marco Polo",
+    "category": "mat",
+    "lat": 57.64492,
+    "lng": 18.3065,
+    "description": "Restaurang · Pizza"
+  },
+  {
+    "id": "mat-kaffestugan-n448298314",
+    "name": "Mat- & Kaffestugan",
+    "category": "mat",
+    "lat": 57.8545,
+    "lng": 19.02812,
+    "description": "Café"
+  },
+  {
+    "id": "max-w207318199",
+    "name": "Max",
+    "category": "mat",
+    "lat": 57.6374,
+    "lng": 18.30376,
+    "description": "Snabbmat · Burger"
+  },
+  {
+    "id": "mcdonald-s-n4977419516",
+    "name": "McDonald's",
+    "category": "mat",
+    "lat": 57.63759,
+    "lng": 18.30112,
+    "description": "Snabbmat · Burger"
+  },
+  {
+    "id": "mcdonald-s-w504177112",
+    "name": "McDonald's",
+    "category": "mat",
+    "lat": 57.6217,
+    "lng": 18.32036,
+    "description": "Snabbmat · Burger"
+  },
+  {
+    "id": "medusas-badcafe-w378721507",
+    "name": "Medusas Badcafé",
+    "category": "mat",
+    "lat": 57.70202,
+    "lng": 18.80666,
+    "description": "Café"
+  },
+  {
+    "id": "mel-s-diner-hamnen-n392710903",
+    "name": "Mel's Diner Hamnen",
+    "category": "mat",
+    "lat": 57.63708,
+    "lng": 18.2872,
+    "description": "Restaurang · Pizza"
+  },
+  {
+    "id": "mels-diner-n12877367056",
+    "name": "Mels Diner",
+    "category": "mat",
+    "lat": 57.64093,
+    "lng": 18.29677,
+    "description": "Restaurang · American"
+  },
+  {
+    "id": "meza-n5250513989",
+    "name": "Meza",
+    "category": "mat",
+    "lat": 57.63707,
+    "lng": 18.29445,
+    "description": "Restaurang · Lebanese"
+  },
+  {
+    "id": "mille-lire-n12909505715",
+    "name": "Mille Lire",
+    "category": "mat",
+    "lat": 57.64019,
+    "lng": 18.29648,
+    "description": "Restaurang · Pizza"
+  },
+  {
+    "id": "mirells-n11042499253",
+    "name": "Mirells",
+    "category": "mat",
+    "lat": 57.63569,
+    "lng": 18.29252,
+    "description": "Café"
+  },
+  {
+    "id": "munkens-cafe-n6624689518",
+    "name": "Munkens Cafe",
+    "category": "mat",
+    "lat": 57.51591,
+    "lng": 18.45855,
+    "description": "Café · Coffee shop"
+  },
+  {
+    "id": "munkkallaren-n315872865",
+    "name": "Munkkällaren",
+    "category": "mat",
+    "lat": 57.64082,
+    "lng": 18.29536,
+    "description": "Restaurang"
+  },
+  {
+    "id": "novi-beach-club-n3032533331",
+    "name": "NOVI Beach Club",
+    "category": "mat",
+    "lat": 57.65327,
+    "lng": 18.30397,
+    "description": "Restaurang"
+  },
+  {
+    "id": "nissevikens-restaurang-n817398704",
+    "name": "Nissevikens restaurang",
+    "category": "mat",
+    "lat": 57.13253,
+    "lng": 18.21833,
+    "description": "Restaurang"
+  },
+  {
+    "id": "nya-skafferiet-n766160699",
+    "name": "Nya Skafferiet",
+    "category": "mat",
+    "lat": 57.63753,
+    "lng": 18.29502,
+    "description": "Café"
+  },
+  {
+    "id": "nystroms-n6651664474",
+    "name": "Nyströms",
+    "category": "mat",
+    "lat": 57.8241,
+    "lng": 19.07967,
+    "description": "Café"
+  },
+  {
+    "id": "paradiset-n2320588645",
+    "name": "Paradiset",
+    "category": "mat",
+    "lat": 57.64151,
+    "lng": 18.29543,
+    "description": "Café"
+  },
+  {
+    "id": "pastamakarna-w484297663",
+    "name": "Pastamakarna",
+    "category": "mat",
+    "lat": 57.90707,
+    "lng": 19.1075,
+    "description": "Restaurang · Pasta"
+  },
+  {
+    "id": "pinchos-n318701858",
+    "name": "Pinchos",
+    "category": "mat",
+    "lat": 57.63499,
+    "lng": 18.29173,
+    "description": "Restaurang · Tapas"
+  },
+  {
+    "id": "pizzaboden-n1845077872",
+    "name": "Pizzaboden",
+    "category": "mat",
+    "lat": 57.31796,
+    "lng": 18.16685,
+    "description": "Restaurang"
+  },
+  {
+    "id": "pizzeria-babbolina-n11059805465",
+    "name": "Pizzeria Babbolina",
+    "category": "mat",
+    "lat": 57.26306,
+    "lng": 18.20732,
+    "description": "Restaurang · Pizza"
+  },
+  {
+    "id": "plaza-n12892441095",
+    "name": "Plaza",
+    "category": "mat",
+    "lat": 57.64098,
+    "lng": 18.29576,
+    "description": "Restaurang"
+  },
+  {
+    "id": "paangen-mat-bar-n13999828201",
+    "name": "PåÄngen Mat & Bar",
+    "category": "mat",
+    "lat": 57.83257,
+    "lng": 18.80633,
+    "description": "Restaurang · Mexican"
+  },
+  {
+    "id": "quality-hotel-breakfast-n12590982285",
+    "name": "Quality Hotel breakfast",
+    "category": "mat",
+    "lat": 57.63195,
+    "lng": 18.27973,
+    "description": "Restaurang"
+  },
+  {
+    "id": "re-market-n10764689258",
+    "name": "Re:Market",
+    "category": "mat",
+    "lat": 57.38601,
+    "lng": 18.19976,
+    "description": "Café"
+  },
+  {
+    "id": "restaurang-china-n315985687",
+    "name": "Restaurang China",
+    "category": "mat",
+    "lat": 57.63505,
+    "lng": 18.29137,
+    "description": "Restaurang"
+  },
+  {
+    "id": "romabrunnen-w551289836",
+    "name": "Romabrunnen",
+    "category": "mat",
+    "lat": 57.50726,
+    "lng": 18.45149,
+    "description": "Restaurang"
+  },
+  {
+    "id": "rute-stenugnsbageri-n454109520",
+    "name": "Rute Stenugnsbageri",
+    "category": "mat",
+    "lat": 57.81862,
+    "lng": 18.91116,
+    "description": "Café"
+  },
+  {
+    "id": "salteriet-ljugarn-n14002303060",
+    "name": "Salteriet Ljugarn",
+    "category": "mat",
+    "lat": 57.3233,
+    "lng": 18.7113,
+    "description": "Restaurang · Fish"
+  },
+  {
+    "id": "salthamn-restaurang-n13057783776",
+    "name": "Salthamn Restaurang",
+    "category": "mat",
+    "lat": 57.73256,
+    "lng": 18.39769,
+    "description": "Restaurang"
+  },
+  {
+    "id": "sandwich-bar-n12877293845",
+    "name": "Sandwich Bar",
+    "category": "mat",
+    "lat": 57.63799,
+    "lng": 18.30121,
+    "description": "Snabbmat"
+  },
+  {
+    "id": "sankt-hans-cafe-n6641676474",
+    "name": "Sankt Hans Cafe",
+    "category": "mat",
+    "lat": 57.63841,
+    "lng": 18.29274,
+    "description": "Café"
+  },
+  {
+    "id": "shawarma-bar-n4322086600",
+    "name": "Shawarma bar",
+    "category": "mat",
+    "lat": 57.63887,
+    "lng": 18.29756,
+    "description": "Restaurang · Lebanese"
+  },
+  {
+    "id": "sibylla-n12903356274",
+    "name": "Sibylla",
+    "category": "mat",
+    "lat": 57.63343,
+    "lng": 18.32452,
+    "description": "Snabbmat · Burger"
+  },
+  {
+    "id": "sibylla-w462905908",
+    "name": "Sibylla",
+    "category": "mat",
+    "lat": 57.6164,
+    "lng": 18.28507,
+    "description": "Snabbmat · Burger"
+  },
+  {
+    "id": "sjumastarn-n2974861177",
+    "name": "Sjumastarn",
+    "category": "mat",
+    "lat": 57.63624,
+    "lng": 18.28616,
+    "description": "Bar"
+  },
+  {
+    "id": "skeppsbron-n1798251637",
+    "name": "Skeppsbron",
+    "category": "mat",
+    "lat": 57.63794,
+    "lng": 18.28812,
+    "description": "Restaurang"
+  },
+  {
+    "id": "skolhusets-tradgardscafe-n4358957393",
+    "name": "Skolhusets trädgårdscafé",
+    "category": "mat",
+    "lat": 57.42149,
+    "lng": 18.85783,
+    "description": "Café"
+  },
+  {
+    "id": "skumpanerna-n3036788570",
+    "name": "Skumpanerna",
+    "category": "mat",
+    "lat": 57.86303,
+    "lng": 19.05561,
+    "description": "Restaurang · Pizza"
+  },
+  {
+    "id": "smakrike-krog-n559420063",
+    "name": "Smakrike Krog",
+    "category": "mat",
+    "lat": 57.33017,
+    "lng": 18.70862,
+    "description": "Restaurang"
+  },
+  {
+    "id": "snausarve-gardsby-n8907196818",
+    "name": "Snausarve Gardsby",
+    "category": "mat",
+    "lat": 57.22719,
+    "lng": 18.21068,
+    "description": "Restaurang · Pizza"
+  },
+  {
+    "id": "solsidan-w1087504467",
+    "name": "Solsidan",
+    "category": "mat",
+    "lat": 57.61093,
+    "lng": 18.24625,
+    "description": "Restaurang"
+  },
+  {
+    "id": "stenkyrka-mejeri-w1299811537",
+    "name": "Stenkyrka Mejeri",
+    "category": "mat",
+    "lat": 57.79911,
+    "lng": 18.51067,
+    "description": "Restaurang"
+  },
+  {
+    "id": "sudersands-resort-w450812651",
+    "name": "Sudersands resort",
+    "category": "mat",
+    "lat": 57.95557,
+    "lng": 19.2515,
+    "description": "Restaurang · Pizza"
+  },
+  {
+    "id": "sukh-indiska-restaurang-n8902966068",
+    "name": "Sukh Indiska Restaurang",
+    "category": "mat",
+    "lat": 57.861,
+    "lng": 19.05296,
+    "description": "Restaurang · Indian"
+  },
+  {
+    "id": "sundars-momo-n8906950527",
+    "name": "Sundars Momo",
+    "category": "mat",
+    "lat": 57.63235,
+    "lng": 18.28966,
+    "description": "Restaurang · Dumplings"
+  },
+  {
+    "id": "sundars-momo-n11063363503",
+    "name": "Sundars Momo",
+    "category": "mat",
+    "lat": 57.60116,
+    "lng": 18.25196,
+    "description": "Restaurang"
+  },
+  {
+    "id": "sunes-elefant-n331809821",
+    "name": "Sunes elefant",
+    "category": "mat",
+    "lat": 57.62846,
+    "lng": 18.28727,
+    "description": "Restaurang"
+  },
+  {
+    "id": "surfers-n1305285039",
+    "name": "Surfers",
+    "category": "mat",
+    "lat": 57.63935,
+    "lng": 18.29594,
+    "description": "Bar"
+  },
+  {
+    "id": "surflogiet-w610892209",
+    "name": "Surflogiet",
+    "category": "mat",
+    "lat": 57.48379,
+    "lng": 18.12675,
+    "description": "Restaurang"
+  },
+  {
+    "id": "sushi-bar-n576100215",
+    "name": "Sushi Bar",
+    "category": "mat",
+    "lat": 57.63256,
+    "lng": 18.28821,
+    "description": "Restaurang"
+  },
+  {
+    "id": "taco-bar-n13063633536",
+    "name": "Taco Bar",
+    "category": "mat",
+    "lat": 57.63977,
+    "lng": 18.2923,
+    "description": "Snabbmat · Tex-mex"
+  },
+  {
+    "id": "thai-thai-n305501178",
+    "name": "Thai Thai",
+    "category": "mat",
+    "lat": 57.63264,
+    "lng": 18.28796,
+    "description": "Restaurang"
+  },
+  {
+    "id": "thairauken-w1316735399",
+    "name": "Thairauken",
+    "category": "mat",
+    "lat": 57.73394,
+    "lng": 18.60736,
+    "description": "Restaurang · Thai"
+  },
+  {
+    "id": "tingstade-grill-w437659820",
+    "name": "Tingstäde Grill",
+    "category": "mat",
+    "lat": 57.73396,
+    "lng": 18.60811,
+    "description": "Restaurang · Burger"
+  },
+  {
+    "id": "tofta-beach-house-w966254795",
+    "name": "Tofta Beach House",
+    "category": "mat",
+    "lat": 57.48635,
+    "lng": 18.12806,
+    "description": "Restaurang"
+  },
+  {
+    "id": "toftalagret-w1204762705",
+    "name": "Toftalagret",
+    "category": "mat",
+    "lat": 57.4935,
+    "lng": 18.14836,
+    "description": "Snabbmat · Pizza"
+  },
+  {
+    "id": "torgkrogen-n2320587675",
+    "name": "Torgkrogen",
+    "category": "mat",
+    "lat": 57.6402,
+    "lng": 18.29673,
+    "description": "Restaurang"
+  },
+  {
+    "id": "tre-stekare-n12075145347",
+    "name": "Tre Stekare",
+    "category": "mat",
+    "lat": 57.03472,
+    "lng": 18.25815,
+    "description": "Snabbmat · Burger"
+  },
+  {
+    "id": "trossen-n13069531090",
+    "name": "Trossen",
+    "category": "mat",
+    "lat": 57.63739,
+    "lng": 18.28756,
+    "description": "Restaurang"
+  },
+  {
+    "id": "underbar-visby-n9883916617",
+    "name": "Underbar Visby",
+    "category": "mat",
+    "lat": 57.63864,
+    "lng": 18.29316,
+    "description": "Restaurang · Lebanese"
+  },
+  {
+    "id": "vedje-n11056917583",
+    "name": "Vedje",
+    "category": "mat",
+    "lat": 56.96906,
+    "lng": 18.22938,
+    "description": "Café"
+  },
+  {
+    "id": "vedugnen-n2973285473",
+    "name": "Vedugnen",
+    "category": "mat",
+    "lat": 57.57602,
+    "lng": 18.73379,
+    "description": "Restaurang · Pizza"
+  },
+  {
+    "id": "village-tandoori-n305501169",
+    "name": "Village Tandoori",
+    "category": "mat",
+    "lat": 57.63249,
+    "lng": 18.28844,
+    "description": "Restaurang"
+  },
+  {
+    "id": "visby-gustavsberg-n5713149943",
+    "name": "Visby Gustavsberg",
+    "category": "mat",
+    "lat": 57.6617,
+    "lng": 18.32138,
+    "description": "Restaurang · International"
+  },
+  {
+    "id": "visby-take-away-w462905907",
+    "name": "Visby Take Away",
+    "category": "mat",
+    "lat": 57.61653,
+    "lng": 18.2855,
+    "description": "Snabbmat"
+  },
+  {
+    "id": "vardshuset-lindgarden-n12877320264",
+    "name": "Värdshuset Lindgården",
+    "category": "mat",
+    "lat": 57.64096,
+    "lng": 18.29317,
+    "description": "Restaurang"
+  },
+  {
+    "id": "vaffelmagasinet-n5001701844",
+    "name": "Våffelmagasinet",
+    "category": "mat",
+    "lat": 57.32352,
+    "lng": 18.71131,
+    "description": "Restaurang"
+  },
+  {
+    "id": "var-fru-visby-n7978464485",
+    "name": "Vår Fru Visby",
+    "category": "mat",
+    "lat": 57.63884,
+    "lng": 18.29365,
+    "description": "Restaurang · Regional"
+  },
+  {
+    "id": "wallers-n315981584",
+    "name": "Wallers",
+    "category": "mat",
+    "lat": 57.63889,
+    "lng": 18.29588,
+    "description": "Restaurang"
+  },
+  {
+    "id": "wallins-n1835421261",
+    "name": "Wallins",
+    "category": "mat",
+    "lat": 57.43183,
+    "lng": 18.84398,
+    "description": "Café"
+  },
+  {
+    "id": "wisby-hof-n5029421553",
+    "name": "Wisby Hof",
+    "category": "mat",
+    "lat": 57.63536,
+    "lng": 18.29288,
+    "description": "Bar"
+  },
+  {
+    "id": "g-a-masters-n318001602",
+    "name": "g:a masters",
+    "category": "mat",
+    "lat": 57.64003,
+    "lng": 18.29657,
+    "description": "Restaurang"
+  },
+  {
+    "id": "joda-bar-kok-n272283508",
+    "name": "joda bar & kök",
+    "category": "mat",
+    "lat": 57.63837,
+    "lng": 18.28875,
+    "description": "Restaurang"
+  },
+  {
+    "id": "aminne-n1842664290",
+    "name": "Åminne",
+    "category": "mat",
+    "lat": 57.6148,
+    "lng": 18.76104,
+    "description": "Restaurang · Pizza"
+  },
+  {
+    "id": "osterdahls-brygga-n13231526901",
+    "name": "Österdahls Brygga",
+    "category": "mat",
+    "lat": 57.63856,
+    "lng": 18.28644,
+    "description": "Restaurang"
+  },
+  {
+    "id": "akebacks-kyrka-w1191878794",
+    "name": "Akebäcks kyrka",
+    "category": "sevardhet",
+    "lat": 57.54743,
+    "lng": 18.39241,
+    "description": "Kyrka"
+  },
+  {
+    "id": "ala-kyrka-w1191878789",
+    "name": "Ala kyrka",
+    "category": "sevardhet",
+    "lat": 57.41903,
+    "lng": 18.63517,
+    "description": "Kyrka"
+  },
+  {
+    "id": "albatrossmonumentet-n7292507079",
+    "name": "Albatrossmonumentet",
+    "category": "sevardhet",
+    "lat": 57.42178,
+    "lng": 18.859,
+    "description": "Minnesmärke"
+  },
+  {
+    "id": "alskogs-kyrka-w1191878786",
+    "name": "Alskogs kyrka",
+    "category": "sevardhet",
+    "lat": 57.33148,
+    "lng": 18.62735,
+    "description": "Kyrka"
+  },
+  {
+    "id": "alva-kyrka-w1191887713",
+    "name": "Alva kyrka",
+    "category": "sevardhet",
+    "lat": 57.20751,
+    "lng": 18.36139,
+    "description": "Kyrka"
+  },
+  {
+    "id": "alyhrs-skeppssattning-w986649175",
+    "name": "Alyhrs skeppssättning",
+    "category": "sevardhet",
+    "lat": 57.50736,
+    "lng": 18.12577,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "anga-31-2-n6373614409",
+    "name": "Anga 31:2",
+    "category": "sevardhet",
+    "lat": 57.47775,
+    "lng": 18.70617,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "anga-kyrka-w379456758",
+    "name": "Anga kyrka",
+    "category": "sevardhet",
+    "lat": 57.4804,
+    "lng": 18.7064,
+    "description": "Kyrka"
+  },
+  {
+    "id": "ardre-domarring-n6373523158",
+    "name": "Ardre Domarring",
+    "category": "sevardhet",
+    "lat": 57.36023,
+    "lng": 18.73352,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "ardre-bildsten-viii-n6373542757",
+    "name": "Ardre bildsten VIII",
+    "category": "sevardhet",
+    "lat": 57.37743,
+    "lng": 18.69726,
+    "description": "Konstverk"
+  },
+  {
+    "id": "atlingbo-kyrka-w974049197",
+    "name": "Atlingbo kyrka",
+    "category": "sevardhet",
+    "lat": 57.47995,
+    "lng": 18.39079,
+    "description": "Kyrka"
+  },
+  {
+    "id": "b-m-gard-w559809576",
+    "name": "B&M Gård",
+    "category": "sevardhet",
+    "lat": 57.79624,
+    "lng": 18.49825,
+    "description": "Djurpark"
+  },
+  {
+    "id": "bm-gard-n6659101319",
+    "name": "BM Gård",
+    "category": "sevardhet",
+    "lat": 57.79503,
+    "lng": 18.4975,
+    "description": "Djurpark"
+  },
+  {
+    "id": "bandelains-tappu-n1850647610",
+    "name": "Bandeläins täppu",
+    "category": "sevardhet",
+    "lat": 57.29322,
+    "lng": 18.63049,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "bara-odekyrka-w548548167",
+    "name": "Bara Ödekyrka",
+    "category": "sevardhet",
+    "lat": 57.58467,
+    "lng": 18.61182,
+    "description": "Kyrka"
+  },
+  {
+    "id": "barlingbo-kyrka-w531663522",
+    "name": "Barlingbo kyrka",
+    "category": "sevardhet",
+    "lat": 57.56449,
+    "lng": 18.46313,
+    "description": "Kyrka"
+  },
+  {
+    "id": "barshalder-cairn-n6374238908",
+    "name": "Barshalder Cairn",
+    "category": "sevardhet",
+    "lat": 57.10232,
+    "lng": 18.32116,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "barshalder-skeppssattning-n6374174464",
+    "name": "Barshalder Skeppssättning",
+    "category": "sevardhet",
+    "lat": 57.1022,
+    "lng": 18.32105,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "bergmancenter-w494554006",
+    "name": "Bergmancenter",
+    "category": "sevardhet",
+    "lat": 57.91911,
+    "lng": 19.1389,
+    "description": "Museum"
+  },
+  {
+    "id": "bildstenen-vid-stenbro-n6374182224",
+    "name": "Bildstenen vid Stenbro",
+    "category": "sevardhet",
+    "lat": 57.23227,
+    "lng": 18.21134,
+    "description": "Monument"
+  },
+  {
+    "id": "bilmuseum-gotland-w463465364",
+    "name": "Bilmuseum Gotland",
+    "category": "sevardhet",
+    "lat": 57.60761,
+    "lng": 18.25155,
+    "description": "Museum"
+  },
+  {
+    "id": "bjars-hog-n6373633487",
+    "name": "Bjärs Hög",
+    "category": "sevardhet",
+    "lat": 57.51785,
+    "lng": 18.70427,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "bjorke-kyrka-w1191878791",
+    "name": "Björke kyrka",
+    "category": "sevardhet",
+    "lat": 57.50745,
+    "lng": 18.42131,
+    "description": "Kyrka"
+  },
+  {
+    "id": "blase-museum-stentaget-w708582509",
+    "name": "Bläse Museum Stentåget",
+    "category": "sevardhet",
+    "lat": 57.89763,
+    "lng": 18.84814,
+    "description": "Historisk plats"
+  },
+  {
+    "id": "blase-museum-stentaget-w1087458417",
+    "name": "Bläse Museum Stentåget",
+    "category": "sevardhet",
+    "lat": 57.90042,
+    "lng": 18.85433,
+    "description": "Historisk plats"
+  },
+  {
+    "id": "blase-museum-stentaget-w1108370699",
+    "name": "Bläse Museum Stentåget",
+    "category": "sevardhet",
+    "lat": 57.90257,
+    "lng": 18.85746,
+    "description": "Historisk plats"
+  },
+  {
+    "id": "blase-museum-stentaget-w1108370700",
+    "name": "Bläse Museum Stentåget",
+    "category": "sevardhet",
+    "lat": 57.9016,
+    "lng": 18.85689,
+    "description": "Historisk plats"
+  },
+  {
+    "id": "blase-kalkbruksmuseum-w1068987684",
+    "name": "Bläse kalkbruksmuseum",
+    "category": "sevardhet",
+    "lat": 57.89429,
+    "lng": 18.83992,
+    "description": "Museum"
+  },
+  {
+    "id": "boge-33-1-n6373747906",
+    "name": "Boge 33:1",
+    "category": "sevardhet",
+    "lat": 57.62844,
+    "lng": 18.73453,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "boge-4-1-n6373747978",
+    "name": "Boge 4:1",
+    "category": "sevardhet",
+    "lat": 57.70244,
+    "lng": 18.75796,
+    "description": "Vägkors"
+  },
+  {
+    "id": "boge-kyrka-w379069464",
+    "name": "Boge kyrka",
+    "category": "sevardhet",
+    "lat": 57.68704,
+    "lng": 18.76286,
+    "description": "Kyrka"
+  },
+  {
+    "id": "bogeklintens-raukar-n1844666556",
+    "name": "Bogeklintens raukar",
+    "category": "sevardhet",
+    "lat": 57.67153,
+    "lng": 18.77368,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "bord-och-bank-n1489906374",
+    "name": "Bord och bänk",
+    "category": "sevardhet",
+    "lat": 57.29088,
+    "lng": 18.10647,
+    "description": "Rastplats"
+  },
+  {
+    "id": "bord-och-bank-n1489906375",
+    "name": "Bord och bänk",
+    "category": "sevardhet",
+    "lat": 57.29209,
+    "lng": 18.1097,
+    "description": "Rastplats"
+  },
+  {
+    "id": "bord-och-bank-n1489906376",
+    "name": "Bord och bänk",
+    "category": "sevardhet",
+    "lat": 57.29395,
+    "lng": 18.12465,
+    "description": "Rastplats"
+  },
+  {
+    "id": "bottarve-museigard-n6620946755",
+    "name": "Bottarve Museigård",
+    "category": "sevardhet",
+    "lat": 56.99214,
+    "lng": 18.24659,
+    "description": "Museum"
+  },
+  {
+    "id": "braidfloar-gravfalt-w680732876",
+    "name": "Braidfloar Gravfält",
+    "category": "sevardhet",
+    "lat": 57.26812,
+    "lng": 18.23862,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "bro-stajnkalm-w706199757",
+    "name": "Bro Stajnkalm",
+    "category": "sevardhet",
+    "lat": 57.66217,
+    "lng": 18.44379,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "bro-kyrka-w546818438",
+    "name": "Bro kyrka",
+    "category": "sevardhet",
+    "lat": 57.67005,
+    "lng": 18.47484,
+    "description": "Kyrka"
+  },
+  {
+    "id": "bulverket-w378884344",
+    "name": "Bulverket",
+    "category": "sevardhet",
+    "lat": 57.72775,
+    "lng": 18.62849,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "bunge-aviation-museum-n1782364606",
+    "name": "Bunge Aviation Museum",
+    "category": "sevardhet",
+    "lat": 57.85221,
+    "lng": 19.03176,
+    "description": "Museum"
+  },
+  {
+    "id": "bunge-kyrka-w432591635",
+    "name": "Bunge kyrka",
+    "category": "sevardhet",
+    "lat": 57.8537,
+    "lng": 19.02359,
+    "description": "Kyrka"
+  },
+  {
+    "id": "bungemuseet-n687936955",
+    "name": "Bungemuseet",
+    "category": "sevardhet",
+    "lat": 57.85389,
+    "lng": 19.02864,
+    "description": "Museum"
+  },
+  {
+    "id": "burs-65-1-ringcross-n6373566315",
+    "name": "Burs 65:1 Ringcross",
+    "category": "sevardhet",
+    "lat": 57.24312,
+    "lng": 18.51518,
+    "description": "Vägkors"
+  },
+  {
+    "id": "burs-kyrka-w1191887709",
+    "name": "Burs kyrka",
+    "category": "sevardhet",
+    "lat": 57.24566,
+    "lng": 18.50873,
+    "description": "Kyrka"
+  },
+  {
+    "id": "butravjs-skeppssattningar-n6373661542",
+    "name": "Butravjs Skeppssättningar",
+    "category": "sevardhet",
+    "lat": 57.52987,
+    "lng": 18.66903,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "buttle-266-n6373697292",
+    "name": "Buttle 266",
+    "category": "sevardhet",
+    "lat": 57.39543,
+    "lng": 18.50218,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "buttle-kyrka-w1191878787",
+    "name": "Buttle kyrka",
+    "category": "sevardhet",
+    "lat": 57.40271,
+    "lng": 18.52991,
+    "description": "Kyrka"
+  },
+  {
+    "id": "bals-kyrka-w431963645",
+    "name": "Bäls kyrka",
+    "category": "sevardhet",
+    "lat": 57.64476,
+    "lng": 18.63293,
+    "description": "Kyrka"
+  },
+  {
+    "id": "bandesborg-w530662944",
+    "name": "Bändesborg",
+    "category": "sevardhet",
+    "lat": 57.32492,
+    "lng": 18.46987,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "baken-n9730122846",
+    "name": "Båken",
+    "category": "sevardhet",
+    "lat": 57.64359,
+    "lng": 18.29237,
+    "description": "Konstverk"
+  },
+  {
+    "id": "batsmannshus-n1433648258",
+    "name": "Båtsmannshus",
+    "category": "sevardhet",
+    "lat": 57.3431,
+    "lng": 18.23525,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "christopher-polhem-n2320588646",
+    "name": "Christopher Polhem",
+    "category": "sevardhet",
+    "lat": 57.64192,
+    "lng": 18.29532,
+    "description": "Monument"
+  },
+  {
+    "id": "dalhem-45-1-n6373677147",
+    "name": "Dalhem 45:1",
+    "category": "sevardhet",
+    "lat": 57.55324,
+    "lng": 18.53575,
+    "description": "Vägkors"
+  },
+  {
+    "id": "dalhem-46-1-n6373677148",
+    "name": "Dalhem 46:1",
+    "category": "sevardhet",
+    "lat": 57.55257,
+    "lng": 18.532,
+    "description": "Vägkors"
+  },
+  {
+    "id": "dalhems-kyrka-w230513395",
+    "name": "Dalhems kyrka",
+    "category": "sevardhet",
+    "lat": 57.5524,
+    "lng": 18.53413,
+    "description": "Kyrka"
+  },
+  {
+    "id": "dalmansporten-n6641861710",
+    "name": "Dalmansporten",
+    "category": "sevardhet",
+    "lat": 57.64162,
+    "lng": 18.30055,
+    "description": "Stadsport"
+  },
+  {
+    "id": "dalmanstornet-w686918930",
+    "name": "Dalmanstornet",
+    "category": "sevardhet",
+    "lat": 57.64163,
+    "lng": 18.30052,
+    "description": "Ruin"
+  },
+  {
+    "id": "digarojr-cist-n6373556120",
+    "name": "Digarojr Cist",
+    "category": "sevardhet",
+    "lat": 57.30928,
+    "lng": 18.63762,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "digarojr-gravfalt-n6373556121",
+    "name": "Digarojr Gravfält",
+    "category": "sevardhet",
+    "lat": 57.3124,
+    "lng": 18.63874,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "digarojr-rose-n6373556119",
+    "name": "Digarojr Röse",
+    "category": "sevardhet",
+    "lat": 57.3094,
+    "lng": 18.63744,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "digarojr-skeppssattning-n6373556118",
+    "name": "Digarojr Skeppssättning",
+    "category": "sevardhet",
+    "lat": 57.30802,
+    "lng": 18.63765,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "djupvik-skeppssattning-n6374203622",
+    "name": "Djupvik Skeppssättning",
+    "category": "sevardhet",
+    "lat": 57.30664,
+    "lng": 18.15116,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "djupviks-fiskelage-n1489980143",
+    "name": "Djupviks fiskeläge",
+    "category": "sevardhet",
+    "lat": 57.30789,
+    "lng": 18.14971,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "domarlunden-n6373753073",
+    "name": "Domarlunden",
+    "category": "sevardhet",
+    "lat": 57.78393,
+    "lng": 18.81746,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "donnersporten-n1798336943",
+    "name": "Donnersporten",
+    "category": "sevardhet",
+    "lat": 57.63921,
+    "lng": 18.29128,
+    "description": "Stadsport"
+  },
+  {
+    "id": "drakstenen-n5322112830",
+    "name": "Drakstenen",
+    "category": "sevardhet",
+    "lat": 57.1561,
+    "lng": 18.22128,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "drottens-kyrkoruin-w61048801",
+    "name": "Drottens kyrkoruin",
+    "category": "sevardhet",
+    "lat": 57.64173,
+    "lng": 18.29536,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "ekbackens-dansbana-n1853522075",
+    "name": "Ekbackens dansbana",
+    "category": "sevardhet",
+    "lat": 57.3125,
+    "lng": 18.58651,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "eke-kyrka-w1191887714",
+    "name": "Eke kyrka",
+    "category": "sevardhet",
+    "lat": 57.16803,
+    "lng": 18.3791,
+    "description": "Kyrka"
+  },
+  {
+    "id": "ekeby-kyrka-w205110805",
+    "name": "Ekeby kyrka",
+    "category": "sevardhet",
+    "lat": 57.59513,
+    "lng": 18.51465,
+    "description": "Kyrka"
+  },
+  {
+    "id": "eksta-kyrka-w1191887706",
+    "name": "Eksta kyrka",
+    "category": "sevardhet",
+    "lat": 57.28655,
+    "lng": 18.2064,
+    "description": "Kyrka"
+  },
+  {
+    "id": "elinghems-odekyrka-w1190178503",
+    "name": "Elinghems ödekyrka",
+    "category": "sevardhet",
+    "lat": 57.81188,
+    "lng": 18.61932,
+    "description": "Ruin"
+  },
+  {
+    "id": "endre-17-1-n6373732851",
+    "name": "Endre 17:1",
+    "category": "sevardhet",
+    "lat": 57.61298,
+    "lng": 18.39411,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "endre-35-1-n6373736775",
+    "name": "Endre 35:1",
+    "category": "sevardhet",
+    "lat": 57.62225,
+    "lng": 18.38692,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "endre-kyrka-w549170894",
+    "name": "Endre kyrka",
+    "category": "sevardhet",
+    "lat": 57.61026,
+    "lng": 18.46544,
+    "description": "Kyrka"
+  },
+  {
+    "id": "engelska-kyrkogarden-w1191890665",
+    "name": "Engelska kyrkogården",
+    "category": "sevardhet",
+    "lat": 57.85085,
+    "lng": 19.13019,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "eskelhems-kyrka-w1191878782",
+    "name": "Eskelhems kyrka",
+    "category": "sevardhet",
+    "lat": 57.48965,
+    "lng": 18.20997,
+    "description": "Kyrka"
+  },
+  {
+    "id": "etelhem-kyrka-w1191878784",
+    "name": "Etelhem kyrka",
+    "category": "sevardhet",
+    "lat": 57.33722,
+    "lng": 18.49601,
+    "description": "Kyrka"
+  },
+  {
+    "id": "fardhems-kyrka-w1191887707",
+    "name": "Fardhems kyrka",
+    "category": "sevardhet",
+    "lat": 57.26397,
+    "lng": 18.34154,
+    "description": "Kyrka"
+  },
+  {
+    "id": "fenomenalen-n6591138285",
+    "name": "Fenomenalen",
+    "category": "sevardhet",
+    "lat": 57.63689,
+    "lng": 18.28705,
+    "description": "Museum"
+  },
+  {
+    "id": "fide-kyrka-w1191887716",
+    "name": "Fide kyrka",
+    "category": "sevardhet",
+    "lat": 57.07375,
+    "lng": 18.31633,
+    "description": "Kyrka"
+  },
+  {
+    "id": "filming-location-villa-villekulla-n11133784285",
+    "name": "Filming location: Villa Villekulla",
+    "category": "sevardhet",
+    "lat": 57.61745,
+    "lng": 18.27623,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "fiskarporten-n6634264864",
+    "name": "Fiskarporten",
+    "category": "sevardhet",
+    "lat": 57.64211,
+    "lng": 18.29134,
+    "description": "Stadsport"
+  },
+  {
+    "id": "fjale-gard-i-ala-raa-nummer-ala-98-1-n2167598744",
+    "name": "Fjäle gård i Ala, RAÄ-nummer Ala 98:1",
+    "category": "sevardhet",
+    "lat": 57.39043,
+    "lng": 18.61964,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "fleringe-kyrka-w437167933",
+    "name": "Fleringe kyrka",
+    "category": "sevardhet",
+    "lat": 57.86965,
+    "lng": 18.87697,
+    "description": "Kyrka"
+  },
+  {
+    "id": "flyktingarna-fran-estland-lettland-och-litauen-n8900440073",
+    "name": "Flyktingarna Från Estland, Lettland och Litauen",
+    "category": "sevardhet",
+    "lat": 57.7058,
+    "lng": 18.80988,
+    "description": "Minnesmärke"
+  },
+  {
+    "id": "fole-kyrka-w530619108",
+    "name": "Fole kyrka",
+    "category": "sevardhet",
+    "lat": 57.65056,
+    "lng": 18.54497,
+    "description": "Kyrka"
+  },
+  {
+    "id": "follingbo-kyrka-w468503373",
+    "name": "Follingbo kyrka",
+    "category": "sevardhet",
+    "lat": 57.58231,
+    "lng": 18.38336,
+    "description": "Kyrka"
+  },
+  {
+    "id": "fornborg-w530645625",
+    "name": "Fornborg",
+    "category": "sevardhet",
+    "lat": 57.82149,
+    "lng": 18.89856,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "fornborgen-kaupungs-slott-w530662935",
+    "name": "Fornborgen Kaupungs slott",
+    "category": "sevardhet",
+    "lat": 57.36051,
+    "lng": 18.71177,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "fornborgen-i-boge-n1430279427",
+    "name": "Fornborgen i Boge",
+    "category": "sevardhet",
+    "lat": 57.62907,
+    "lng": 18.73864,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "fornsalen-w455294754",
+    "name": "Fornsalen",
+    "category": "sevardhet",
+    "lat": 57.63973,
+    "lng": 18.29254,
+    "description": "Museum"
+  },
+  {
+    "id": "frojels-kyrka-w1117505199",
+    "name": "Fröjels kyrka",
+    "category": "sevardhet",
+    "lat": 57.3356,
+    "lng": 18.1899,
+    "description": "Kyrka"
+  },
+  {
+    "id": "fyrutstallning-w481313997",
+    "name": "Fyrutställning",
+    "category": "sevardhet",
+    "lat": 56.92159,
+    "lng": 18.15093,
+    "description": "Museum"
+  },
+  {
+    "id": "faro-107-1-n4852505594",
+    "name": "Fårö 107:1",
+    "category": "sevardhet",
+    "lat": 57.85982,
+    "lng": 19.12324,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-11-1-n4888688781",
+    "name": "Fårö 11:1",
+    "category": "sevardhet",
+    "lat": 57.9661,
+    "lng": 19.1345,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-11-2-n4888688780",
+    "name": "Fårö 11:2",
+    "category": "sevardhet",
+    "lat": 57.96637,
+    "lng": 19.13496,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-12-1-n4888688751",
+    "name": "Fårö 12:1",
+    "category": "sevardhet",
+    "lat": 57.96486,
+    "lng": 19.13118,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-142-1-n4852505615",
+    "name": "Fårö 142:1",
+    "category": "sevardhet",
+    "lat": 57.85566,
+    "lng": 19.11004,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-146-1-n4852505608",
+    "name": "Fårö 146:1",
+    "category": "sevardhet",
+    "lat": 57.85838,
+    "lng": 19.11373,
+    "description": "Ruin"
+  },
+  {
+    "id": "faro-147-1-n4852505605",
+    "name": "Fårö 147:1",
+    "category": "sevardhet",
+    "lat": 57.85919,
+    "lng": 19.11154,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-147-1-w493326195",
+    "name": "Fårö 147:1",
+    "category": "sevardhet",
+    "lat": 57.86087,
+    "lng": 19.12035,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-147-2-n4852505606",
+    "name": "Fårö 147:2",
+    "category": "sevardhet",
+    "lat": 57.85873,
+    "lng": 19.11192,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-14-1-n4888688750",
+    "name": "Fårö 14:1",
+    "category": "sevardhet",
+    "lat": 57.96016,
+    "lng": 19.11328,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-14-2-n4888688749",
+    "name": "Fårö 14:2",
+    "category": "sevardhet",
+    "lat": 57.96024,
+    "lng": 19.11259,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-14-3-n4888688748",
+    "name": "Fårö 14:3",
+    "category": "sevardhet",
+    "lat": 57.96028,
+    "lng": 19.1124,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-15-1-n4888688747",
+    "name": "Fårö 15:1",
+    "category": "sevardhet",
+    "lat": 57.95906,
+    "lng": 19.12443,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-1-1-n4888688803",
+    "name": "Fårö 1:1",
+    "category": "sevardhet",
+    "lat": 57.99809,
+    "lng": 19.24005,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-252-1-n4852505617",
+    "name": "Fårö 252:1",
+    "category": "sevardhet",
+    "lat": 57.85183,
+    "lng": 19.11228,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-256-1-w493326193",
+    "name": "Fårö 256:1",
+    "category": "sevardhet",
+    "lat": 57.8596,
+    "lng": 19.1253,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-259-1-n4852505619",
+    "name": "Fårö 259:1",
+    "category": "sevardhet",
+    "lat": 57.84908,
+    "lng": 19.12941,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-259-1-n4852505620",
+    "name": "Fårö 259:1",
+    "category": "sevardhet",
+    "lat": 57.84916,
+    "lng": 19.12942,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-2-1-n4888688802",
+    "name": "Fårö 2:1",
+    "category": "sevardhet",
+    "lat": 57.99827,
+    "lng": 19.18919,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-2-2-n4888688801",
+    "name": "Fårö 2:2",
+    "category": "sevardhet",
+    "lat": 57.99824,
+    "lng": 19.18931,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-2-3-n4888688800",
+    "name": "Fårö 2:3",
+    "category": "sevardhet",
+    "lat": 57.99818,
+    "lng": 19.18944,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-2-4-n4888688772",
+    "name": "Fårö 2:4",
+    "category": "sevardhet",
+    "lat": 57.99811,
+    "lng": 19.18956,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-380-1-n4852224087",
+    "name": "Fårö 380:1",
+    "category": "sevardhet",
+    "lat": 57.84867,
+    "lng": 19.12272,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-3-1-w1124781907",
+    "name": "Fårö 3:1",
+    "category": "sevardhet",
+    "lat": 57.99663,
+    "lng": 19.18057,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-4-1-n4888688770",
+    "name": "Fårö 4:1",
+    "category": "sevardhet",
+    "lat": 57.99408,
+    "lng": 19.21532,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-77-1-n4852505604",
+    "name": "Fårö 77:1",
+    "category": "sevardhet",
+    "lat": 57.85999,
+    "lng": 19.11274,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-77-2-n4852505603",
+    "name": "Fårö 77:2",
+    "category": "sevardhet",
+    "lat": 57.85993,
+    "lng": 19.11252,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-78-1-n4852505609",
+    "name": "Fårö 78:1",
+    "category": "sevardhet",
+    "lat": 57.85814,
+    "lng": 19.11228,
+    "description": "Ruin"
+  },
+  {
+    "id": "faro-78-2-n4852505610",
+    "name": "Fårö 78:2",
+    "category": "sevardhet",
+    "lat": 57.85792,
+    "lng": 19.11282,
+    "description": "Ruin"
+  },
+  {
+    "id": "faro-78-3-n4852505612",
+    "name": "Fårö 78:3",
+    "category": "sevardhet",
+    "lat": 57.85769,
+    "lng": 19.11319,
+    "description": "Ruin"
+  },
+  {
+    "id": "faro-78-4-n4852505611",
+    "name": "Fårö 78:4",
+    "category": "sevardhet",
+    "lat": 57.8578,
+    "lng": 19.11339,
+    "description": "Ruin"
+  },
+  {
+    "id": "faro-78-5-n4852505607",
+    "name": "Fårö 78:5",
+    "category": "sevardhet",
+    "lat": 57.85837,
+    "lng": 19.1124,
+    "description": "Ruin"
+  },
+  {
+    "id": "faro-79-1-n4852505613",
+    "name": "Fårö 79:1",
+    "category": "sevardhet",
+    "lat": 57.85777,
+    "lng": 19.11035,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-79-2-n4852505614",
+    "name": "Fårö 79:2",
+    "category": "sevardhet",
+    "lat": 57.85756,
+    "lng": 19.11043,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-80-1-n4852505616",
+    "name": "Fårö 80:1",
+    "category": "sevardhet",
+    "lat": 57.85457,
+    "lng": 19.11314,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-96-1-n4852505602",
+    "name": "Fårö 96:1",
+    "category": "sevardhet",
+    "lat": 57.86181,
+    "lng": 19.1119,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-96-2-n4852505601",
+    "name": "Fårö 96:2",
+    "category": "sevardhet",
+    "lat": 57.86161,
+    "lng": 19.11228,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-9-1-n4888688769",
+    "name": "Fårö 9:1",
+    "category": "sevardhet",
+    "lat": 57.96976,
+    "lng": 19.19521,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "faro-kyrka-w344862510",
+    "name": "Fårö kyrka",
+    "category": "sevardhet",
+    "lat": 57.9158,
+    "lng": 19.13336,
+    "description": "Kyrka"
+  },
+  {
+    "id": "faro-museum-w494554005",
+    "name": "Fårö museum",
+    "category": "sevardhet",
+    "lat": 57.91891,
+    "lng": 19.13845,
+    "description": "Museum"
+  },
+  {
+    "id": "farosunds-fastning-batteri-ii-n1844650303",
+    "name": "Fårösunds fästning, Batteri II",
+    "category": "sevardhet",
+    "lat": 57.90653,
+    "lng": 19.01889,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "farosunds-sodra-batteri-w708193044",
+    "name": "Fårösunds södra batteri",
+    "category": "sevardhet",
+    "lat": 57.84068,
+    "lng": 19.08706,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "galgberget-n52586897",
+    "name": "Galgberget",
+    "category": "sevardhet",
+    "lat": 57.65051,
+    "lng": 18.30722,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "galgen-n6641175640",
+    "name": "Galgen",
+    "category": "sevardhet",
+    "lat": 57.65041,
+    "lng": 18.30745,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "gamla-lagerplatsen-n3173424684",
+    "name": "Gamla lägerplatsen",
+    "category": "sevardhet",
+    "lat": 57.8521,
+    "lng": 18.98147,
+    "description": "Historisk plats"
+  },
+  {
+    "id": "gamle-hamn-n448281278",
+    "name": "Gamle Hamn",
+    "category": "sevardhet",
+    "lat": 57.943,
+    "lng": 19.09087,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "gammelgarns-kyrka-w855572079",
+    "name": "Gammelgarns kyrka",
+    "category": "sevardhet",
+    "lat": 57.40457,
+    "lng": 18.80445,
+    "description": "Kyrka"
+  },
+  {
+    "id": "gannarve-w1117505215",
+    "name": "Gannarve",
+    "category": "sevardhet",
+    "lat": 57.34786,
+    "lng": 18.19224,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "ganns-odekyrka-w1190038227",
+    "name": "Ganns ödekyrka",
+    "category": "sevardhet",
+    "lat": 57.79623,
+    "lng": 18.75173,
+    "description": "Kyrka"
+  },
+  {
+    "id": "ganthems-kyrka-w612052388",
+    "name": "Ganthems kyrka",
+    "category": "sevardhet",
+    "lat": 57.51455,
+    "lng": 18.58179,
+    "description": "Kyrka"
+  },
+  {
+    "id": "garda-kyrka-w1191878785",
+    "name": "Garda kyrka",
+    "category": "sevardhet",
+    "lat": 57.31716,
+    "lng": 18.58236,
+    "description": "Kyrka"
+  },
+  {
+    "id": "gerums-kyrka-w1191887704",
+    "name": "Gerums kyrka",
+    "category": "sevardhet",
+    "lat": 57.29452,
+    "lng": 18.32959,
+    "description": "Kyrka"
+  },
+  {
+    "id": "gervide-sojvide-w680680413",
+    "name": "Gervide, Sojvide",
+    "category": "sevardhet",
+    "lat": 57.47651,
+    "lng": 18.50134,
+    "description": "Historisk byggnad"
+  },
+  {
+    "id": "gnisvard-dolmen-n6373725205",
+    "name": "Gnisvärd dolmen",
+    "category": "sevardhet",
+    "lat": 57.50862,
+    "lng": 18.14068,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "gnisvard-skeppssattning-1-n2758370179",
+    "name": "Gnisvärd skeppssättning #1",
+    "category": "sevardhet",
+    "lat": 57.50828,
+    "lng": 18.14096,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "gnisvard-skeppssattning-2-n6373725189",
+    "name": "Gnisvärd skeppssättning #2",
+    "category": "sevardhet",
+    "lat": 57.50749,
+    "lng": 18.14128,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "gnisvard-skeppssattning-3-n6373725190",
+    "name": "Gnisvärd skeppssättning #3",
+    "category": "sevardhet",
+    "lat": 57.50646,
+    "lng": 18.14082,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "gnisvards-strand-n11942430070",
+    "name": "Gnisvärds strand",
+    "category": "sevardhet",
+    "lat": 57.49958,
+    "lng": 18.11599,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "gothem-kyrka-w437599415",
+    "name": "Gothem kyrka",
+    "category": "sevardhet",
+    "lat": 57.57543,
+    "lng": 18.73504,
+    "description": "Kyrka"
+  },
+  {
+    "id": "gotlands-djurpark-n6588401485",
+    "name": "Gotlands Djurpark",
+    "category": "sevardhet",
+    "lat": 57.51649,
+    "lng": 18.21747,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "gotlands-fiskerimuseum-n4954644105",
+    "name": "Gotlands Fiskerimuseum",
+    "category": "sevardhet",
+    "lat": 57.40731,
+    "lng": 18.15841,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "gotlands-lantbruksmuseum-w528255778",
+    "name": "Gotlands Lantbruksmuseum",
+    "category": "sevardhet",
+    "lat": 57.16073,
+    "lng": 18.33072,
+    "description": "Museum"
+  },
+  {
+    "id": "gotlands-museum-n8690246817",
+    "name": "Gotlands Museum",
+    "category": "sevardhet",
+    "lat": 57.63964,
+    "lng": 18.29241,
+    "description": "Museum"
+  },
+  {
+    "id": "gotlands-forsvarsmuseum-w443245008",
+    "name": "Gotlands försvarsmuseum",
+    "category": "sevardhet",
+    "lat": 57.73477,
+    "lng": 18.61301,
+    "description": "Museum"
+  },
+  {
+    "id": "gotlands-konstmuseum-w396133930",
+    "name": "Gotlands konstmuseum",
+    "category": "sevardhet",
+    "lat": 57.63942,
+    "lng": 18.29363,
+    "description": "Museum"
+  },
+  {
+    "id": "grane-skeppssattning-n6373695001",
+    "name": "Gräne Skeppssättning",
+    "category": "sevardhet",
+    "lat": 57.44246,
+    "lng": 18.34036,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "grotlingbo-kyrka-w1191887715",
+    "name": "Grötlingbo kyrka",
+    "category": "sevardhet",
+    "lat": 57.13353,
+    "lng": 18.34666,
+    "description": "Kyrka"
+  },
+  {
+    "id": "guldrupe-kyrka-w1161278315",
+    "name": "Guldrupe kyrka",
+    "category": "sevardhet",
+    "lat": 57.43029,
+    "lng": 18.42662,
+    "description": "Kyrka"
+  },
+  {
+    "id": "gute-vingard-n12012015669",
+    "name": "Gute Vingård",
+    "category": "sevardhet",
+    "lat": 57.18652,
+    "lng": 18.24805,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "galrum-gravfalt-n937714637",
+    "name": "Gålrum Gravfält",
+    "category": "sevardhet",
+    "lat": 57.33026,
+    "lng": 18.6569,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "hablingbo-kyrka-w438460843",
+    "name": "Hablingbo kyrka",
+    "category": "sevardhet",
+    "lat": 57.18729,
+    "lng": 18.26279,
+    "description": "Kyrka"
+  },
+  {
+    "id": "hagrojr-w1124781510",
+    "name": "Hagrojr",
+    "category": "sevardhet",
+    "lat": 57.18868,
+    "lng": 18.49903,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "halla-kyrka-w234712398",
+    "name": "Halla kyrka",
+    "category": "sevardhet",
+    "lat": 57.5109,
+    "lng": 18.49712,
+    "description": "Kyrka"
+  },
+  {
+    "id": "hallbrosslott-w530649835",
+    "name": "Hallbrosslott",
+    "category": "sevardhet",
+    "lat": 57.581,
+    "lng": 18.19198,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "halls-kyrka-w1191859372",
+    "name": "Halls kyrka",
+    "category": "sevardhet",
+    "lat": 57.89208,
+    "lng": 18.71588,
+    "description": "Kyrka"
+  },
+  {
+    "id": "hallshuks-kapell-w533013733",
+    "name": "Hallshuks kapell",
+    "category": "sevardhet",
+    "lat": 57.92504,
+    "lng": 18.74236,
+    "description": "Kyrka"
+  },
+  {
+    "id": "hamra-kyrka-w513951983",
+    "name": "Hamra kyrka",
+    "category": "sevardhet",
+    "lat": 56.97611,
+    "lng": 18.3134,
+    "description": "Kyrka"
+  },
+  {
+    "id": "hangvars-kyrka-w465480015",
+    "name": "Hangvars kyrka",
+    "category": "sevardhet",
+    "lat": 57.83933,
+    "lng": 18.68858,
+    "description": "Kyrka"
+  },
+  {
+    "id": "havdhem-skeppssattningar-n6374182223",
+    "name": "Havdhem Skeppssättningar",
+    "category": "sevardhet",
+    "lat": 57.18069,
+    "lng": 18.34209,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "havdhem-kyrka-w528255799",
+    "name": "Havdhem kyrka",
+    "category": "sevardhet",
+    "lat": 57.16258,
+    "lng": 18.3233,
+    "description": "Kyrka"
+  },
+  {
+    "id": "havors-fornborg-n1853513909",
+    "name": "Havors fornborg",
+    "category": "sevardhet",
+    "lat": 57.21586,
+    "lng": 18.31948,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "hednakyrkogarden-fornborg-w533037103",
+    "name": "Hednakyrkogården - Fornborg",
+    "category": "sevardhet",
+    "lat": 57.886,
+    "lng": 18.72651,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "hejde-kyrka-w549170449",
+    "name": "Hejde kyrka",
+    "category": "sevardhet",
+    "lat": 57.41276,
+    "lng": 18.3461,
+    "description": "Kyrka"
+  },
+  {
+    "id": "hejdeby-kyrka-w528236268",
+    "name": "Hejdeby kyrka",
+    "category": "sevardhet",
+    "lat": 57.63045,
+    "lng": 18.44279,
+    "description": "Kyrka"
+  },
+  {
+    "id": "hejnums-kyrka-w1191859370",
+    "name": "Hejnums kyrka",
+    "category": "sevardhet",
+    "lat": 57.68015,
+    "lng": 18.63201,
+    "description": "Kyrka"
+  },
+  {
+    "id": "helgumannens-fiskelage-n6631038862",
+    "name": "Helgumannens fiskeläge",
+    "category": "sevardhet",
+    "lat": 57.9806,
+    "lng": 19.13233,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "helige-andes-kyrkoruin-w434370801",
+    "name": "Helige Andes kyrkoruin",
+    "category": "sevardhet",
+    "lat": 57.64307,
+    "lng": 18.29838,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "hellvi-kyrka-w1029666578",
+    "name": "Hellvi kyrka",
+    "category": "sevardhet",
+    "lat": 57.7751,
+    "lng": 18.89523,
+    "description": "Kyrka"
+  },
+  {
+    "id": "hemse-kyrka-w1070695750",
+    "name": "Hemse kyrka",
+    "category": "sevardhet",
+    "lat": 57.2329,
+    "lng": 18.37304,
+    "description": "Kyrka"
+  },
+  {
+    "id": "herrgardsklints-fornborg-w530624485",
+    "name": "Herrgårdsklints Fornborg",
+    "category": "sevardhet",
+    "lat": 57.39993,
+    "lng": 18.74596,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "hit-rann-blodet-n6700033551",
+    "name": "Hit rann blodet",
+    "category": "sevardhet",
+    "lat": 57.63797,
+    "lng": 18.28909,
+    "description": "Minnesmärke"
+  },
+  {
+    "id": "hjulkorsgraven-w680690472",
+    "name": "Hjulkorsgraven",
+    "category": "sevardhet",
+    "lat": 57.79648,
+    "lng": 18.52641,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "hoburgsgubben-n4740781279",
+    "name": "Hoburgsgubben",
+    "category": "sevardhet",
+    "lat": 56.92246,
+    "lng": 18.12939,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "hogran-kyrka-w1191878781",
+    "name": "Hogrän kyrka",
+    "category": "sevardhet",
+    "lat": 57.50464,
+    "lng": 18.30788,
+    "description": "Kyrka"
+  },
+  {
+    "id": "honnorsparken-graffiti-wall-w1534502296",
+    "name": "Honnörsparken Graffiti Wall",
+    "category": "sevardhet",
+    "lat": 57.62703,
+    "lng": 18.30881,
+    "description": "Konstverk"
+  },
+  {
+    "id": "honnorsparken-graffiti-wall-w1534502297",
+    "name": "Honnörsparken Graffiti Wall",
+    "category": "sevardhet",
+    "lat": 57.62694,
+    "lng": 18.30852,
+    "description": "Konstverk"
+  },
+  {
+    "id": "haftingsklint-n2459344842",
+    "name": "Häftingsklint",
+    "category": "sevardhet",
+    "lat": 57.8838,
+    "lng": 18.62344,
+    "description": "Utsiktsplats"
+  },
+  {
+    "id": "hogklint-n279987685",
+    "name": "Högklint",
+    "category": "sevardhet",
+    "lat": 57.60002,
+    "lng": 18.20161,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "horsne-kyrka-w611593275",
+    "name": "Hörsne kyrka",
+    "category": "sevardhet",
+    "lat": 57.55847,
+    "lng": 18.59748,
+    "description": "Kyrka"
+  },
+  {
+    "id": "jungfrutornet-w1111524902",
+    "name": "Jungfrutornet",
+    "category": "sevardhet",
+    "lat": 57.64631,
+    "lng": 18.29556,
+    "description": "Ruin"
+  },
+  {
+    "id": "jarnaldersgrav-n6651668069",
+    "name": "Järnåldersgrav",
+    "category": "sevardhet",
+    "lat": 57.28947,
+    "lng": 17.97294,
+    "description": "Grav"
+  },
+  {
+    "id": "kaffepannan-n448272971",
+    "name": "Kaffepannan",
+    "category": "sevardhet",
+    "lat": 57.94377,
+    "lng": 19.0881,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "kalkugn-n4754525292",
+    "name": "Kalkugn",
+    "category": "sevardhet",
+    "lat": 57.89115,
+    "lng": 19.08602,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "kallbadhuset-n317437644",
+    "name": "Kallbadhuset",
+    "category": "sevardhet",
+    "lat": 57.64043,
+    "lng": 18.28715,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "karlsvards-fastning-w294889377",
+    "name": "Karlsvärds fästning",
+    "category": "sevardhet",
+    "lat": 57.69549,
+    "lng": 18.82117,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "katolska-kyrkan-i-visby-w508436745",
+    "name": "Katolska kyrkan i Visby",
+    "category": "sevardhet",
+    "lat": 57.64221,
+    "lng": 18.29544,
+    "description": "Kyrka"
+  },
+  {
+    "id": "kauparve-rose-n2338340536",
+    "name": "Kauparve röse",
+    "category": "sevardhet",
+    "lat": 57.80392,
+    "lng": 18.80886,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "klinte-kyrka-w229011475",
+    "name": "Klinte kyrka",
+    "category": "sevardhet",
+    "lat": 57.3784,
+    "lng": 18.23223,
+    "description": "Kyrka"
+  },
+  {
+    "id": "kneippbyn-sommarland-w232286256",
+    "name": "Kneippbyn Sommarland",
+    "category": "sevardhet",
+    "lat": 57.61077,
+    "lng": 18.24501,
+    "description": "Nöjespark"
+  },
+  {
+    "id": "konst-i-varn-pjv-kan-40-25-w1094452150",
+    "name": "Konst i värn PJV KAN 40:25",
+    "category": "sevardhet",
+    "lat": 57.64132,
+    "lng": 18.28954,
+    "description": "Museum"
+  },
+  {
+    "id": "konstnarshemmet-brucebo-w473683925",
+    "name": "Konstnärshemmet Brucebo",
+    "category": "sevardhet",
+    "lat": 57.68819,
+    "lng": 18.35248,
+    "description": "Museum"
+  },
+  {
+    "id": "kronvalls-fislelage-n1489628660",
+    "name": "Kronvalls Fisleläge",
+    "category": "sevardhet",
+    "lat": 57.28181,
+    "lng": 18.0977,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "kronvalls-skans-n1489966442",
+    "name": "Kronvalls skans",
+    "category": "sevardhet",
+    "lat": 57.28913,
+    "lng": 18.10299,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "kruttornet-w508436750",
+    "name": "Kruttornet",
+    "category": "sevardhet",
+    "lat": 57.64228,
+    "lng": 18.29137,
+    "description": "Ruin"
+  },
+  {
+    "id": "kraklingbo-12-1-n6373616301",
+    "name": "Kräklingbo 12:1",
+    "category": "sevardhet",
+    "lat": 57.4504,
+    "lng": 18.70738,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "kraklingbo-kyrka-w379351817",
+    "name": "Kräklingbo kyrka",
+    "category": "sevardhet",
+    "lat": 57.44524,
+    "lng": 18.71134,
+    "description": "Kyrka"
+  },
+  {
+    "id": "kvarnhjulet-vid-lummelunds-bruk-n6716208649",
+    "name": "Kvarnhjulet vid Lummelunds bruk",
+    "category": "sevardhet",
+    "lat": 57.73916,
+    "lng": 18.40595,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "kallunge-kyrka-w705213764",
+    "name": "Källunge kyrka",
+    "category": "sevardhet",
+    "lat": 57.60783,
+    "lng": 18.58484,
+    "description": "Kyrka"
+  },
+  {
+    "id": "lajkarhajd-n6373753074",
+    "name": "Lajkarhajd",
+    "category": "sevardhet",
+    "lat": 57.78497,
+    "lng": 18.81492,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "lau-kyrka-w1082056185",
+    "name": "Lau kyrka",
+    "category": "sevardhet",
+    "lat": 57.2829,
+    "lng": 18.62015,
+    "description": "Kyrka"
+  },
+  {
+    "id": "lauters-stainkalm-w497285800",
+    "name": "Lauters stainkalm",
+    "category": "sevardhet",
+    "lat": 57.96897,
+    "lng": 19.11845,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "lejstu-rojr-w1124781367",
+    "name": "Lejstu rojr",
+    "category": "sevardhet",
+    "lat": 57.18752,
+    "lng": 18.48117,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "levide-kyrka-w1191887705",
+    "name": "Levide kyrka",
+    "category": "sevardhet",
+    "lat": 57.28216,
+    "lng": 18.2664,
+    "description": "Kyrka"
+  },
+  {
+    "id": "liffridesskeppen-n6373528707",
+    "name": "Liffridesskeppen",
+    "category": "sevardhet",
+    "lat": 57.35514,
+    "lng": 18.66821,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "lilla-bjars-gravfalt-n6373771303",
+    "name": "Lilla Bjärs Gravfält",
+    "category": "sevardhet",
+    "lat": 57.79014,
+    "lng": 18.54114,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "lilla-strandporten-n60763552",
+    "name": "Lilla Strandporten",
+    "category": "sevardhet",
+    "lat": 57.6402,
+    "lng": 18.29239,
+    "description": "Stadsport"
+  },
+  {
+    "id": "lillklev-n1065974086",
+    "name": "Lillklev",
+    "category": "sevardhet",
+    "lat": 57.59574,
+    "lng": 18.19511,
+    "description": "Utsiktsplats"
+  },
+  {
+    "id": "linde-kyrka-w551235740",
+    "name": "Linde kyrka",
+    "category": "sevardhet",
+    "lat": 57.27968,
+    "lng": 18.37975,
+    "description": "Kyrka"
+  },
+  {
+    "id": "linne-n6641693084",
+    "name": "Linné",
+    "category": "sevardhet",
+    "lat": 57.64329,
+    "lng": 18.29329,
+    "description": "Minnesmärke"
+  },
+  {
+    "id": "linnes-utsikten-n9828415267",
+    "name": "Linnés utsikten",
+    "category": "sevardhet",
+    "lat": 57.42112,
+    "lng": 18.85752,
+    "description": "Utsiktsplats"
+  },
+  {
+    "id": "livbat-n12175014766",
+    "name": "Livbåt",
+    "category": "sevardhet",
+    "lat": 57.70574,
+    "lng": 18.80997,
+    "description": "Monument"
+  },
+  {
+    "id": "lojsta-slott-n1433642522",
+    "name": "Lojsta Slott",
+    "category": "sevardhet",
+    "lat": 57.32055,
+    "lng": 18.41946,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "lojsta-kyrka-w1191878777",
+    "name": "Lojsta kyrka",
+    "category": "sevardhet",
+    "lat": 57.31283,
+    "lng": 18.38391,
+    "description": "Kyrka"
+  },
+  {
+    "id": "lojsta-russpark-n361111619",
+    "name": "Lojsta russpark",
+    "category": "sevardhet",
+    "lat": 57.32909,
+    "lng": 18.32752,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "lojsta-slott-n282869357",
+    "name": "Lojsta slott",
+    "category": "sevardhet",
+    "lat": 57.32158,
+    "lng": 18.42165,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "lokrume-kyrka-w530542837",
+    "name": "Lokrume kyrka",
+    "category": "sevardhet",
+    "lat": 57.6878,
+    "lng": 18.53894,
+    "description": "Kyrka"
+  },
+  {
+    "id": "lummelunda-kyrka-w1078761491",
+    "name": "Lummelunda kyrka",
+    "category": "sevardhet",
+    "lat": 57.76975,
+    "lng": 18.45554,
+    "description": "Kyrka"
+  },
+  {
+    "id": "lummelundagrottan-w472268447",
+    "name": "Lummelundagrottan",
+    "category": "sevardhet",
+    "lat": 57.7386,
+    "lng": 18.40404,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "lye-kyrka-w1191878778",
+    "name": "Lye kyrka",
+    "category": "sevardhet",
+    "lat": 57.29792,
+    "lng": 18.52645,
+    "description": "Kyrka"
+  },
+  {
+    "id": "larbro-kyrka-w296560049",
+    "name": "Lärbro kyrka",
+    "category": "sevardhet",
+    "lat": 57.78717,
+    "lng": 18.79371,
+    "description": "Kyrka"
+  },
+  {
+    "id": "losa-kvarn-n1853522076",
+    "name": "Löså kvarn",
+    "category": "sevardhet",
+    "lat": 57.45985,
+    "lng": 18.70601,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "majsterrojr-n5112840376",
+    "name": "Majsterrojr",
+    "category": "sevardhet",
+    "lat": 57.61522,
+    "lng": 18.73355,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "majsterrojr-skeppssattning-n6373764149",
+    "name": "Majsterrojr skeppssättning",
+    "category": "sevardhet",
+    "lat": 57.6155,
+    "lng": 18.73417,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "martebo-kyrka-w464798262",
+    "name": "Martebo kyrka",
+    "category": "sevardhet",
+    "lat": 57.74822,
+    "lng": 18.4945,
+    "description": "Kyrka"
+  },
+  {
+    "id": "mellanvarn-franke-w437661455",
+    "name": "Mellanvärn Franke",
+    "category": "sevardhet",
+    "lat": 57.72507,
+    "lng": 18.61181,
+    "description": "Fästning"
+  },
+  {
+    "id": "minnessten-kvarnbacken-n3003538503",
+    "name": "Minnessten Kvarnbacken",
+    "category": "sevardhet",
+    "lat": 57.81639,
+    "lng": 18.71335,
+    "description": "Historisk plats"
+  },
+  {
+    "id": "mulde-fornborg-w374191024",
+    "name": "Mulde fornborg",
+    "category": "sevardhet",
+    "lat": 57.35767,
+    "lng": 18.20938,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "museet-stora-karlso-n2342987592",
+    "name": "Museet Stora Karlsö",
+    "category": "sevardhet",
+    "lat": 57.28887,
+    "lng": 17.96964,
+    "description": "Museum"
+  },
+  {
+    "id": "museijarnvag-n3450013896",
+    "name": "Museijärnväg",
+    "category": "sevardhet",
+    "lat": 57.54441,
+    "lng": 18.53132,
+    "description": "Museum"
+  },
+  {
+    "id": "museum-lars-jonsson-n12068486576",
+    "name": "Museum Lars Jonsson",
+    "category": "sevardhet",
+    "lat": 56.96923,
+    "lng": 18.22925,
+    "description": "Museum"
+  },
+  {
+    "id": "masterby-kyrka-w1191878780",
+    "name": "Mästerby kyrka",
+    "category": "sevardhet",
+    "lat": 57.46993,
+    "lng": 18.30403,
+    "description": "Kyrka"
+  },
+  {
+    "id": "naturum-gotland-n12899726384",
+    "name": "Naturum Gotland",
+    "category": "sevardhet",
+    "lat": 56.96874,
+    "lng": 18.23061,
+    "description": "Museum"
+  },
+  {
+    "id": "niva-n11085903409",
+    "name": "Nivå",
+    "category": "sevardhet",
+    "lat": 57.64175,
+    "lng": 18.29898,
+    "description": "Konstverk"
+  },
+  {
+    "id": "nordens-storsta-gravklot-n6373677150",
+    "name": "Nordens största gravklot",
+    "category": "sevardhet",
+    "lat": 57.49651,
+    "lng": 18.47624,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "norderport-n6634294872",
+    "name": "Norderport",
+    "category": "sevardhet",
+    "lat": 57.64469,
+    "lng": 18.30106,
+    "description": "Stadsport"
+  },
+  {
+    "id": "norrbys-w962621283",
+    "name": "Norrbys",
+    "category": "sevardhet",
+    "lat": 57.45475,
+    "lng": 18.37109,
+    "description": "Museum"
+  },
+  {
+    "id": "norrlanda-20-1-n6373633488",
+    "name": "Norrlanda 20:1",
+    "category": "sevardhet",
+    "lat": 57.51814,
+    "lng": 18.71176,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "norrlanda-25-1-n6373633489",
+    "name": "Norrlanda 25:1",
+    "category": "sevardhet",
+    "lat": 57.51872,
+    "lng": 18.71152,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "norrlanda-28-1-n6373633492",
+    "name": "Norrlanda 28:1",
+    "category": "sevardhet",
+    "lat": 57.5185,
+    "lng": 18.72514,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "norrlanda-29-1-rose-n6373633490",
+    "name": "Norrlanda 29:1 röse",
+    "category": "sevardhet",
+    "lat": 57.51898,
+    "lng": 18.72672,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "norrlanda-29-1-skeppssattning-n6373633491",
+    "name": "Norrlanda 29:1 skeppssättning",
+    "category": "sevardhet",
+    "lat": 57.51891,
+    "lng": 18.72658,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "norrlanda-7-1-n6373633493",
+    "name": "Norrlanda 7:1",
+    "category": "sevardhet",
+    "lat": 57.51756,
+    "lng": 18.72189,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "norrlanda-fornstuga-n2338320709",
+    "name": "Norrlanda Fornstuga",
+    "category": "sevardhet",
+    "lat": 57.52643,
+    "lng": 18.67632,
+    "description": "Museum"
+  },
+  {
+    "id": "norrlanda-kyrka-w1191878790",
+    "name": "Norrlanda kyrka",
+    "category": "sevardhet",
+    "lat": 57.50154,
+    "lng": 18.65982,
+    "description": "Kyrka"
+  },
+  {
+    "id": "nygards-herrgard-n5307204925",
+    "name": "Nygårds Herrgård",
+    "category": "sevardhet",
+    "lat": 57.60067,
+    "lng": 18.22755,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "nar-kyrka-w1191887702",
+    "name": "När kyrka",
+    "category": "sevardhet",
+    "lat": 57.25735,
+    "lng": 18.62529,
+    "description": "Kyrka"
+  },
+  {
+    "id": "nas-kyrka-w1072813194",
+    "name": "Näs kyrka",
+    "category": "sevardhet",
+    "lat": 57.11017,
+    "lng": 18.26238,
+    "description": "Kyrka"
+  },
+  {
+    "id": "offerkallan-n5712258179",
+    "name": "Offerkällan",
+    "category": "sevardhet",
+    "lat": 57.66755,
+    "lng": 18.47313,
+    "description": "Minnesmärke"
+  },
+  {
+    "id": "olf-palmes-minnesplats-sudersund-n9961775775",
+    "name": "Olf Palmes minnesplats Sudersund",
+    "category": "sevardhet",
+    "lat": 57.95649,
+    "lng": 19.25208,
+    "description": "Monument"
+  },
+  {
+    "id": "oscarsstenen-n4166098288",
+    "name": "Oscarsstenen",
+    "category": "sevardhet",
+    "lat": 57.61865,
+    "lng": 18.27461,
+    "description": "Minnesmärke"
+  },
+  {
+    "id": "othems-kyrka-w530358997",
+    "name": "Othems kyrka",
+    "category": "sevardhet",
+    "lat": 57.74739,
+    "lng": 18.73879,
+    "description": "Kyrka"
+  },
+  {
+    "id": "petarve-vattensag-n2384744219",
+    "name": "Petarve vattensåg",
+    "category": "sevardhet",
+    "lat": 57.43516,
+    "lng": 18.25032,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "pingstkyrkan-w315912055",
+    "name": "Pingstkyrkan",
+    "category": "sevardhet",
+    "lat": 57.62754,
+    "lng": 18.30252,
+    "description": "Kyrka"
+  },
+  {
+    "id": "polhemsgarden-n2561810064",
+    "name": "Polhemsgården",
+    "category": "sevardhet",
+    "lat": 57.73658,
+    "lng": 18.6115,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "rannarve-rose-n6374234542",
+    "name": "Rannarve Röse",
+    "category": "sevardhet",
+    "lat": 57.39766,
+    "lng": 18.22556,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "rannarve-skeppssattningar-n2376496025",
+    "name": "Rannarve Skeppssättningar",
+    "category": "sevardhet",
+    "lat": 57.39582,
+    "lng": 18.22405,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "rojrhagen-n6373569137",
+    "name": "Rojrhagen",
+    "category": "sevardhet",
+    "lat": 57.28259,
+    "lng": 18.40321,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "roma-kungsgard-n2338332791",
+    "name": "Roma Kungsgård",
+    "category": "sevardhet",
+    "lat": 57.51607,
+    "lng": 18.45897,
+    "description": "Museum"
+  },
+  {
+    "id": "roma-klosterruin-w225002136",
+    "name": "Roma klosterruin",
+    "category": "sevardhet",
+    "lat": 57.51617,
+    "lng": 18.46042,
+    "description": "Historisk plats"
+  },
+  {
+    "id": "roma-kyrka-w305232214",
+    "name": "Roma kyrka",
+    "category": "sevardhet",
+    "lat": 57.52842,
+    "lng": 18.44202,
+    "description": "Kyrka"
+  },
+  {
+    "id": "rone-kyrka-w1191887712",
+    "name": "Rone kyrka",
+    "category": "sevardhet",
+    "lat": 57.20898,
+    "lng": 18.44122,
+    "description": "Kyrka"
+  },
+  {
+    "id": "rute-23-1-n6373759857",
+    "name": "Rute 23:1",
+    "category": "sevardhet",
+    "lat": 57.79805,
+    "lng": 18.9479,
+    "description": "Minnesmärke"
+  },
+  {
+    "id": "rute-kyrka-w437167947",
+    "name": "Rute kyrka",
+    "category": "sevardhet",
+    "lat": 57.83371,
+    "lng": 18.92353,
+    "description": "Kyrka"
+  },
+  {
+    "id": "rojsu-w566746570",
+    "name": "Röjsu",
+    "category": "sevardhet",
+    "lat": 57.2883,
+    "lng": 17.98166,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "rovar-liljas-hala-n1065974088",
+    "name": "Rövar Liljas håla",
+    "category": "sevardhet",
+    "lat": 57.59363,
+    "lng": 18.19191,
+    "description": "Utsiktsplats"
+  },
+  {
+    "id": "sanda-58-1-n6373703775",
+    "name": "Sanda 58:1",
+    "category": "sevardhet",
+    "lat": 57.45454,
+    "lng": 18.20667,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "sanda-kyrka-w209257974",
+    "name": "Sanda kyrka",
+    "category": "sevardhet",
+    "lat": 57.42928,
+    "lng": 18.22324,
+    "description": "Kyrka"
+  },
+  {
+    "id": "sangelstainen-n6373753075",
+    "name": "Sangelstainen",
+    "category": "sevardhet",
+    "lat": 57.78312,
+    "lng": 18.81009,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "sankt-clemens-kyrkoruin-w531813266",
+    "name": "Sankt Clemens kyrkoruin",
+    "category": "sevardhet",
+    "lat": 57.64314,
+    "lng": 18.29615,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "sankt-gorans-kyrkoruin-w302506172",
+    "name": "Sankt Görans kyrkoruin",
+    "category": "sevardhet",
+    "lat": 57.64768,
+    "lng": 18.30338,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "sankt-goransporten-n6634264854",
+    "name": "Sankt Göransporten",
+    "category": "sevardhet",
+    "lat": 57.64545,
+    "lng": 18.29958,
+    "description": "Stadsport"
+  },
+  {
+    "id": "sankt-hans-och-sankt-pers-kyrkoruiner-w508536373",
+    "name": "Sankt Hans och Sankt Pers kyrkoruiner",
+    "category": "sevardhet",
+    "lat": 57.63807,
+    "lng": 18.29282,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "sankt-lars-kyrkoruin-w61048800",
+    "name": "Sankt Lars kyrkoruin",
+    "category": "sevardhet",
+    "lat": 57.64138,
+    "lng": 18.29521,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "sankt-nicolai-kyrkoruin-w126807117",
+    "name": "Sankt Nicolai kyrkoruin",
+    "category": "sevardhet",
+    "lat": 57.64415,
+    "lng": 18.29807,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "sankt-olofs-kyrkoruin-n13092537887",
+    "name": "Sankt Olofs Kyrkoruin",
+    "category": "sevardhet",
+    "lat": 57.64311,
+    "lng": 18.29382,
+    "description": "Ruin"
+  },
+  {
+    "id": "sankt-olofs-kyrka-n696071874",
+    "name": "Sankt Olofs kyrka",
+    "category": "sevardhet",
+    "lat": 57.9421,
+    "lng": 19.09021,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "sankta-katarina-ruin-w227838338",
+    "name": "Sankta Katarina ruin",
+    "category": "sevardhet",
+    "lat": 57.64044,
+    "lng": 18.29567,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "sankta-maria-domkyrka-w127396508",
+    "name": "Sankta Maria domkyrka",
+    "category": "sevardhet",
+    "lat": 57.64185,
+    "lng": 18.29805,
+    "description": "Kyrka"
+  },
+  {
+    "id": "shipwreck-fortuna-n1127172958",
+    "name": "Shipwreck Fortuna",
+    "category": "sevardhet",
+    "lat": 57.99587,
+    "lng": 19.24395,
+    "description": "Vrak"
+  },
+  {
+    "id": "sigsarve-vattensag-n1846061506",
+    "name": "Sigsarve vattensåg",
+    "category": "sevardhet",
+    "lat": 57.41069,
+    "lng": 18.36336,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "silte-kyrka-w1191887710",
+    "name": "Silte kyrka",
+    "category": "sevardhet",
+    "lat": 57.22104,
+    "lng": 18.23677,
+    "description": "Kyrka"
+  },
+  {
+    "id": "sjonhem-16-1-n6373692864",
+    "name": "Sjonhem 16:1",
+    "category": "sevardhet",
+    "lat": 57.47243,
+    "lng": 18.49739,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "sjonhem-kyrka-w1125607517",
+    "name": "Sjonhem kyrka",
+    "category": "sevardhet",
+    "lat": 57.48558,
+    "lng": 18.52075,
+    "description": "Kyrka"
+  },
+  {
+    "id": "sjofartsmuseum-w238968957",
+    "name": "Sjöfartsmuseum",
+    "category": "sevardhet",
+    "lat": 57.70569,
+    "lng": 18.80892,
+    "description": "Museum"
+  },
+  {
+    "id": "skans-2-w437657274",
+    "name": "Skans 2",
+    "category": "sevardhet",
+    "lat": 57.74164,
+    "lng": 18.60402,
+    "description": "Fästning"
+  },
+  {
+    "id": "skans-3-w437657275",
+    "name": "Skans 3",
+    "category": "sevardhet",
+    "lat": 57.73374,
+    "lng": 18.5896,
+    "description": "Fästning"
+  },
+  {
+    "id": "skans-4-w437657276",
+    "name": "Skans 4",
+    "category": "sevardhet",
+    "lat": 57.729,
+    "lng": 18.58545,
+    "description": "Fästning"
+  },
+  {
+    "id": "skans-5-w437657277",
+    "name": "Skans 5",
+    "category": "sevardhet",
+    "lat": 57.72317,
+    "lng": 18.60028,
+    "description": "Fästning"
+  },
+  {
+    "id": "skansport-n12133238362",
+    "name": "Skansport",
+    "category": "sevardhet",
+    "lat": 57.63494,
+    "lng": 18.28807,
+    "description": "Stadsport"
+  },
+  {
+    "id": "slite-kyrka-w431971303",
+    "name": "Slite kyrka",
+    "category": "sevardhet",
+    "lat": 57.70752,
+    "lng": 18.79594,
+    "description": "Kyrka"
+  },
+  {
+    "id": "slottet-n1809286612",
+    "name": "Slottet",
+    "category": "sevardhet",
+    "lat": 57.41188,
+    "lng": 18.7315,
+    "description": "Utsiktsplats"
+  },
+  {
+    "id": "smaklosa-museum-n11063410832",
+    "name": "Smaklösa Museum",
+    "category": "sevardhet",
+    "lat": 57.43703,
+    "lng": 18.14476,
+    "description": "Museum"
+  },
+  {
+    "id": "smiss-slott-n1853513911",
+    "name": "Smiss slott",
+    "category": "sevardhet",
+    "lat": 57.22694,
+    "lng": 18.34156,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "snackgardsporten-n2320592905",
+    "name": "Snäckgärdsporten",
+    "category": "sevardhet",
+    "lat": 57.64672,
+    "lng": 18.29657,
+    "description": "Stadsport"
+  },
+  {
+    "id": "snackgardstornet-w508436776",
+    "name": "Snäckgärdstornet",
+    "category": "sevardhet",
+    "lat": 57.64669,
+    "lng": 18.29654,
+    "description": "Ruin"
+  },
+  {
+    "id": "solfagel-n5153154556",
+    "name": "Solfågel",
+    "category": "sevardhet",
+    "lat": 57.64056,
+    "lng": 18.29106,
+    "description": "Konstverk"
+  },
+  {
+    "id": "sonja-akessons-park-n1853527130",
+    "name": "Sonja Åkessons park",
+    "category": "sevardhet",
+    "lat": 57.16229,
+    "lng": 18.33755,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "sproge-kyrka-w1191887708",
+    "name": "Sproge kyrka",
+    "category": "sevardhet",
+    "lat": 57.25364,
+    "lng": 18.2109,
+    "description": "Kyrka"
+  },
+  {
+    "id": "stenkumla-96-1-n6373731494",
+    "name": "Stenkumla 96:1",
+    "category": "sevardhet",
+    "lat": 57.52441,
+    "lng": 18.22175,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "stenkumla-avrattningsplats-n12755469530",
+    "name": "Stenkumla avrättningsplats",
+    "category": "sevardhet",
+    "lat": 57.55073,
+    "lng": 18.26825,
+    "description": "Minnesmärke"
+  },
+  {
+    "id": "stenkumla-kyrka-w462282415",
+    "name": "Stenkumla kyrka",
+    "category": "sevardhet",
+    "lat": 57.54772,
+    "lng": 18.26858,
+    "description": "Kyrka"
+  },
+  {
+    "id": "stenkyrka-kyrka-w610027234",
+    "name": "Stenkyrka kyrka",
+    "category": "sevardhet",
+    "lat": 57.79324,
+    "lng": 18.53148,
+    "description": "Kyrka"
+  },
+  {
+    "id": "stenmuseum-n4958498788",
+    "name": "Stenmuseum",
+    "category": "sevardhet",
+    "lat": 56.94246,
+    "lng": 18.14955,
+    "description": "Museum"
+  },
+  {
+    "id": "stora-hastnas-n814045399",
+    "name": "Stora Hästnäs",
+    "category": "sevardhet",
+    "lat": 57.65987,
+    "lng": 18.36332,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "strandridaregarden-w546620045",
+    "name": "Strandridaregården",
+    "category": "sevardhet",
+    "lat": 57.32371,
+    "lng": 18.71283,
+    "description": "Museum"
+  },
+  {
+    "id": "stanga-kyrka-w203245557",
+    "name": "Stånga kyrka",
+    "category": "sevardhet",
+    "lat": 57.28307,
+    "lng": 18.46595,
+    "description": "Kyrka"
+  },
+  {
+    "id": "sundre-kyrka-w481314041",
+    "name": "Sundre kyrka",
+    "category": "sevardhet",
+    "lat": 56.9359,
+    "lng": 18.18183,
+    "description": "Kyrka"
+  },
+  {
+    "id": "svenskbymuseet-n12125015854",
+    "name": "Svenskbymuseet",
+    "category": "sevardhet",
+    "lat": 57.52759,
+    "lng": 18.44342,
+    "description": "Museum"
+  },
+  {
+    "id": "soderport-n35506295",
+    "name": "Söderport",
+    "category": "sevardhet",
+    "lat": 57.6348,
+    "lng": 18.29191,
+    "description": "Stadsport"
+  },
+  {
+    "id": "tingstade-fastning-w311648678",
+    "name": "Tingstäde fästning",
+    "category": "sevardhet",
+    "lat": 57.73828,
+    "lng": 18.62009,
+    "description": "Museum"
+  },
+  {
+    "id": "tingstade-kyrka-w437648592",
+    "name": "Tingstäde kyrka",
+    "category": "sevardhet",
+    "lat": 57.73638,
+    "lng": 18.61505,
+    "description": "Kyrka"
+  },
+  {
+    "id": "tjelvarkyrkan-n11102444105",
+    "name": "Tjelvarkyrkan",
+    "category": "sevardhet",
+    "lat": 57.63584,
+    "lng": 18.30918,
+    "description": "Kyrka"
+  },
+  {
+    "id": "tjelvarkyrkan-w460867681",
+    "name": "Tjelvarkyrkan",
+    "category": "sevardhet",
+    "lat": 57.63586,
+    "lng": 18.30919,
+    "description": "Kyrka"
+  },
+  {
+    "id": "tjelvars-grav-w530624487",
+    "name": "Tjelvars grav",
+    "category": "sevardhet",
+    "lat": 57.62782,
+    "lng": 18.73256,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "tjuls-station-jarnvagsmuseum-n1348603066",
+    "name": "Tjuls station, Järnvägsmuseum",
+    "category": "sevardhet",
+    "lat": 57.45945,
+    "lng": 18.23775,
+    "description": "Museum"
+  },
+  {
+    "id": "tjarkokeriet-n9711635954",
+    "name": "Tjärkokeriet",
+    "category": "sevardhet",
+    "lat": 57.6369,
+    "lng": 18.29616,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "tofta-viking-village-w443274473",
+    "name": "Tofta Viking Village",
+    "category": "sevardhet",
+    "lat": 57.48378,
+    "lng": 18.14066,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "tofta-kyrka-w986655333",
+    "name": "Tofta kyrka",
+    "category": "sevardhet",
+    "lat": 57.52163,
+    "lng": 18.16876,
+    "description": "Kyrka"
+  },
+  {
+    "id": "torsburgens-fornborg-w1375653399",
+    "name": "Torsburgens fornborg",
+    "category": "sevardhet",
+    "lat": 57.41201,
+    "lng": 18.72035,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "trojaborg-w230634568",
+    "name": "Trojaborg",
+    "category": "sevardhet",
+    "lat": 57.65257,
+    "lng": 18.30712,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "trullhalsar-gravfalt-n6373633495",
+    "name": "Trullhalsar Gravfält",
+    "category": "sevardhet",
+    "lat": 57.50742,
+    "lng": 18.74211,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "trakumla-kyrka-w462284661",
+    "name": "Träkumla kyrka",
+    "category": "sevardhet",
+    "lat": 57.56033,
+    "lng": 18.313,
+    "description": "Kyrka"
+  },
+  {
+    "id": "ullviarrojr-w443496435",
+    "name": "Ullviarrojr",
+    "category": "sevardhet",
+    "lat": 57.48429,
+    "lng": 18.16717,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "valdemarskorset-n6373741789",
+    "name": "Valdemarskorset",
+    "category": "sevardhet",
+    "lat": 57.6339,
+    "lng": 18.2993,
+    "description": "Vägkors"
+  },
+  {
+    "id": "valdemarsmuren-w1251166884",
+    "name": "Valdemarsmuren",
+    "category": "sevardhet",
+    "lat": 57.63493,
+    "lng": 18.29244,
+    "description": "Historisk plats"
+  },
+  {
+    "id": "valls-kyrka-w1191878783",
+    "name": "Valls kyrka",
+    "category": "sevardhet",
+    "lat": 57.52079,
+    "lng": 18.34517,
+    "description": "Kyrka"
+  },
+  {
+    "id": "vallstena-72-1-n6373668146",
+    "name": "Vallstena 72:1",
+    "category": "sevardhet",
+    "lat": 57.59086,
+    "lng": 18.65797,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "vallstena-kyrka-w1191859371",
+    "name": "Vallstena kyrka",
+    "category": "sevardhet",
+    "lat": 57.60983,
+    "lng": 18.63679,
+    "description": "Kyrka"
+  },
+  {
+    "id": "vamlingbo-kyrka-w481742273",
+    "name": "Vamlingbo kyrka",
+    "category": "sevardhet",
+    "lat": 56.9697,
+    "lng": 18.23024,
+    "description": "Kyrka"
+  },
+  {
+    "id": "viklau-kyrka-w1125607519",
+    "name": "Viklau kyrka",
+    "category": "sevardhet",
+    "lat": 57.46555,
+    "lng": 18.45654,
+    "description": "Kyrka"
+  },
+  {
+    "id": "villa-villekulla-w459132353",
+    "name": "Villa Villekulla",
+    "category": "sevardhet",
+    "lat": 57.6099,
+    "lng": 18.24391,
+    "description": "Sevärdhet"
+  },
+  {
+    "id": "visborgskyrkan-w463283956",
+    "name": "Visborgskyrkan",
+    "category": "sevardhet",
+    "lat": 57.62469,
+    "lng": 18.28515,
+    "description": "Kyrka"
+  },
+  {
+    "id": "visby-bilmuseum-w467553339",
+    "name": "Visby Bilmuseum",
+    "category": "sevardhet",
+    "lat": 57.65152,
+    "lng": 18.38736,
+    "description": "Museum"
+  },
+  {
+    "id": "vange-kyrka-w1191878779",
+    "name": "Vänge kyrka",
+    "category": "sevardhet",
+    "lat": 57.45199,
+    "lng": 18.51151,
+    "description": "Kyrka"
+  },
+  {
+    "id": "vaskinde-kyrka-w467805827",
+    "name": "Väskinde kyrka",
+    "category": "sevardhet",
+    "lat": 57.69057,
+    "lng": 18.42308,
+    "description": "Kyrka"
+  },
+  {
+    "id": "vastergarn-19-1-n6373708921",
+    "name": "Västergarn 19:1",
+    "category": "sevardhet",
+    "lat": 57.46489,
+    "lng": 18.19623,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "vastergarn-kyrka-w1191887701",
+    "name": "Västergarn kyrka",
+    "category": "sevardhet",
+    "lat": 57.44084,
+    "lng": 18.15099,
+    "description": "Kyrka"
+  },
+  {
+    "id": "vasterhejde-kyrka-w198674674",
+    "name": "Västerhejde kyrka",
+    "category": "sevardhet",
+    "lat": 57.58056,
+    "lng": 18.24806,
+    "description": "Kyrka"
+  },
+  {
+    "id": "vate-kyrka-w960816616",
+    "name": "Väte kyrka",
+    "category": "sevardhet",
+    "lat": 57.4491,
+    "lng": 18.36406,
+    "description": "Kyrka"
+  },
+  {
+    "id": "var-skulpturparken-n6373738073",
+    "name": "Vår Skulpturparken",
+    "category": "sevardhet",
+    "lat": 57.63223,
+    "lng": 18.28951,
+    "description": "Konstverk"
+  },
+  {
+    "id": "vardklockans-kyrka-w1057220846",
+    "name": "Vårdklockans Kyrka",
+    "category": "sevardhet",
+    "lat": 57.63858,
+    "lng": 18.29566,
+    "description": "Kyrka"
+  },
+  {
+    "id": "anges-bildstenar-n605015930",
+    "name": "Änges Bildstenar",
+    "category": "sevardhet",
+    "lat": 57.3945,
+    "lng": 18.50045,
+    "description": "Fornlämning"
+  },
+  {
+    "id": "oja-kyrka-w202596417",
+    "name": "Öja kyrka",
+    "category": "sevardhet",
+    "lat": 57.03555,
+    "lng": 18.29991,
+    "description": "Kyrka"
+  },
+  {
+    "id": "ostergarn-kyrka-w781016570",
+    "name": "Östergarn kyrka",
+    "category": "sevardhet",
+    "lat": 57.42177,
+    "lng": 18.8588,
+    "description": "Kyrka"
+  },
+  {
+    "id": "osterport-n83730235",
+    "name": "Österport",
+    "category": "sevardhet",
+    "lat": 57.63846,
+    "lng": 18.29844,
+    "description": "Stadsport"
+  },
+  {
+    "id": "bungeviken-w292513912",
+    "name": "Bungeviken",
+    "category": "strand",
+    "lat": 57.83547,
+    "lng": 19.0674,
+    "description": "Badstrand"
+  },
+  {
+    "id": "gnisvards-strand-w292514531",
+    "name": "Gnisvärds strand",
+    "category": "strand",
+    "lat": 57.4978,
+    "lng": 18.11874,
+    "description": "Badstrand"
+  },
+  {
+    "id": "gustav-setu-pebble-bridge-n8953076951",
+    "name": "Gustav Setu Pebble Bridge",
+    "category": "strand",
+    "lat": 57.91887,
+    "lng": 18.94572,
+    "description": "Badstrand"
+  },
+  {
+    "id": "kappelshamns-sandstrand-n11065575649",
+    "name": "Kappelshamns sandstrand",
+    "category": "strand",
+    "lat": 57.85341,
+    "lng": 18.78262,
+    "description": "Badstrand"
+  },
+  {
+    "id": "nordersand-w436131422",
+    "name": "Nordersand",
+    "category": "strand",
+    "lat": 57.97309,
+    "lng": 19.25044,
+    "description": "Badstrand"
+  },
+  {
+    "id": "raudstajnsstrand-w482269629",
+    "name": "Raudstajnsstrand",
+    "category": "strand",
+    "lat": 57.97462,
+    "lng": 19.2769,
+    "description": "Badstrand"
+  },
+  {
+    "id": "sandvikens-strand-w708078874",
+    "name": "Sandvikens Strand",
+    "category": "strand",
+    "lat": 57.39551,
+    "lng": 18.87482,
+    "description": "Badstrand"
+  },
+  {
+    "id": "tofta-strand-w116575228",
+    "name": "Tofta Strand",
+    "category": "strand",
+    "lat": 57.48863,
+    "lng": 18.12748,
+    "description": "Badstrand"
+  },
+  {
+    "id": "vitvikens-strand-w1081103331",
+    "name": "Vitvikens Strand",
+    "category": "strand",
+    "lat": 57.61899,
+    "lng": 18.76417,
+    "description": "Badstrand"
+  },
+  {
+    "id": "vastergarns-badplats-n12128997752",
+    "name": "Västergarns badplats",
+    "category": "strand",
+    "lat": 57.43691,
+    "lng": 18.14227,
+    "description": "Badstrand"
+  },
+  {
+    "id": "aminne-strand-w707430389",
+    "name": "Åminne Strand",
+    "category": "strand",
+    "lat": 57.6141,
+    "lng": 18.7661,
+    "description": "Badstrand"
+  }
+]
