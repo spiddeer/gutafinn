@@ -87,6 +87,53 @@ export function toProductCategory(category: string): PlaceCategory {
   return toProductCategories([category])[0]
 }
 
+function isNullableString(value: unknown) {
+  return value == null || typeof value === "string"
+}
+
+function isCategoryDetail(value: unknown) {
+  if (!value || typeof value !== "object") return false
+  const detail = value as Record<string, unknown>
+  return (
+    typeof detail.id === "string" &&
+    typeof detail.isPrimary === "boolean" &&
+    typeof detail.label === "string" &&
+    typeof detail.emoji === "string"
+  )
+}
+
+function isOpeningPeriod(value: unknown) {
+  if (!value || typeof value !== "object") return false
+  const period = value as Record<string, unknown>
+  return (
+    Number.isInteger(period.dayOfWeek) &&
+    typeof period.dayOfWeek === "number" &&
+    period.dayOfWeek >= 0 &&
+    period.dayOfWeek <= 6 &&
+    isNullableString(period.opensAt) &&
+    isNullableString(period.closesAt) &&
+    isNullableString(period.note)
+  )
+}
+
+function isOpeningHours(value: unknown) {
+  if (value == null) return true
+  if (typeof value !== "object") return false
+  const openingHours = value as Record<string, unknown>
+  return (
+    isNullableString(openingHours.raw) &&
+    isNullableString(openingHours.note) &&
+    (openingHours.weekly == null ||
+      (Array.isArray(openingHours.weekly) && openingHours.weekly.every(isOpeningPeriod)))
+  )
+}
+
+function isImage(value: unknown) {
+  if (!value || typeof value !== "object") return false
+  const image = value as Record<string, unknown>
+  return typeof image.url === "string" && isNullableString(image.altText)
+}
+
 export function parseApiPlaces(input: unknown): ApiPlace[] {
   if (!Array.isArray(input)) throw new Error("API response must be an array")
   const isPlace = (value: unknown): value is ApiPlace => {
@@ -106,11 +153,19 @@ export function parseApiPlaces(input: unknown): ApiPlace[] {
       place.lng >= -180 &&
       place.lng <= 180 &&
       (place.categories == null ||
-        (Array.isArray(place.categories) && place.categories.every((category) => typeof category === "string")))
+        (Array.isArray(place.categories) && place.categories.every((category) => typeof category === "string"))) &&
+      (place.categoryDetails == null ||
+        (Array.isArray(place.categoryDetails) && place.categoryDetails.every(isCategoryDetail))) &&
+      isOpeningHours(place.openingHours) &&
+      (place.images == null || (Array.isArray(place.images) && place.images.every(isImage))) &&
+      isNullableString(place.lastVerifiedAt)
     )
   }
-  if (!input.every(isPlace)) throw new Error("API response contains an invalid place")
-  return input
+  const places = input.filter(isPlace)
+  if (input.length > 0 && places.length === 0) {
+    throw new Error("API response contains no valid places")
+  }
+  return places
 }
 
 export function distanceKilometers(from: Coordinates, to: Coordinates) {
@@ -200,7 +255,7 @@ export function toViewModel(place: ApiPlace, position: Coordinates | null, now =
     : null
   const primaryCategory = place.categoryDetails?.find((category) => category.isPrimary)
 
-  const kinds = toProductCategories(place.categories?.length ? place.categories : [place.category])
+  const kinds = toProductCategories([place.category, ...(place.categories ?? [])])
   return {
     ...place,
     kind: kinds[0],

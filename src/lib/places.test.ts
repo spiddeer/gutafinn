@@ -40,6 +40,17 @@ describe("place mapping", () => {
     expect(results).toHaveLength(1)
   })
 
+  it("keeps the canonical category as the displayed primary kind", () => {
+    const [result] = filterPlaces(
+      [place({ category: "service", categories: ["mat", "service"] })],
+      "Allt",
+      "",
+      null,
+    )
+    expect(result.kind).toBe("Göra")
+    expect(result.kinds).toEqual(["Göra", "Äta"])
+  })
+
   it("computes honest GPS distance and radius counts", () => {
     const position = { lat: 57.333, lng: 18.711 }
     expect(distanceKilometers(position, position)).toBe(0)
@@ -81,5 +92,24 @@ describe("place mapping", () => {
   it("rejects malformed API payloads before they reach the UI", () => {
     expect(() => parseApiPlaces([{ name: "Saknar koordinater" }])).toThrow()
     expect(parseApiPlaces([place()])).toHaveLength(1)
+  })
+
+  it("drops malformed records without losing the valid catalogue", () => {
+    const malformedNestedPlace = place({
+      id: "bad",
+      images: [{ url: "https://example.com/image.jpg" }],
+    }) as unknown as Record<string, unknown>
+    malformedNestedPlace.images = [{ url: 42 }]
+
+    expect(parseApiPlaces([place(), malformedNestedPlace])).toEqual([place()])
+  })
+
+  it("validates nested structures used by the UI", () => {
+    const malformedHours = place() as unknown as Record<string, unknown>
+    malformedHours.openingHours = {
+      weekly: [{ dayOfWeek: 9, opensAt: "10:00", closesAt: "18:00" }],
+    }
+
+    expect(() => parseApiPlaces([malformedHours])).toThrow()
   })
 })
