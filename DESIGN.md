@@ -2,6 +2,8 @@
 
 Status: implemented as the active frontend contract. The latest live-verified
 release is recorded separately in `README.md` and `deploy/proxmox/README.md`.
+Gutafinn is the only active product name across interface copy, components and
+new design assets.
 
 ## 1. Product character
 

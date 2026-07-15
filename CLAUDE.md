@@ -1,7 +1,7 @@
 # Project Context
 
 Gutafinn is the active Swedish responsive, mobile-first frontend for the
-Gotlandsguiden backend and deployment stack.
+Gutafinn backend and deployment stack.
 
 ## Stack and operation
 
@@ -20,8 +20,10 @@ Gotlandsguiden backend and deployment stack.
 - Discovery: `Overraska mig` is an internal GPS-required micro-adventure flow
   backed by pure selection logic and bounded browser-only history
 - Deployment: Docker Compose in Proxmox LXC CT 201 behind Cloudflare Tunnel in CT 200
-- Production: `https://gotland.tobtech.se`
-- Deploy: `./deploy/proxmox/deploy.sh` from `/opt/gotlandsguiden`
+- Production: `https://gutafinn.tobtech.se`
+- Compatibility URL: `https://gotland.tobtech.se` permanently redirects to the
+  same path and query on the primary hostname
+- Deploy: `./deploy/proxmox/deploy.sh` from `/opt/gutafinn`
 
 ## Important contracts
 

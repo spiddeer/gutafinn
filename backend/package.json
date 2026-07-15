@@ -1,8 +1,8 @@
 {
-  "name": "gotlandsguiden-backend",
+  "name": "gutafinn-backend",
   "version": "1.0.0",
   "private": true,
-  "description": "API backend for Gotlandsguiden – serves places from SQLite",
+  "description": "API backend for Gutafinn – serves places from SQLite",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

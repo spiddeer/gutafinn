@@ -2,7 +2,7 @@ services:
   backend:
     build:
       context: ../../backend
-    container_name: gotlandsguiden_api
+    container_name: gutafinn_api
     restart: unless-stopped
     env_file:
       - ./.env
@@ -16,7 +16,7 @@ services:
     build:
       context: ../..
       dockerfile: deploy/Dockerfile
-    container_name: gotlandsguiden_web
+    container_name: gutafinn_web
     restart: unless-stopped
     depends_on:
       - backend

@@ -353,7 +353,7 @@ async function fetchOsmElements(urls = DEFAULT_OVERPASS_URLS) {
           method: "POST",
           headers: {
             "content-type": "application/x-www-form-urlencoded;charset=UTF-8",
-            "user-agent": "Gotlandsguiden/1.0 (https://gotland.tobtech.se)",
+            "user-agent": "Gutafinn/1.0 (https://gutafinn.tobtech.se)",
           },
           body: new URLSearchParams({ data: query }),
           signal: AbortSignal.timeout(105_000),

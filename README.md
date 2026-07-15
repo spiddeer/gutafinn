@@ -1,16 +1,17 @@
-# Gutafinn / Gotlandsguiden
+# Gutafinn
 
 Gutafinn ar den aktiva responsiva, mobilforst-frontenden for att hitta saker att
 gora, se och ata pa Gotland just nu. Samma React-app fungerar som enkelkolumn pa
 mobil och iPad samt som synkroniserad feed/karta pa desktop. Repot innehaller
-ocksa Gotlandsguidens befintliga Express/SQLite-API, OSM-import och Proxmox-drift.
+ocksa Gutafinns befintliga Express/SQLite-API, OSM-import och Proxmox-drift.
 
 Dokumentationen ar avstamd mot produktionssetupen den 15 juli 2026. Aktuell
 driftsatt Git-SHA verifieras med kommandot i Proxmox-runbooken.
 
 ## Live
 
-- Produktion: https://gotland.tobtech.se
+- Produktion: https://gutafinn.tobtech.se
+- Tidigare adress: https://gotland.tobtech.se (permanent redirect med bevarad path/query)
 
 ## Vad vi bygger
 
@@ -109,9 +110,9 @@ deploy/
     docker-compose.yml
     deploy.sh
     backup.sh
-    gotlandsguiden.service
-    gotlandsguiden-backup.service
-    gotlandsguiden-backup.timer
+    gutafinn.service
+    gutafinn-backup.service
+    gutafinn-backup.timer
     README.md
 ```
 
@@ -275,9 +276,9 @@ npm test
 Efter deploy ska bade webb och API verifieras:
 
 ```bash
-curl -fsSI https://gotland.tobtech.se
-curl -fsS https://gotland.tobtech.se/api/categories
-curl -fsS https://gotland.tobtech.se/api/places
+curl -fsSI https://gutafinn.tobtech.se
+curl -fsS https://gutafinn.tobtech.se/api/categories
+curl -fsS https://gutafinn.tobtech.se/api/places
 ```
 
 Verifiera dessutom i en riktig browser vid 320, 390, 768, 820, 1024 landskap,
@@ -291,8 +292,8 @@ aterstallas samt att `OpenStreetMap-bidragsgivare` alltid ar synligt.
 ### Alternativ A: Docker Compose
 
 ```bash
-git clone https://github.com/spiddeer/gotlandguiden.git
-cd gotlandguiden
+git clone https://github.com/spiddeer/gutafinn.git
+cd gutafinn
 docker-compose -f deploy/proxmox/docker-compose.yml up -d --build
 ```
 
@@ -322,7 +323,7 @@ Nuvarande produktion kor i Proxmox med separat app-container och Cloudflare edge
 I app-containern (CT 201):
 
 ```bash
-cd /opt/gotlandsguiden
+cd /opt/gutafinn
 ./deploy/proxmox/deploy.sh
 ```
 
@@ -337,14 +338,14 @@ Scriptet gor:
 Manuell backup:
 
 ```bash
-cd /opt/gotlandsguiden/deploy/proxmox
+cd /opt/gutafinn/deploy/proxmox
 ./backup.sh
 ```
 
 Nattlig backup hanteras via systemd timer:
 
-- gotlandsguiden-backup.timer
-- gotlandsguiden-backup.service
+- gutafinn-backup.timer
+- gutafinn-backup.service
 
 ## Status
 

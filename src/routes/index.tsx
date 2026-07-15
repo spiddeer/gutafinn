@@ -736,7 +736,7 @@ function LoadingPlaces() {
     <Card className="flex items-center gap-3 p-5" role="status">
       <LoaderCircle className="size-5 animate-spin text-sea" aria-hidden="true" />
       <div>
-        <p className="font-semibold text-sea-deep">Hämtar platser från Gotlandsguiden</p>
+        <p className="font-semibold text-sea-deep">Hämtar platser från Gutafinn</p>
         <p className="mt-1 text-sm text-muted-foreground">Ett ögonblick, vi gör ön sökbar.</p>
       </div>
     </Card>

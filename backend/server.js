@@ -138,7 +138,7 @@ function createApp(database = db, { apiKey = API_KEY } = {}) {
 
 if (require.main === module) {
   createApp().listen(PORT, () => {
-    console.log(`Gotlandsguiden API listening on port ${PORT}`);
+    console.log(`Gutafinn API listening on port ${PORT}`);
   });
 }
 

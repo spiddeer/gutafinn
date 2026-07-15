@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Gotlandsguiden – kart-, positions- och platslogik
+   Gutafinn – kart-, positions- och platslogik
    ========================================================================== */
 
 const GOTLAND_CENTER = [57.4684, 18.4867];

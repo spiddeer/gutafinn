@@ -1,4 +1,4 @@
-# Project Hooks for Gotlandsguiden
+# Project Hooks for Gutafinn
 
 Detta dokument forklarar hur hooks i `.github/hooks` hjalper AI-tjanster och utvecklare att halla projektet stabilt.
 

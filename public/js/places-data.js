@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Gotlandsguiden – platsdata
+   Gutafinn – platsdata
    --------------------------------------------------------------------------
    PLATSERNA NEDAN ÄR HÄMTADE FRÅN OpenStreetMap (Overpass API) för Gotland.
    © OpenStreetMap-bidragsgivare (ODbL). Data hämtad 2026-07-14.

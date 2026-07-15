@@ -16,7 +16,7 @@ signals:
     ratio: 1
     count: 5
 ---
-# Gotlandsguiden - Agent Instructions
+# Gutafinn - Agent Instructions
 
 Detta dokument ar den primara kontexten for AI-agenter som jobbar i repot.
 
@@ -26,10 +26,12 @@ Detta dokument ar den primara kontexten for AI-agenter som jobbar i repot.
   Leaflet och Leaflet.markercluster i `src/`
 - Backend: Node.js + Express + SQLite i `backend/`
 - Deploy: Docker Compose i `deploy/proxmox/`
-- Driftmiljo: Proxmox LXC CT 201 (`gotlandsguiden`)
-- Publik doman: `https://gotland.tobtech.se`
+- Driftmiljo: Proxmox LXC CT 201 (`gutafinn`)
+- Publik doman: `https://gutafinn.tobtech.se`
+- Kompatibilitetsdoman: `https://gotland.tobtech.se` redirectar permanent till
+  motsvarande path/query pa primardomanen
 - Edge-routing: Cloudflare Tunnel (konfig i separat CT 200)
-- Git remote: `https://github.com/spiddeer/gotlandguiden.git`
+- Git remote: `https://github.com/spiddeer/gutafinn.git`
 - Driftsatt frontend-SHA: verifieras i CT 201 med `git rev-parse HEAD`
 - Produktionssnapshot: 1 345 aktiva platser, 17 inaktiva historiska platser,
   10 kategorier och 4 databasmigreringar (verifierat 2026-07-14)
@@ -148,12 +150,13 @@ Andra inte den ena snapshoten utan att synka och testa den andra.
 
 ### Proxmox
 
-- CT 201: Korer applikationen (`/opt/gotlandsguiden`)
+- CT 201: Korer applikationen (`/opt/gutafinn`)
 - CT 200: Korer cloudflared tunnel-process
 
 ### Cloudflare
 
-- Hostname: `gotland.tobtech.se`
+- Hostname: `gutafinn.tobtech.se`
+- Redirect-hostname: `gotland.tobtech.se`
 - Tunnel ingress target: `http://192.168.1.224:3003` (CT 201)
 
 ### Compose services
@@ -166,22 +169,22 @@ Andra inte den ena snapshoten utan att synka och testa den andra.
 I CT 201:
 
 ```bash
-cd /opt/gotlandsguiden
+cd /opt/gutafinn
 ./deploy/proxmox/deploy.sh
 ```
 
 Backup manuellt:
 
 ```bash
-cd /opt/gotlandsguiden/deploy/proxmox
+cd /opt/gutafinn/deploy/proxmox
 ./backup.sh
 ```
 
 Timerstatus:
 
 ```bash
-systemctl status gotlandsguiden-backup.timer
-systemctl list-timers --all | grep gotlandsguiden-backup
+systemctl status gutafinn-backup.timer
+systemctl list-timers --all | grep gutafinn-backup
 ```
 
 Lokal verifiering fran projektroten och `backend/`:
@@ -196,9 +199,9 @@ npm test
 Efter deploy:
 
 ```bash
-curl -fsSI https://gotland.tobtech.se
-curl -fsS https://gotland.tobtech.se/api/categories
-curl -fsS https://gotland.tobtech.se/api/places
+curl -fsSI https://gutafinn.tobtech.se
+curl -fsS https://gutafinn.tobtech.se/api/categories
+curl -fsS https://gutafinn.tobtech.se/api/places
 ```
 
 Browser-verifiera darefter 320, 390, 768, 820, 1024 landskap, 1280 och 1440px.

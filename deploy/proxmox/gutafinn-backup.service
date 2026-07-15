@@ -1,0 +1,9 @@
+[Unit]
+Description=Gutafinn SQLite backup
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/gutafinn/deploy/proxmox
+ExecStart=/opt/gutafinn/deploy/proxmox/backup.sh

@@ -1,10 +1,10 @@
 [Unit]
-Description=Nightly backup for Gotlandsguiden
+Description=Nightly backup for Gutafinn
 
 [Timer]
 OnCalendar=*-*-* 03:30:00
 Persistent=true
-Unit=gotlandsguiden-backup.service
+Unit=gutafinn-backup.service
 
 [Install]
 WantedBy=timers.target

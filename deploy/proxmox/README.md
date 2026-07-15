@@ -1,21 +1,23 @@
-# Gotlandsguiden i Proxmox
+# Gutafinn i Proxmox
 
 Denna runbook beskriver den faktiska produktionssetupen och hur den driftas.
 
 ## Produktionsstatus
 
-- Applikation: `gotlandsguiden`
-- Repo: `https://github.com/spiddeer/gotlandguiden.git`
-- Proxmox app-container: CT 201 (`gotlandsguiden`)
+- Applikation: `gutafinn`
+- Repo: `https://github.com/spiddeer/gutafinn.git`
+- Proxmox app-container: CT 201 (`gutafinn`)
 - Exponerad port i CT 201: `3003`
-- Publik doman: `https://gotland.tobtech.se`
+- Publik doman: `https://gutafinn.tobtech.se`
+- Tidigare doman: `https://gotland.tobtech.se` (permanent path/query-redirect)
 - Cloudflare Tunnel konfigurerad i separat CT 200
 - Driftsatt release-SHA: verifieras med `git rev-parse HEAD` enligt avsnittet nedan
 - Datastatus: 1 345 aktiva och 17 inaktiva historiska platser i 10 kategorier
 
 ## Topologi
 
-1. Cloudflare edge tar emot trafik pa `gotland.tobtech.se`.
+1. Cloudflare edge tar emot trafik pa `gutafinn.tobtech.se`.
+   `gotland.tobtech.se` gar genom samma tunnel och redirectas av Nginx.
 2. Cloudflare Tunnel route i CT 200 skickar vidare till `http://192.168.1.224:3003`.
 3. I CT 201 terminerar Nginx-container (`web`) pa port 3003.
 4. `web` byggs i tva steg: Node 22 skapar Gutafinns Vite-`dist/`, som kopieras
@@ -40,16 +42,16 @@ ta bort manuellt tillagda kategorier. Publika API-anrop visar bara
 
 ## Kataloger i CT 201
 
-- Projektroot: `/opt/gotlandsguiden`
-- Composefil: `/opt/gotlandsguiden/deploy/proxmox/docker-compose.yml`
-- Miljofil: `/opt/gotlandsguiden/deploy/proxmox/.env`
-- DB-data: `/opt/gotlandsguiden/deploy/proxmox/data/`
-- Backuper: `/opt/gotlandsguiden/deploy/proxmox/backups/`
+- Projektroot: `/opt/gutafinn`
+- Composefil: `/opt/gutafinn/deploy/proxmox/docker-compose.yml`
+- Miljofil: `/opt/gutafinn/deploy/proxmox/.env`
+- DB-data: `/opt/gutafinn/deploy/proxmox/data/`
+- Backuper: `/opt/gutafinn/deploy/proxmox/backups/`
 
 ## Snabb drift (rekommenderat)
 
 ```bash
-cd /opt/gotlandsguiden
+cd /opt/gutafinn
 ./deploy/proxmox/deploy.sh
 ```
 
@@ -62,10 +64,10 @@ cd /opt/gotlandsguiden
 Kontrollera fore deploy att `main` ar pushad och att backendtesterna passerar:
 
 ```bash
-cd /opt/gotlandsguiden
+cd /opt/gutafinn
 npm test
 npm run build
-cd /opt/gotlandsguiden/backend
+cd /opt/gutafinn/backend
 npm test
 ```
 
@@ -102,13 +104,13 @@ apt-get install -y docker.io docker-compose git
 ```bash
 mkdir -p /opt
 cd /opt
-git clone https://github.com/spiddeer/gotlandguiden.git gotlandsguiden
+git clone https://github.com/spiddeer/gutafinn.git gutafinn
 ```
 
 ### 3) Initiera miljofil
 
 ```bash
-cd /opt/gotlandsguiden/deploy/proxmox
+cd /opt/gutafinn/deploy/proxmox
 cp .env.example .env
 ```
 
@@ -120,7 +122,7 @@ Satt i `.env`:
 ### 4) Starta stacken
 
 ```bash
-cd /opt/gotlandsguiden
+cd /opt/gutafinn
 docker-compose -f deploy/proxmox/docker-compose.yml up -d --build
 docker-compose -f deploy/proxmox/docker-compose.yml ps
 ```
@@ -128,10 +130,10 @@ docker-compose -f deploy/proxmox/docker-compose.yml ps
 ## Systemd for app-autostart
 
 ```bash
-cp /opt/gotlandsguiden/deploy/proxmox/gotlandsguiden.service /etc/systemd/system/
+cp /opt/gutafinn/deploy/proxmox/gutafinn.service /etc/systemd/system/
 systemctl daemon-reload
-systemctl enable --now gotlandsguiden.service
-systemctl status gotlandsguiden.service
+systemctl enable --now gutafinn.service
+systemctl status gutafinn.service
 ```
 
 ## Backup
@@ -142,26 +144,26 @@ databasen ligger utanfor Git och ska inte ersattas med `seed-data.json`.
 ### Manuell backup
 
 ```bash
-cd /opt/gotlandsguiden/deploy/proxmox
+cd /opt/gutafinn/deploy/proxmox
 ./backup.sh
 ```
 
 ### Nattlig backup (03:30 UTC)
 
 ```bash
-cp /opt/gotlandsguiden/deploy/proxmox/gotlandsguiden-backup.service /etc/systemd/system/
-cp /opt/gotlandsguiden/deploy/proxmox/gotlandsguiden-backup.timer /etc/systemd/system/
+cp /opt/gutafinn/deploy/proxmox/gutafinn-backup.service /etc/systemd/system/
+cp /opt/gutafinn/deploy/proxmox/gutafinn-backup.timer /etc/systemd/system/
 systemctl daemon-reload
-systemctl enable --now gotlandsguiden-backup.timer
-systemctl list-timers --all | grep gotlandsguiden-backup
+systemctl enable --now gutafinn-backup.timer
+systemctl list-timers --all | grep gutafinn-backup
 ```
 
 Verifikation:
 
 ```bash
-systemctl start gotlandsguiden-backup.service
-systemctl status gotlandsguiden-backup.service --no-pager
-ls -lh /opt/gotlandsguiden/deploy/proxmox/backups/
+systemctl start gutafinn-backup.service
+systemctl status gutafinn-backup.service --no-pager
+ls -lh /opt/gutafinn/deploy/proxmox/backups/
 ```
 
 ## Daglig felsokning
@@ -170,20 +172,20 @@ ls -lh /opt/gotlandsguiden/deploy/proxmox/backups/
 
 ```bash
 curl -fsS http://127.0.0.1:3003/api/places | head
-docker-compose -f /opt/gotlandsguiden/deploy/proxmox/docker-compose.yml ps
+docker-compose -f /opt/gutafinn/deploy/proxmox/docker-compose.yml ps
 ```
 
 ### Kontrollera publik doman
 
 ```bash
-curl -fsSI https://gotland.tobtech.se
-curl -fsS https://gotland.tobtech.se/api/categories
-curl -fsS https://gotland.tobtech.se/api/places | head
+curl -fsSI https://gutafinn.tobtech.se
+curl -fsS https://gutafinn.tobtech.se/api/categories
+curl -fsS https://gutafinn.tobtech.se/api/places | head
 ```
 
 ### Kontrollera den aktiva kartan
 
-Oppna `https://gotland.tobtech.se` i mobil och desktop och verifiera:
+Oppna `https://gutafinn.tobtech.se` i mobil och desktop och verifiera:
 
 1. Aktiv navetikett ar `Karta`.
 2. Platschipet visar 1 345 platser.
@@ -198,7 +200,7 @@ Oppna `https://gotland.tobtech.se` i mobil och desktop och verifiera:
 ### Verifiera release och databas i CT 201
 
 ```bash
-cd /opt/gotlandsguiden
+cd /opt/gutafinn
 git rev-parse HEAD
 docker-compose -f deploy/proxmox/docker-compose.yml ps
 docker-compose -f deploy/proxmox/docker-compose.yml exec backend node -e \
@@ -207,7 +209,7 @@ docker-compose -f deploy/proxmox/docker-compose.yml exec backend node -e \
 
 ### Vanliga problem
 
-1. `git pull` failar: kontrollera remote och branch i `/opt/gotlandsguiden`.
+1. `git pull` failar: kontrollera remote och branch i `/opt/gutafinn`.
 2. Frontend-imagen byggs inte: kontrollera `docker compose ... build web` och
    att `package-lock.json`, `src/` och `deploy/Dockerfile` finns i aktuell SHA.
 3. API svarar inte: kontrollera `backend`-container och DB-volym.

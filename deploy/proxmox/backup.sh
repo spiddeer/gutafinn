@@ -5,7 +5,7 @@ BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DATA_DIR="${BASE_DIR}/data"
 BACKUP_DIR="${BASE_DIR}/backups"
 TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
-BACKUP_FILE="${BACKUP_DIR}/gotlandsguiden-data-${TIMESTAMP}.tar.gz"
+BACKUP_FILE="${BACKUP_DIR}/gutafinn-data-${TIMESTAMP}.tar.gz"
 
 mkdir -p "${BACKUP_DIR}"
 
