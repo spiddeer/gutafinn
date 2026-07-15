@@ -5,8 +5,8 @@ gora, se och ata pa Gotland just nu. Samma React-app fungerar som enkelkolumn pa
 mobil och iPad samt som synkroniserad feed/karta pa desktop. Repot innehaller
 ocksa Gotlandsguidens befintliga Express/SQLite-API, OSM-import och Proxmox-drift.
 
-Dokumentationen ar avstamd mot produktionssetupen och release `1982690` den
-15 juli 2026.
+Dokumentationen ar avstamd mot produktionssetupen den 15 juli 2026. Aktuell
+driftsatt Git-SHA verifieras med kommandot i Proxmox-runbooken.
 
 ## Live
 

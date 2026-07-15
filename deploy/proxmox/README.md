@@ -10,7 +10,7 @@ Denna runbook beskriver den faktiska produktionssetupen och hur den driftas.
 - Exponerad port i CT 201: `3003`
 - Publik doman: `https://gotland.tobtech.se`
 - Cloudflare Tunnel konfigurerad i separat CT 200
-- Senast live-verifierade release: `1982690` (2026-07-15)
+- Driftsatt release-SHA: verifieras med `git rev-parse HEAD` enligt avsnittet nedan
 - Datastatus: 1 345 aktiva och 17 inaktiva historiska platser i 10 kategorier
 
 ## Topologi

@@ -30,7 +30,7 @@ Detta dokument ar den primara kontexten for AI-agenter som jobbar i repot.
 - Publik doman: `https://gotland.tobtech.se`
 - Edge-routing: Cloudflare Tunnel (konfig i separat CT 200)
 - Git remote: `https://github.com/spiddeer/gotlandguiden.git`
-- Senast live-verifierade frontendrelease: `1982690` (2026-07-15)
+- Driftsatt frontend-SHA: verifieras i CT 201 med `git rev-parse HEAD`
 - Produktionssnapshot: 1 345 aktiva platser, 17 inaktiva historiska platser,
   10 kategorier och 4 databasmigreringar (verifierat 2026-07-14)
 
