@@ -8,6 +8,7 @@ const {
   deactivateSourcePlaces,
   getPlace,
   listCategories,
+  listPlaces,
   mergeImportedPlace,
   savePlace,
   upsertCorePlace,
@@ -55,7 +56,11 @@ test("migrations create the rich schema and default categories", () => {
   ]) {
     assert.ok(tables.has(table), `${table} should exist`);
   }
-  assert.equal(listCategories(database).length, 10);
+  assert.equal(listCategories(database).length, 8);
+  assert.deepEqual(
+    listCategories(database).map((category) => category.id),
+    ["mat", "sevardhet", "strand", "smultronstallen", "natur", "aktivitet", "familj", "shopping"]
+  );
   assert.equal(database.prepare("SELECT COUNT(*) count FROM schema_migrations").get().count, 4);
   database.close();
 });
@@ -119,7 +124,40 @@ test("a place can belong to several categories", () => {
     lng: 18.5,
     description: "Café och gårdsbutik",
   }, { create: true });
-  assert.deepEqual(getPlace(database, "gardscafe").categories, ["mat", "shopping", "familj"]);
+  assert.deepEqual(getPlace(database, "gardscafe").categories, ["mat", "familj", "shopping"]);
+  database.close();
+});
+
+test("public reads exclude utility-only places and hide legacy utility categories", () => {
+  const database = openDatabase(":memory:");
+  database.prepare(`
+    INSERT INTO categories (id, label, color, emoji, sort_order)
+    VALUES ('service', 'Service', '#607d8b', 'i', 100)
+  `).run();
+
+  mergeImportedPlace(database, {
+    id: "fuel",
+    name: "Bensinstation",
+    category: "service",
+    categories: ["service"],
+    lat: 57.5,
+    lng: 18.5,
+    description: "Bensinstation",
+  }, { sourceType: "OpenStreetMap", externalId: "fuel" });
+  mergeImportedPlace(database, {
+    id: "mixed",
+    name: "Besöksmål med äldre servicekategori",
+    category: "service",
+    categories: ["service", "mat"],
+    lat: 57.6,
+    lng: 18.6,
+    description: "Restaurang",
+  }, { sourceType: "OpenStreetMap", externalId: "mixed" });
+
+  assert.equal(getPlace(database, "fuel"), null);
+  assert.deepEqual(listPlaces(database).map((place) => place.id), ["mixed"]);
+  assert.equal(getPlace(database, "mixed").category, "mat");
+  assert.deepEqual(getPlace(database, "mixed").categories, ["mat"]);
   database.close();
 });
 
@@ -172,11 +210,11 @@ test("a new source snapshot hides stale imports without deleting their enrichmen
   mergeImportedPlace(database, {
     id: "stale-n1",
     name: "Tidigare plats",
-    category: "service",
-    categories: ["service"],
+    category: "aktivitet",
+    categories: ["aktivitet"],
     lat: 57.5,
     lng: 18.5,
-    description: "Service",
+    description: "Aktivitet",
   }, source);
   savePlace(database, {
     id: "stale-n1",
@@ -204,7 +242,7 @@ test("source categories are synchronized while manual supplemental categories re
     id: "kallplats-n1",
     name: "Källplats",
     category: "sevardhet",
-    categories: ["sevardhet", "service"],
+    categories: ["sevardhet", "natur"],
     lat: 57.5,
     lng: 18.5,
     description: "Besöksmål",

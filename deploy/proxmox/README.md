@@ -12,7 +12,7 @@ Denna runbook beskriver den faktiska produktionssetupen och hur den driftas.
 - Tidigare doman: `https://gotland.tobtech.se` (permanent path/query-redirect)
 - Cloudflare Tunnel konfigurerad i separat CT 200
 - Driftsatt release-SHA: verifieras med `git rev-parse HEAD` enligt avsnittet nedan
-- Datastatus: 1 345 aktiva och 17 inaktiva historiska platser i 10 kategorier
+- Release-snapshot: 977 besoksmal i 8 interna kategorier och 7 anvandarfilter
 
 ## Topologi
 
@@ -188,7 +188,7 @@ curl -fsS https://gutafinn.tobtech.se/api/places | head
 Oppna `https://gutafinn.tobtech.se` i mobil och desktop och verifiera:
 
 1. Aktiv navetikett ar `Karta`.
-2. Platschipet visar 1 345 platser.
+2. Platschipet visar 977 platser efter att den kuraterade seed-snapshoten har laddats.
 3. OpenStreetMap-plattor och markerkluster laddas.
 4. `OpenStreetMap-bidragsgivare` ar synligt utan hover eller tryck.
 5. Browserkonsolen saknar runtime-undantag.
@@ -196,6 +196,8 @@ Oppna `https://gutafinn.tobtech.se` i mobil och desktop och verifiera:
    visar bottom-nav och enkelkolumn.
 7. `Kartfokus` kan aterstallas och behaller kategori/feed-state.
 8. Listval oppnar ratt popup och markorklick lyfter ratt kort utan kart-reinitiering.
+9. Varje platskort oppnar informationspanelen och visar kalla samt alla
+   tillgangliga adress-, kontakt-, oppettids- och tillganglighetsuppgifter.
 
 ### Verifiera release och databas i CT 201
 

@@ -33,8 +33,8 @@ Detta dokument ar den primara kontexten for AI-agenter som jobbar i repot.
 - Edge-routing: Cloudflare Tunnel (konfig i separat CT 200)
 - Git remote: `https://github.com/spiddeer/gutafinn.git`
 - Driftsatt frontend-SHA: verifieras i CT 201 med `git rev-parse HEAD`
-- Produktionssnapshot: 1 345 aktiva platser, 17 inaktiva historiska platser,
-  10 kategorier och 4 databasmigreringar (verifierat 2026-07-14)
+- Kuraterad release-snapshot: 977 besoksmal i 8 interna kategorier och 7
+  anvandarfilter; inga service-, boende-, bensin- eller laddposter
 
 ## Arkitektur
 
@@ -89,15 +89,17 @@ Detta dokument ar den primara kontexten for AI-agenter som jobbar i repot.
 ## Frontend-state och designkontrakt
 
 Gutafinn anvander lokal React-state i `src/routes/index.tsx`. Kategorin maste
-fortsatt vara `useState<Category>` med `Allt`, `Göra`, `Se` och `Äta`; sokning
+fortsatt vara `useState<Category>` med `Allt`, `Mat & dryck`, `Sevärdheter`,
+`Bad`, `Natur`, `Aktiviteter`, `Familj` och `Lokalt`; sokning
 och kategori kombineras i en memoiserad filtrering. Sparstatus och aktiv
 bottom-nav ar lokal UI-state. Sparade plats-id:n lagras beständigt i localStorage
 under `gutafinn_saved_places` och ingar inte i SQLite eller API-kontraktet.
 `Karta` ar en intern React-vy; den far inte bytas tillbaka till en extern lank.
 
 `Overraska mig` ar ocksa en intern React-vy och ska ateranvanda redan laddade
-platser samt befintlig GPS-state. Kandidater filtrerar bort primarkategorierna
-`boende` och `service`. V1 far endast ranka pa avstand, kategorivariation,
+platser samt befintlig GPS-state. Katalogen ska bara innehalla besokskategorier;
+boende, service, bensin, laddning och generisk handel filtreras i importen.
+V1 far endast ranka pa avstand, kategorivariation,
 `lastVerifiedAt` och lokal visningshistorik. Radien far vaxa
 i 1 km-steg men aldrig over 10 km. De fyra `gutafinn_surprise_*`-nycklarna
 lagrar tid, fardsatt och hogst 20 senaste plats-id:n/kategorier; GPS-koordinater
@@ -130,6 +132,12 @@ Valfria berikningsfalt ar `categories`, `address`, `contacts`, `openingHours`,
 En plats kan tillhora flera kategorier, men `category` ar alltid primar kategori.
 Kategori-nycklar maste finnas i bade SQLite-tabellen `categories` och fallbacken
 `CATEGORIES` i `public/js/places-data.js`.
+
+Publika kategorier ar `mat`, `sevardhet`, `strand`, `smultronstallen`, `natur`,
+`aktivitet`, `familj` och `shopping`. Nya importsokningar far inte aterinfora
+`service`, `boende`, bensin, laddning eller generisk handel. Varje aktiv plats
+ska ha namn, beskrivning, koordinater och kalla; informationspanelen visar
+dessutom all tillganglig adress, kontakt, oppettid och tillganglighet.
 
 API:t ska fortsatt exponera `/api/categories` och `/api/places`. Den aktiva
 Gutafinn-frontenden anvander `/api/places` som enda platskalla. `public/`-

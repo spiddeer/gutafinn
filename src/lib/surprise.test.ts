@@ -188,12 +188,12 @@ describe("surprise selection", () => {
       timeBudget: "30",
       travelMode: "walk",
       minimumCandidateCount: 1,
-      recentCategories: ["Se"],
+      recentCategories: ["Natur"],
       random: () => 0,
     })
 
     expect(recommendation?.place.id).toBe("different")
-    expect(recommendation?.productCategory).toBe("Äta")
+    expect(recommendation?.productCategory).toBe("Mat & dryck")
   })
 
   it("uses injected randomness deterministically", () => {
@@ -216,8 +216,8 @@ describe("recommendation reasons", () => {
     expect(
       buildRecommendationReasons({
         distanceKm: 1.2,
-        productCategory: "Äta",
-        recentCategories: ["Se"],
+        productCategory: "Mat & dryck",
+        recentCategories: ["Natur"],
         lastVerifiedAt: "2026-07-14",
       }),
     ).toEqual(["1,2 km bort", "En kategori du inte sett nyligen"])
@@ -227,8 +227,8 @@ describe("recommendation reasons", () => {
     expect(
       buildRecommendationReasons({
         distanceKm: null,
-        productCategory: "Se",
-        recentCategories: ["Se"],
+        productCategory: "Sevärdheter",
+        recentCategories: ["Sevärdheter"],
         lastVerifiedAt: "2026-07-14",
       }),
     ).toEqual(["Verifierad 14 juli 2026"])
@@ -243,7 +243,7 @@ describe("recommendation reasons", () => {
   it("never emits opening-hours or weather claims", () => {
     const reasons = buildRecommendationReasons({
       distanceKm: 0.5,
-      productCategory: "Göra",
+      productCategory: "Aktiviteter",
       recentCategories: [] as PlaceCategory[],
       lastVerifiedAt: "2026-07-14",
     })

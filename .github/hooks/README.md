@@ -97,7 +97,8 @@ Skyddar mot:
    `npm test` i `backend/` och verifiera att frontend-fallbacken genererats av
    samma importkorning.
 6. Vid andring i kategorier: verifiera SQLite-kategorier, seedens primara och
-   sekundara kategorier samt `CATEGORIES` i fallbacken.
+   sekundara kategorier samt `CATEGORIES` i fallbacken. Besokskatalogen far inte
+   aterinfora service, boende, bensin, laddning eller generisk handel.
 7. Vid andring i Gutafinn: hall farger tokenbaserade i `src/styles.css`, routefiler
    i `src/routes/` och verifiera datamappning samt TypeScript/Vite med `npm test` och `npm run build`.
 8. Vid andring i `src/components/gutafinn-map.tsx`: behall Leaflet-markercluster,
@@ -111,6 +112,8 @@ Skyddar mot:
     landskap, 1280 och 1440px. Mobil/iPad ska vara enkelkolumn med bottom-nav;
     desktop ska ha toppnavigation, 460-540px feed, flexibel karta och
     aterstallbart kartfokus utan tappade filter.
+11. Vid andring i platsinformation: verifiera informationspanelen med komplett
+    data och med saknad adress/kontakt/oppettid; kalla och koordinater ska alltid synas.
 
 `Overraska mig` ska fortsatt ha ren, testbar domanlogik i `src/lib/surprise.ts`,
 begransad localStorage-hantering i `src/lib/surprise-storage.ts` och UI i

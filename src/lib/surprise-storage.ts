@@ -12,7 +12,15 @@ export const MAX_SURPRISE_HISTORY = 20
 
 const TIME_BUDGET_VALUES = ["30", "1-2h", "half-day"] as const
 const TRAVEL_MODE_VALUES = ["walk", "bicycle", "car"] as const
-const PRODUCT_CATEGORY_VALUES: readonly PlaceCategory[] = ["Göra", "Se", "Äta"]
+const PRODUCT_CATEGORY_VALUES: readonly PlaceCategory[] = [
+  "Mat & dryck",
+  "Sevärdheter",
+  "Bad",
+  "Natur",
+  "Aktiviteter",
+  "Familj",
+  "Lokalt",
+]
 
 export type StorageLike = Pick<Storage, "getItem" | "setItem">
 

@@ -48,8 +48,8 @@ describe("surprise storage parsing", () => {
       "two",
     ])
     expect(
-      parseRecentCategories(JSON.stringify(["Göra", "Allt", "Se", "unknown", "Göra"])),
-    ).toEqual(["Göra", "Se", "Göra"])
+      parseRecentCategories(JSON.stringify(["Natur", "Allt", "Bad", "unknown", "Natur"])),
+    ).toEqual(["Natur", "Bad", "Natur"])
   })
 
   it("bounds parsed and serialized history to twenty unique entries", () => {
@@ -70,14 +70,14 @@ describe("surprise storage parsing", () => {
   it("keeps a bounded category sequence so older category choices can expire", () => {
     const categories = Array.from(
       { length: 25 },
-      (_, index) => (["Göra", "Se", "Äta"] as const)[index % 3],
+      (_, index) => (["Aktiviteter", "Natur", "Mat & dryck"] as const)[index % 3],
     )
 
     expect(parseRecentCategories(JSON.stringify(categories))).toEqual(
       categories.slice(0, MAX_SURPRISE_HISTORY),
     )
-    expect(addRecentCategory(categories, "Äta")).toEqual(
-      ["Äta", ...categories].slice(0, MAX_SURPRISE_HISTORY),
+    expect(addRecentCategory(categories, "Mat & dryck")).toEqual(
+      ["Mat & dryck", ...categories].slice(0, MAX_SURPRISE_HISTORY),
     )
   })
 })
@@ -88,14 +88,14 @@ describe("surprise storage integration", () => {
       [SURPRISE_STORAGE_KEYS.timeBudget]: "half-day",
       [SURPRISE_STORAGE_KEYS.travelMode]: "bicycle",
       [SURPRISE_STORAGE_KEYS.recentPlaceIds]: JSON.stringify(["place-2", "place-1"]),
-      [SURPRISE_STORAGE_KEYS.recentCategories]: JSON.stringify(["Äta", "Se"]),
+      [SURPRISE_STORAGE_KEYS.recentCategories]: JSON.stringify(["Mat & dryck", "Natur"]),
     })
 
     expect(readSurpriseState(storage)).toEqual({
       timeBudget: "half-day",
       travelMode: "bicycle",
       recentPlaceIds: ["place-2", "place-1"],
-      recentCategories: ["Äta", "Se"],
+      recentCategories: ["Mat & dryck", "Natur"],
     })
   })
 
@@ -105,12 +105,12 @@ describe("surprise storage integration", () => {
     writeTimeBudget(storage, "1-2h")
     writeTravelMode(storage, "car")
     writeRecentPlaceIds(storage, ["place-2", "place-1"])
-    writeRecentCategories(storage, ["Göra", "Äta"])
+    writeRecentCategories(storage, ["Aktiviteter", "Mat & dryck"])
 
     expect(values.get("gutafinn_surprise_time_budget")).toBe("1-2h")
     expect(values.get("gutafinn_surprise_travel_mode")).toBe("car")
     expect(values.get("gutafinn_surprise_recent_place_ids")).toBe('["place-2","place-1"]')
-    expect(values.get("gutafinn_surprise_recent_categories")).toBe('["Göra","Äta"]')
+    expect(values.get("gutafinn_surprise_recent_categories")).toBe('["Aktiviteter","Mat & dryck"]')
   })
 
   it("returns safe defaults when storage itself throws", () => {

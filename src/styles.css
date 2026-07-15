@@ -553,9 +553,16 @@ button {
 }
 
 .gutafinn-map-popup__heading {
-  margin: 0.25rem 0 0.8rem;
+  margin: 0.25rem 0 0.45rem;
   color: var(--sea-deep);
   font: 600 1.25rem/1.15 "Fraunces", Georgia, serif;
+}
+
+.gutafinn-map-popup__address {
+  margin: 0 0 0.8rem;
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+  line-height: 1.45;
 }
 
 .gutafinn-map-popup__link {

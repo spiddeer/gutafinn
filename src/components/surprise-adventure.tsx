@@ -86,7 +86,7 @@ function readInitialState() {
 }
 
 function getMoodImage(place: ApiPlace, category: PlaceCategory) {
-  if (place.category === "mat" || category === "Äta") {
+  if (place.category === "mat" || category === "Mat & dryck") {
     return {
       src: saffronPancake,
       alt: "Stämningsbild av gotländsk fika och saffranspannkaka",

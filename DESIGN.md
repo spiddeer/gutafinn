@@ -79,12 +79,14 @@ color alone.
 2. Live GPS status and saved-place control at the safe-area-aware top edge.
 3. Truthful location state, time-aware greeting and real nearby count in the hero.
 4. A search card overlapping the hero by 28px and searching the full API response.
-5. Horizontally scrolling category pills for Allt, Göra, Se and Äta.
+5. Horizontally scrolling category pills for Allt, Mat & dryck, Sevärdheter,
+   Bad, Natur, Aktiviteter, Familj and Lokalt.
 6. A prominent `Överraska mig` callout opens an internal full-screen flow for
    time, travel mode and one nearby micro-adventure.
 7. A large featured place with save, source verification, distance, walk time, opening state
    and a poppy-colored `Ta mig hit` action.
-8. Compact horizontal place cards filtered by search and category.
+8. Compact horizontal place cards filtered by search and category. Every card
+   opens a responsive information dialog with all sourced place facts.
 9. A sea-deep weather strip.
 10. A fixed safe-area-aware pill navigation for Hem, Karta, Nära and Sparat.
 11. Karta opens an embedded Leaflet atlas view with clustered live places, a GPS marker,

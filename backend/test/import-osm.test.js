@@ -4,6 +4,7 @@ const {
   CATEGORY_ORDER,
   categoriesFor,
   categoryCounts,
+  curateExistingPlaces,
   dedupePlaces,
   renderFrontendSnapshot,
   transformElement,
@@ -21,13 +22,13 @@ test("OSM tags map to primary and secondary guide categories", () => {
   );
   assert.deepEqual(
     categoriesFor({ tourism: "camp_site", leisure: "nature_reserve" }),
-    ["boende", "natur"]
+    ["natur"]
   );
+  assert.deepEqual(categoriesFor({ tourism: "hotel" }), []);
+  assert.deepEqual(categoriesFor({ amenity: "fuel" }), []);
+  assert.deepEqual(categoriesFor({ amenity: "charging_station" }), []);
   assert.deepEqual(categoriesFor({ tourism: "information", information: "board" }), []);
-  assert.deepEqual(
-    categoriesFor({ tourism: "information", information: "office" }),
-    ["service"]
-  );
+  assert.deepEqual(categoriesFor({ tourism: "information", information: "office" }), []);
 });
 
 test("an OSM element becomes a sourced, enriched place", () => {
@@ -48,27 +49,58 @@ test("an OSM element becomes a sourced, enriched place", () => {
   }, "2026-07-14");
 
   assert.equal(place.id, "gardsbutik-akanten-n123");
-  assert.equal(place.category, "shopping");
-  assert.deepEqual(place.categories, ["shopping"]);
+  assert.equal(place.category, "mat");
+  assert.deepEqual(place.categories, ["mat", "shopping"]);
+  assert.equal(place.description, "Gårdsbutik.");
   assert.equal(place.address.street, "Testvägen 1");
   assert.equal(place.contacts.websites[0].value, "https://example.test");
   assert.equal(place.openingHours.raw, "Mo-Fr 10:00-18:00");
   assert.equal(place.source.sourceUrl, "https://www.openstreetmap.org/node/123");
 });
 
+test("existing snapshots are curated without losing relevant enrichment", () => {
+  const places = curateExistingPlaces([
+    {
+      id: "charger",
+      name: "Laddplats",
+      category: "service",
+      categories: ["service"],
+      description: "Laddstation",
+    },
+    {
+      id: "hotel-restaurant",
+      name: "Krogen",
+      category: "boende",
+      categories: ["boende", "mat"],
+      description: "Restaurang",
+      address: { locality: "Visby" },
+    },
+    {
+      id: "generic-shop",
+      name: "Vanlig butik",
+      category: "shopping",
+      categories: ["shopping"],
+      description: "Butik",
+    },
+  ]);
+
+  assert.deepEqual(places.map((place) => place.id), ["hotel-restaurant"]);
+  assert.equal(places[0].category, "mat");
+  assert.deepEqual(places[0].categories, ["mat"]);
+  assert.equal(places[0].address.locality, "Visby");
+});
+
 test("duplicate Overpass elements are collapsed and every category can be counted", () => {
   const elements = CATEGORY_ORDER.map((category, index) => {
     const tagsByCategory = {
       strand: { natural: "beach" },
-      boende: { tourism: "hotel" },
       mat: { amenity: "restaurant" },
-      shopping: { shop: "farm" },
-      familj: { leisure: "playground" },
-      aktivitet: { sport: "cycling" },
+      sevardhet: { historic: "ruins" },
       smultronstallen: { tourism: "viewpoint" },
       natur: { leisure: "nature_reserve" },
-      service: { amenity: "pharmacy" },
-      sevardhet: { historic: "ruins" },
+      familj: { leisure: "playground" },
+      aktivitet: { sport: "surfing" },
+      shopping: { shop: "craft" },
     };
     return {
       type: "node",
@@ -109,7 +141,7 @@ test("nearby node and way representations of the same place are merged", () => {
 
   assert.equal(places.length, 2);
   const enriched = places.find((place) => place.website || place.contacts?.websites?.length);
-  assert.deepEqual(enriched.categories, ["shopping", "familj"]);
+  assert.deepEqual(enriched.categories, ["familj", "shopping"]);
   assert.equal(enriched.contacts.websites[0].value, "https://example.test");
 });
 

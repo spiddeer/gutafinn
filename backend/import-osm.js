@@ -7,43 +7,42 @@ const DEFAULT_OVERPASS_URLS = [
   "https://overpass.private.coffee/api/interpreter",
 ];
 
-const ACCOMMODATION = new Set([
-  "hotel", "hostel", "guest_house", "motel", "camp_site", "caravan_site",
-  "chalet", "apartment", "wilderness_hut",
-]);
 const FOOD = new Set([
   "restaurant", "cafe", "fast_food", "bar", "pub", "ice_cream",
   "food_court", "biergarten",
 ]);
-const SHOPPING = new Set([
-  "farm", "deli", "bakery", "convenience", "supermarket", "department_store",
-  "mall", "cheese", "coffee", "tea", "alcohol", "beverages", "craft",
-  "gift", "antiques", "art", "clothes", "books", "florist", "seafood",
-  "greengrocer", "confectionery", "chocolate", "variety_store",
+const FOOD_SHOPS = new Set([
+  "farm", "deli", "bakery", "cheese", "coffee", "tea", "alcohol",
+  "beverages", "seafood", "greengrocer", "confectionery", "chocolate",
+]);
+const LOCAL_SHOPS = new Set([
+  "craft", "gift", "antiques", "art", "books", "florist",
 ]);
 const FAMILY_LEISURE = new Set([
   "playground", "water_park", "miniature_golf",
 ]);
 const FAMILY_TOURISM = new Set(["zoo", "theme_park"]);
 const ACTIVITIES = new Set([
-  "sports_centre", "golf_course", "fitness_centre", "horse_riding", "marina",
-  "swimming_pool", "stadium", "track", "water_park", "miniature_golf",
+  "golf_course", "horse_riding", "swimming_pool", "water_park", "miniature_golf",
   "playground", "disc_golf_course", "bowling_alley", "escape_game",
+]);
+const VISITOR_SPORTS = new Set([
+  "surfing", "climbing", "canoe", "kayaking", "sailing", "golf",
+  "horse_racing", "disc_golf",
 ]);
 const NATURE = new Set([
   "peak", "cliff", "cave_entrance", "spring", "rock", "stone", "waterfall",
   "wetland", "wood", "heath",
 ]);
-const SERVICES = new Set([
-  "pharmacy", "hospital", "clinic", "fuel", "charging_station", "atm", "bank",
-  "post_office", "car_rental", "bicycle_rental", "boat_rental", "ferry_terminal",
-  "toilets", "drinking_water", "police",
-]);
-
 const CATEGORY_ORDER = [
-  "strand", "boende", "mat", "shopping", "familj", "aktivitet",
-  "smultronstallen", "natur", "sevardhet", "service",
+  "strand", "mat", "sevardhet", "smultronstallen", "natur", "familj",
+  "aktivitet", "shopping",
 ];
+const LEGACY_EXCLUDED_DESCRIPTIONS = new Set([
+  "Aktivitet", "Aktivitet och idrott", "Apotek", "Bensinstation", "Butik", "Färjeterminal", "Idrottsanläggning",
+  "Laddstation", "Service", "Sjukhus", "Småbåtshamn", "Träningsanläggning",
+  "Vårdcentral",
+]);
 const GOTLAND_BBOX = "56.85,17.80,58.45,19.55";
 
 const OVERPASS_SELECTORS = [
@@ -53,16 +52,15 @@ const OVERPASS_SELECTORS = [
   '["amenity"="place_of_worship"]["name"]',
   '["natural"="beach"]["name"]',
   '["leisure"~"^(beach_resort|bathing_place)$"]["name"]',
-  '["tourism"~"^(hotel|hostel|guest_house|motel|camp_site|caravan_site|chalet|apartment|wilderness_hut)$"]["name"]',
-  '["leisure"~"^(sports_centre|golf_course|fitness_centre|horse_riding|marina|swimming_pool|stadium|track|water_park|miniature_golf|playground|disc_golf_course|bowling_alley|escape_game|nature_reserve|picnic_site)$"]["name"]',
-  '["sport"]["name"]',
+  '["leisure"~"^(golf_course|horse_riding|swimming_pool|water_park|miniature_golf|playground|disc_golf_course|bowling_alley|escape_game|nature_reserve|picnic_site)$"]["name"]',
+  '["sport"~"^(surfing|climbing|canoe|kayaking|sailing|golf|horse_racing|disc_golf)$"]["name"]',
+  '["amenity"~"^(bicycle_rental|boat_rental)$"]["name"]',
   '["natural"~"^(peak|cliff|cave_entrance|spring|rock|stone|waterfall|wetland|wood|heath)$"]["name"]',
   '["boundary"="protected_area"]["name"]',
   '["tourism"="viewpoint"]["name"]',
-  '["shop"~"^(farm|deli|bakery|convenience|supermarket|department_store|mall|cheese|coffee|tea|alcohol|beverages|craft|gift|antiques|art|clothes|books|florist|seafood|greengrocer|confectionery|chocolate|variety_store)$"]["name"]',
+  '["shop"~"^(farm|deli|bakery|cheese|coffee|tea|alcohol|beverages|seafood|greengrocer|confectionery|chocolate)$"]["name"]',
+  '["shop"~"^(craft|gift|antiques|art|books|florist)$"]["name"]',
   '["tourism"~"^(zoo|theme_park)$"]["name"]',
-  '["tourism"="information"]["name"]',
-  '["amenity"~"^(pharmacy|hospital|clinic|fuel|charging_station|atm|bank|post_office|car_rental|bicycle_rental|boat_rental|ferry_terminal|toilets|drinking_water|police)$"]["name"]',
 ];
 
 const DESCRIPTION_LABELS = {
@@ -73,19 +71,10 @@ const DESCRIPTION_LABELS = {
   "amenity:pub": "Pub",
   "amenity:ice_cream": "Glass",
   "amenity:place_of_worship": "Kyrka och besöksmål",
-  "tourism:hotel": "Hotell",
-  "tourism:hostel": "Vandrarhem",
-  "tourism:guest_house": "Pensionat och gästboende",
-  "tourism:motel": "Motell",
-  "tourism:camp_site": "Camping",
-  "tourism:caravan_site": "Ställplats och husvagnscamping",
-  "tourism:chalet": "Stuga",
-  "tourism:apartment": "Semesterboende",
   "tourism:museum": "Museum",
   "tourism:gallery": "Galleri",
   "tourism:attraction": "Besöksmål",
   "tourism:viewpoint": "Utsiktsplats",
-  "tourism:information": "Turistinformation",
   "tourism:zoo": "Djurpark",
   "tourism:theme_park": "Temapark",
   "natural:beach": "Badstrand",
@@ -95,19 +84,74 @@ const DESCRIPTION_LABELS = {
   "leisure:nature_reserve": "Naturreservat",
   "leisure:picnic_site": "Rast- och picknickplats",
   "leisure:golf_course": "Golfbana",
-  "leisure:sports_centre": "Idrottsanläggning",
-  "leisure:fitness_centre": "Träningsanläggning",
-  "leisure:marina": "Småbåtshamn",
+  "leisure:horse_riding": "Ridning",
+  "leisure:swimming_pool": "Bad och simning",
   "leisure:miniature_golf": "Minigolf",
   "leisure:water_park": "Vattenpark",
+  "leisure:disc_golf_course": "Discgolfbana",
+  "leisure:bowling_alley": "Bowling",
+  "leisure:escape_game": "Escape room",
   "boundary:protected_area": "Skyddat naturområde",
-  "amenity:pharmacy": "Apotek",
-  "amenity:hospital": "Sjukhus",
-  "amenity:clinic": "Vårdcentral",
-  "amenity:fuel": "Bensinstation",
-  "amenity:charging_station": "Laddstation",
-  "amenity:post_office": "Postombud",
-  "amenity:ferry_terminal": "Färjeterminal",
+  "amenity:bicycle_rental": "Cykeluthyrning",
+  "amenity:boat_rental": "Båtuthyrning",
+  "natural:peak": "Utsikts- och höjdpunkt",
+  "natural:cliff": "Klint och naturupplevelse",
+  "natural:cave_entrance": "Grotta",
+  "natural:spring": "Källa",
+  "natural:rock": "Rauk- och klippformation",
+  "natural:stone": "Stenformation",
+  "natural:waterfall": "Vattenfall",
+  "natural:wetland": "Våtmark",
+  "natural:wood": "Skogsområde",
+  "natural:heath": "Hedmark",
+  "historic:castle": "Slott eller borg",
+  "historic:ruins": "Historisk ruin",
+  "historic:archaeological_site": "Fornlämning",
+  "historic:fort": "Historisk befästning",
+  "historic:city_gate": "Historisk stadsport",
+  "historic:manor": "Historisk herrgård",
+  "historic:memorial": "Minnesmärke",
+  "historic:monument": "Monument",
+  "shop:farm": "Gårdsbutik",
+  "shop:deli": "Delikatessbutik",
+  "shop:bakery": "Bageri",
+  "shop:cheese": "Ostbutik",
+  "shop:coffee": "Kaffehandel",
+  "shop:tea": "Tehandel",
+  "shop:alcohol": "Dryckesbutik",
+  "shop:beverages": "Dryckesbutik",
+  "shop:seafood": "Fisk och skaldjur",
+  "shop:greengrocer": "Frukt och grönt",
+  "shop:confectionery": "Konfektyr",
+  "shop:chocolate": "Chokladbutik",
+  "shop:craft": "Lokalt hantverk",
+  "shop:gift": "Present- och souvenirbutik",
+  "shop:antiques": "Antikhandel",
+  "shop:art": "Konstbutik",
+  "shop:books": "Bokhandel",
+  "shop:florist": "Blomsterbutik",
+  "sport:surfing": "Surfing",
+  "sport:climbing": "Klättring",
+  "sport:canoe": "Kanotpaddling",
+  "sport:kayaking": "Kajakpaddling",
+  "sport:sailing": "Segling",
+  "sport:golf": "Golf",
+  "sport:horse_racing": "Hästsport",
+  "sport:disc_golf": "Discgolf",
+};
+
+const CUISINE_LABELS = {
+  regional: "gotländskt och regionalt",
+  swedish: "svenskt",
+  seafood: "fisk och skaldjur",
+  pizza: "pizza",
+  burger: "burgare",
+  italian: "italienskt",
+  thai: "thailändskt",
+  indian: "indiskt",
+  asian: "asiatiskt",
+  kebab: "kebab",
+  coffee_shop: "kaffe och fika",
 };
 
 function buildOverpassQuery(selected = OVERPASS_SELECTORS) {
@@ -137,14 +181,17 @@ function categoriesFor(tags) {
   if (tags.natural === "beach" || ["beach_resort", "bathing_place"].includes(tags.leisure)) {
     matches.add("strand");
   }
-  if (has(tags, "tourism", ACCOMMODATION)) matches.add("boende");
   if (has(tags, "amenity", FOOD)) matches.add("mat");
-  if (has(tags, "shop", SHOPPING)) matches.add("shopping");
+  if (has(tags, "shop", FOOD_SHOPS)) {
+    matches.add("mat");
+    matches.add("shopping");
+  }
+  if (has(tags, "shop", LOCAL_SHOPS)) matches.add("shopping");
 
   if (has(tags, "leisure", FAMILY_LEISURE) || has(tags, "tourism", FAMILY_TOURISM)) {
     matches.add("familj");
   }
-  if (has(tags, "leisure", ACTIVITIES) || tags.sport
+  if (has(tags, "leisure", ACTIVITIES) || has(tags, "sport", VISITOR_SPORTS)
     || ["bicycle_rental", "boat_rental"].includes(tags.amenity)) {
     matches.add("aktivitet");
   }
@@ -156,10 +203,6 @@ function categoriesFor(tags) {
     || tags.leisure === "picnic_site") {
     matches.add("natur");
   }
-  if (has(tags, "amenity", SERVICES)
-    || (tags.tourism === "information" && tags.information === "office")) {
-    matches.add("service");
-  }
   if (["museum", "gallery", "attraction", "artwork"].includes(tags.tourism)
     || tags.historic || tags.amenity === "place_of_worship") {
     matches.add("sevardhet");
@@ -169,26 +212,42 @@ function categoriesFor(tags) {
 }
 
 function describe(tags, primaryCategory) {
-  for (const key of ["amenity", "tourism", "leisure", "natural", "boundary"]) {
-    const label = DESCRIPTION_LABELS[`${key}:${tags[key]}`];
-    if (label) return label;
+  const sourcedDescription = String(tags["description:sv"] || tags.description || "")
+    .replace(/\s+/g, " ").trim();
+  if (sourcedDescription) return sourcedDescription.slice(0, 320);
+
+  let label = null;
+  for (const key of ["amenity", "tourism", "leisure", "natural", "boundary", "historic", "shop", "sport"]) {
+    const candidate = DESCRIPTION_LABELS[`${key}:${tags[key]}`];
+    if (candidate) {
+      label = candidate;
+      break;
+    }
   }
-  if (tags.historic) return "Historisk plats";
-  if (tags.shop === "farm") return "Gårdsbutik";
-  if (tags.shop) return "Butik";
-  if (tags.sport) return "Aktivitet och idrott";
-  return {
+  if (!label && tags.historic) label = "Historisk plats";
+  if (!label && tags.shop) label = "Lokalt besöksmål";
+  if (!label && tags.sport) label = "Aktivitet";
+  if (!label) label = {
     strand: "Badplats",
-    boende: "Boende",
     mat: "Mat och dryck",
-    shopping: "Butik",
+    shopping: "Lokalt besöksmål",
     familj: "Familjeaktivitet",
     aktivitet: "Aktivitet",
     smultronstallen: "Utflyktsmål",
     natur: "Naturupplevelse",
-    service: "Service",
     sevardhet: "Sevärdhet",
   }[primaryCategory];
+
+  const facts = [];
+  const cuisines = uniqueValues(tags.cuisine)
+    .map((value) => CUISINE_LABELS[value] || value.replace(/_/g, " "));
+  if (cuisines.length) facts.push(`Kök: ${cuisines.join(", ")}.`);
+  if (tags.outdoor_seating === "yes") facts.push("Uteservering finns.");
+  if (tags.takeaway === "yes") facts.push("Takeaway finns.");
+  if (tags["diet:vegan"] === "yes" || tags["diet:vegetarian"] === "yes") {
+    facts.push("Vegetariska eller veganska alternativ finns.");
+  }
+  return [`${label}.`, ...facts].join(" ");
 }
 
 function uniqueValues(...values) {
@@ -332,6 +391,17 @@ function categoryCounts(places) {
   ]));
 }
 
+function curateExistingPlaces(places) {
+  return places.flatMap((place) => {
+    if (LEGACY_EXCLUDED_DESCRIPTIONS.has(place.description)) return [];
+    const categories = CATEGORY_ORDER.filter((category) => (
+      category === place.category || place.categories?.includes(category)
+    ));
+    if (categories.length === 0) return [];
+    return [{ ...place, category: categories[0], categories }];
+  });
+}
+
 function chunks(values, size) {
   return Array.from({ length: Math.ceil(values.length / size) }, (_, index) => (
     values.slice(index * size, (index + 1) * size)
@@ -339,7 +409,7 @@ function chunks(values, size) {
 }
 
 async function fetchOsmElements(urls = DEFAULT_OVERPASS_URLS) {
-  const batches = chunks(OVERPASS_SELECTORS, 4);
+  const batches = chunks(OVERPASS_SELECTORS, 2);
   const elements = [];
 
   for (const [batchIndex, selectors] of batches.entries()) {
@@ -402,6 +472,16 @@ function renderFrontendSnapshot(existingFrontend, corePlaces) {
 }
 
 async function main() {
+  if (process.argv.includes("--curate-existing")) {
+    const seedPath = path.join(__dirname, "seed-data.json");
+    const currentPlaces = JSON.parse(fs.readFileSync(seedPath, "utf8"));
+    const places = curateExistingPlaces(currentPlaces);
+    writeSnapshots(places);
+    console.log(`Renodlade ${currentPlaces.length} platser till ${places.length} besöksmål.`);
+    console.table(categoryCounts(places));
+    return;
+  }
+
   const urls = process.env.OVERPASS_URL
     ? [process.env.OVERPASS_URL]
     : DEFAULT_OVERPASS_URLS;
@@ -428,6 +508,7 @@ module.exports = {
   buildOverpassQuery,
   categoriesFor,
   categoryCounts,
+  curateExistingPlaces,
   dedupePlaces,
   renderFrontendSnapshot,
   describe,

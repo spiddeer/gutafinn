@@ -1,25 +1,36 @@
 import { createFileRoute } from "@tanstack/react-router"
 import {
+  Accessibility,
   ArrowRight,
+  Baby,
+  Bike,
   Bookmark,
-  Camera,
   CheckCircle2,
   Clock3,
+  ExternalLink,
   Footprints,
+  Globe2,
   Heart,
   Home,
+  Info,
+  Landmark,
   LocateFixed,
   LoaderCircle,
+  Mail,
   Map as MapIcon,
   MapPin,
   Navigation,
+  Phone,
   RefreshCw,
   Search,
+  ShoppingBasket,
   Sparkles,
   Sun,
   Sunset,
+  Trees,
   Utensils,
   Waves,
+  X,
   type LucideIcon,
 } from "lucide-react"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
@@ -61,9 +72,13 @@ const SPLIT_LAYOUT_QUERY = "(min-width: 1024px) and (orientation: landscape), (m
 
 const categoryItems: Array<{ label: Category; icon: LucideIcon }> = [
   { label: "Allt", icon: Sun },
-  { label: "Göra", icon: Waves },
-  { label: "Se", icon: Camera },
-  { label: "Äta", icon: Utensils },
+  { label: "Mat & dryck", icon: Utensils },
+  { label: "Sevärdheter", icon: Landmark },
+  { label: "Bad", icon: Waves },
+  { label: "Natur", icon: Trees },
+  { label: "Aktiviteter", icon: Bike },
+  { label: "Familj", icon: Baby },
+  { label: "Lokalt", icon: ShoppingBasket },
 ]
 
 const navItems: Array<{ label: string; icon: LucideIcon }> = [
@@ -130,6 +145,7 @@ function GutafinnPage() {
   const [routeTarget, setRouteTarget] = useState<string | null>(null)
   const [showSurprise, setShowSurprise] = useState(false)
   const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null)
+  const [detailsPlaceId, setDetailsPlaceId] = useState<string | null>(null)
   const requestedLocation = useRef(false)
   const placeRequestId = useRef(0)
   const splitLayout = useMediaQuery(SPLIT_LAYOUT_QUERY)
@@ -202,6 +218,9 @@ function GutafinnPage() {
   const selectedPlace = selectedPlaceId
     ? visiblePlaces.find((place) => place.id === selectedPlaceId) ?? null
     : null
+  const detailsPlace = detailsPlaceId
+    ? visiblePlaces.find((place) => place.id === detailsPlaceId) ?? null
+    : null
   const listStart = featuredPlace ? 1 : 0
   const baseListPlaces =
     feedMode === "Sparat"
@@ -217,6 +236,12 @@ function GutafinnPage() {
       setSelectedPlaceId(null)
     }
   }, [selectedPlaceId, visiblePlaces])
+
+  useEffect(() => {
+    if (detailsPlaceId && !visiblePlaces.some((place) => place.id === detailsPlaceId)) {
+      setDetailsPlaceId(null)
+    }
+  }, [detailsPlaceId, visiblePlaces])
 
   function toggleSaved(placeId: string) {
     setSaved((current) => {
@@ -236,6 +261,11 @@ function GutafinnPage() {
       `https://www.openstreetmap.org/?mlat=${place.lat}&mlon=${place.lng}#map=15/${place.lat}/${place.lng}`
     window.open(url, "_blank", "noopener,noreferrer")
     setRouteTarget(place.name)
+  }
+
+  function showPlaceDetails(placeId: string) {
+    setSelectedPlaceId(placeId)
+    setDetailsPlaceId(placeId)
   }
 
   function selectNavigation(label: string) {
@@ -301,6 +331,7 @@ function GutafinnPage() {
                       place={featuredPlace}
                       isSaved={saved.has(featuredPlace.id)}
                       onToggleSaved={() => toggleSaved(featuredPlace.id)}
+                      onShowDetails={() => showPlaceDetails(featuredPlace.id)}
                       onNavigate={() => openDirections(featuredPlace)}
                     />
                     <p className="sr-only" role="status" aria-live="polite">
@@ -331,7 +362,7 @@ function GutafinnPage() {
                           isSelected={selectedPlaceId === place.id}
                           mapSelectionEnabled={splitLayout}
                           onToggleSaved={() => toggleSaved(place.id)}
-                          onOpen={() => openDirections(place)}
+                          onShowDetails={() => showPlaceDetails(place.id)}
                           onSelectMap={() => selectPlaceOnMap(place.id)}
                         />
                       ))}
@@ -361,6 +392,15 @@ function GutafinnPage() {
       </div>
 
       {!showSurprise && <BottomNavigation active={activeNav} onSelect={selectNavigation} />}
+      {detailsPlace && (
+        <PlaceDetailsDialog
+          place={detailsPlace}
+          isSaved={saved.has(detailsPlace.id)}
+          onClose={() => setDetailsPlaceId(null)}
+          onToggleSaved={() => toggleSaved(detailsPlace.id)}
+          onNavigate={() => openDirections(detailsPlace)}
+        />
+      )}
       <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
         {selectedPlace ? `${selectedPlace.name} är vald på kartan.` : ""}
       </p>
@@ -585,11 +625,13 @@ function FeaturedPlace({
   place,
   isSaved,
   onToggleSaved,
+  onShowDetails,
   onNavigate,
 }: {
   place: PlaceViewModel
   isSaved: boolean
   onToggleSaved: () => void
+  onShowDetails: () => void
   onNavigate: () => void
 }) {
   return (
@@ -629,10 +671,16 @@ function FeaturedPlace({
         <p className="mt-3 text-sm leading-6 text-muted-foreground">{place.description}</p>
         <PlaceMeta place={place} />
 
-        <Button variant="poppy" className="mt-5 w-full" onClick={onNavigate}>
-          <Navigation className="size-4" aria-hidden="true" />
-          {place.distanceKm == null ? "Visa på kartan" : "Ta mig hit"}
-        </Button>
+        <div className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
+          <Button variant="secondary" onClick={onShowDetails}>
+            <Info className="size-4" aria-hidden="true" />
+            Mer information
+          </Button>
+          <Button variant="poppy" onClick={onNavigate}>
+            <Navigation className="size-4" aria-hidden="true" />
+            {place.distanceKm == null ? "Visa på kartan" : "Ta mig hit"}
+          </Button>
+        </div>
       </div>
     </Card>
   )
@@ -672,13 +720,190 @@ function PlaceMeta({ place }: { place: PlaceViewModel }) {
   )
 }
 
+function safeHttpUrl(value?: string | null) {
+  if (!value) return null
+  try {
+    const url = new URL(value)
+    return url.protocol === "http:" || url.protocol === "https:" ? url.toString() : null
+  } catch {
+    return null
+  }
+}
+
+function accessibilityLabel(value?: string | null) {
+  return {
+    yes: "Tillgängligt med rullstol",
+    limited: "Delvis tillgängligt med rullstol",
+    no: "Inte markerat som rullstolstillgängligt",
+  }[value ?? ""] ?? value ?? "Uppgift saknas i källan"
+}
+
+function PlaceInfoRow({
+  icon: Icon,
+  label,
+  children,
+}: {
+  icon: LucideIcon
+  label: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="flex items-start gap-3 rounded-2xl bg-secondary/65 p-4">
+      <span className="grid size-10 shrink-0 place-items-center rounded-full bg-card text-sea shadow-sm">
+        <Icon className="size-4" aria-hidden="true" />
+      </span>
+      <div className="min-w-0 flex-1">
+        <p className="text-[0.68rem] font-bold uppercase tracking-[0.13em] text-muted-foreground">{label}</p>
+        <div className="mt-1 break-words text-sm leading-6 text-foreground">{children}</div>
+      </div>
+    </div>
+  )
+}
+
+export function PlaceDetailsDialog({
+  place,
+  isSaved,
+  onClose,
+  onToggleSaved,
+  onNavigate,
+}: {
+  place: PlaceViewModel
+  isSaved: boolean
+  onClose: () => void
+  onToggleSaved: () => void
+  onNavigate: () => void
+}) {
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const headingId = `place-details-${place.id}`
+  const website = safeHttpUrl(place.website ?? place.contacts?.websites?.[0]?.value)
+  const source = place.sources?.find((item) => item.sourceType === "OpenStreetMap") ?? place.sources?.[0]
+  const sourceUrl = safeHttpUrl(source?.sourceUrl)
+
+  useEffect(() => {
+    const dialog = dialogRef.current
+    if (dialog && !dialog.open) {
+      if (typeof dialog.showModal === "function") dialog.showModal()
+      else dialog.setAttribute("open", "")
+    }
+    return () => {
+      if (!dialog?.open) return
+      if (typeof dialog.close === "function") dialog.close()
+      else dialog.removeAttribute("open")
+    }
+  }, [])
+
+  return (
+    <dialog
+      ref={dialogRef}
+      aria-labelledby={headingId}
+      onCancel={(event) => {
+        event.preventDefault()
+        onClose()
+      }}
+      className="fixed inset-x-0 bottom-0 top-auto m-0 max-h-[92svh] w-full max-w-none overflow-hidden rounded-t-[2rem] border border-border bg-card p-0 text-foreground shadow-[var(--shadow-float)] backdrop:bg-overlay/75 backdrop:backdrop-blur-sm sm:inset-0 sm:m-auto sm:max-w-[640px] sm:rounded-[2rem]"
+    >
+      <div className="max-h-[92svh] overflow-y-auto overscroll-contain">
+        <header className="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-border bg-card/95 px-5 py-4 backdrop-blur-xl">
+          <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.13em] text-sea">
+            <Info className="size-4" aria-hidden="true" />
+            Platsinformation
+          </p>
+          <Button type="button" variant="ghost" size="icon" aria-label="Stäng platsinformation" onClick={onClose}>
+            <X className="size-5" aria-hidden="true" />
+          </Button>
+        </header>
+
+        <div className="space-y-6 p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:p-7">
+          <section>
+            <div className="flex flex-wrap gap-2">
+              {(place.categoryDetails?.length
+                ? place.categoryDetails
+                : [{ id: place.category, label: place.kind, emoji: "", isPrimary: true }]
+              ).map((categoryDetail) => (
+                <Badge key={categoryDetail.id}>
+                  {categoryDetail.emoji ? `${categoryDetail.emoji} ` : ""}{categoryDetail.label}
+                </Badge>
+              ))}
+            </div>
+            <h2 id={headingId} className="mt-3 font-display text-3xl leading-tight font-semibold text-sea-deep">
+              {place.name}
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-muted-foreground">{place.description}</p>
+            <PlaceMeta place={place} />
+          </section>
+
+          <section className="grid gap-3" aria-label="Fakta om platsen">
+            <PlaceInfoRow icon={MapPin} label="Adress och position">
+              <p>{place.address?.formatted || "Gatuadress saknas i källan"}</p>
+              <p className="text-xs text-muted-foreground">
+                {place.lat.toFixed(5)}, {place.lng.toFixed(5)}
+              </p>
+            </PlaceInfoRow>
+
+            <PlaceInfoRow icon={Clock3} label="Öppettider">
+              {place.openingHours?.raw || place.openingHours?.note || "Uppgift saknas i källan"}
+            </PlaceInfoRow>
+
+            <PlaceInfoRow icon={Accessibility} label="Tillgänglighet">
+              {accessibilityLabel(place.accessibility)}
+            </PlaceInfoRow>
+
+            <PlaceInfoRow icon={Globe2} label="Kontakt">
+              <div className="flex flex-col items-start gap-1">
+                {website && (
+                  <a className="font-semibold text-sea-deep underline-offset-4 hover:underline" href={website} target="_blank" rel="noopener noreferrer">
+                    Webbplats <ExternalLink className="ml-1 inline size-3.5" aria-hidden="true" />
+                  </a>
+                )}
+                {place.phone && (
+                  <a className="inline-flex items-center gap-1.5 font-semibold text-sea-deep underline-offset-4 hover:underline" href={`tel:${place.phone.replace(/[^+\d]/g, "")}`}>
+                    <Phone className="size-3.5" aria-hidden="true" /> {place.phone}
+                  </a>
+                )}
+                {place.email && (
+                  <a className="inline-flex items-center gap-1.5 font-semibold text-sea-deep underline-offset-4 hover:underline" href={`mailto:${place.email}`}>
+                    <Mail className="size-3.5" aria-hidden="true" /> {place.email}
+                  </a>
+                )}
+                {!website && !place.phone && !place.email && "Kontaktuppgifter saknas i källan"}
+              </div>
+            </PlaceInfoRow>
+
+            <PlaceInfoRow icon={CheckCircle2} label="Källa och aktualitet">
+              <p>{place.verifiedLabel ? `Kontrollerad mot källan ${place.verifiedLabel}.` : "Verifieringsdatum saknas."}</p>
+              {sourceUrl ? (
+                <a className="mt-1 inline-flex items-center gap-1 font-semibold text-sea-deep underline-offset-4 hover:underline" href={sourceUrl} target="_blank" rel="noopener noreferrer">
+                  {source?.sourceType || "Visa källa"} <ExternalLink className="size-3.5" aria-hidden="true" />
+                </a>
+              ) : (
+                <p className="mt-1 text-muted-foreground">Länk till källa saknas.</p>
+              )}
+            </PlaceInfoRow>
+          </section>
+
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            <Button type="button" variant="secondary" onClick={onToggleSaved} aria-pressed={isSaved}>
+              <Heart className={cn("size-4", isSaved && "fill-current text-poppy")} aria-hidden="true" />
+              {isSaved ? "Sparad" : "Spara platsen"}
+            </Button>
+            <Button type="button" variant="poppy" onClick={onNavigate}>
+              <Navigation className="size-4" aria-hidden="true" />
+              {place.distanceKm == null ? "Visa på kartan" : "Ta mig hit"}
+            </Button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+  )
+}
+
 function CompactPlace({
   place,
   isSaved,
   isSelected,
   mapSelectionEnabled,
   onToggleSaved,
-  onOpen,
+  onShowDetails,
   onSelectMap,
 }: {
   place: PlaceViewModel
@@ -686,11 +911,9 @@ function CompactPlace({
   isSelected: boolean
   mapSelectionEnabled: boolean
   onToggleSaved: () => void
-  onOpen: () => void
+  onShowDetails: () => void
   onSelectMap: () => void
 }) {
-  const activatePlace = mapSelectionEnabled ? onSelectMap : onOpen
-
   return (
     <Card
       id={`place-card-${place.id}`}
@@ -699,23 +922,34 @@ function CompactPlace({
         isSelected && "border-sea ring-3 ring-sea/20",
       )}
     >
-      <button type="button" className="shrink-0 rounded-xl outline-none focus-visible:ring-[3px] focus-visible:ring-ring/40" onClick={activatePlace}>
+      <button type="button" className="shrink-0 rounded-xl outline-none focus-visible:ring-[3px] focus-visible:ring-ring/40" onClick={onShowDetails} aria-label={`Visa information om ${place.name}`}>
         <img src={getPlaceImage(place)} alt="" className="size-20 rounded-xl object-cover" loading="lazy" />
       </button>
-      <button type="button" className="min-w-0 flex-1 text-left outline-none focus-visible:ring-[3px] focus-visible:ring-ring/40" onClick={activatePlace}>
+      <button type="button" className="min-w-0 flex-1 text-left outline-none focus-visible:ring-[3px] focus-visible:ring-ring/40" onClick={onShowDetails}>
         <p className="text-[0.65rem] font-bold uppercase tracking-[0.13em] text-sea">{place.tag}</p>
         <h3 className="mt-1 truncate font-display text-lg leading-tight font-semibold text-sea-deep">{place.name}</h3>
         <div className="mt-2 flex items-center gap-3 text-xs font-semibold text-muted-foreground">
           {place.distanceLabel ? <span>{place.distanceLabel}</span> : <span>{place.kind}</span>}
           <span className={cn(place.opening.kind === "open" && "text-meadow")}>{place.opening.label}</span>
         </div>
-        {mapSelectionEnabled && (
-          <span className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-sea-deep">
-            <MapPin className="size-3.5" aria-hidden="true" />
-            {isSelected ? "Vald på kartan" : "Visa på kartan"}
-          </span>
-        )}
+        <span className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-sea-deep">
+          <Info className="size-3.5" aria-hidden="true" />
+          Visa information
+        </span>
       </button>
+      {mapSelectionEnabled && (
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="size-10"
+          aria-label={isSelected ? `${place.name} är vald på kartan` : `Visa ${place.name} på kartan`}
+          aria-pressed={isSelected}
+          onClick={onSelectMap}
+        >
+          <MapPin className={cn("size-4", isSelected && "fill-current text-sea")} aria-hidden="true" />
+        </Button>
+      )}
       <Button
         type="button"
         variant="ghost"

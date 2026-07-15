@@ -13,16 +13,14 @@
 
 // Kategorier med etikett och färg (används för filter och markörer).
 const CATEGORIES = {
-  strand:     { label: "Stränder",    color: "#3f9bc0", emoji: "\uD83C\uDFD6\uFE0F" },
+  strand:     { label: "Bad",         color: "#3f9bc0", emoji: "\uD83C\uDFD6\uFE0F" },
   sevardhet:  { label: "Sevärdheter", color: "#e0a458", emoji: "\uD83C\uDFDB\uFE0F" },
   mat:        { label: "Mat & dryck", color: "#c0603f", emoji: "\uD83C\uDF7D\uFE0F" },
   smultronstallen: { label: "Smultronställen", color: "#60a074", emoji: "\uD83C\uDF3F" },
-  boende:     { label: "Boende", color: "#7667a8", emoji: "\uD83D\uDECF\uFE0F" },
   aktivitet:  { label: "Aktiviteter", color: "#d1764f", emoji: "\uD83D\uDEB2" },
-  natur:      { label: "Natur & friluftsliv", color: "#4f8661", emoji: "\uD83C\uDF32" },
-  shopping:   { label: "Butiker & gårdsbutiker", color: "#aa6c84", emoji: "\uD83D\uDECD\uFE0F" },
+  natur:      { label: "Natur & utflykter", color: "#4f8661", emoji: "\uD83C\uDF32" },
+  shopping:   { label: "Lokalt & gårdsbutiker", color: "#aa6c84", emoji: "\uD83D\uDECD\uFE0F" },
   familj:     { label: "För familjen", color: "#bd7f2f", emoji: "\uD83E\uDDF8" },
-  service:    { label: "Service", color: "#607d8b", emoji: "\u2139\uFE0F" },
 };
 
 // Genererad från OpenStreetMap. Redigera fritt eller ersätt via API.
@@ -34,30 +32,6 @@ const MOCK_PLACES = [
     "lat": 57.638696,
     "lng": 18.293112,
     "description": "Restaurang"
-  },
-  {
-    "id": "a-k-wiberg-n12892419542",
-    "name": "A-K Wiberg",
-    "category": "shopping",
-    "lat": 57.640324,
-    "lng": 18.294663,
-    "description": "Butik"
-  },
-  {
-    "id": "a7-w33359632",
-    "name": "A7",
-    "category": "aktivitet",
-    "lat": 57.631424,
-    "lng": 18.301217,
-    "description": "Aktivitet och idrott"
-  },
-  {
-    "id": "a7-rampen-n12175260888",
-    "name": "A7-rampen",
-    "category": "aktivitet",
-    "lat": 57.630858,
-    "lng": 18.302862,
-    "description": "Aktivitet och idrott"
   },
   {
     "id": "adekarr-w482269652",
@@ -156,28 +130,12 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "alva-cng-n10814897162",
-    "name": "Alva CNG",
-    "category": "service",
-    "lat": 57.207593,
-    "lng": 18.352504,
-    "description": "Bensinstation"
-  },
-  {
     "id": "alva-kyrka-w1191887713",
     "name": "Alva kyrka",
     "category": "sevardhet",
     "lat": 57.207506,
     "lng": 18.361388,
     "description": "Kyrka och besöksmål"
-  },
-  {
-    "id": "alva-stugby-n4347934090",
-    "name": "Alva Stugby",
-    "category": "boende",
-    "lat": 57.183327,
-    "lng": 18.335814,
-    "description": "Stuga"
   },
   {
     "id": "alvena-lindarang-w102775339",
@@ -236,76 +194,12 @@ const MOCK_PLACES = [
     "description": "Kyrka och besöksmål"
   },
   {
-    "id": "antikvariat-drotten-n8986047331",
-    "name": "Antikvariat Drotten",
-    "category": "shopping",
-    "lat": 57.640454,
-    "lng": 18.294504,
-    "description": "Butik"
-  },
-  {
-    "id": "antikvariat-perssonligt-n11080887052",
-    "name": "Antikvariat Perssonligt",
-    "category": "shopping",
-    "lat": 57.237152,
-    "lng": 18.374366,
-    "description": "Butik"
-  },
-  {
     "id": "apisaras-thaimat-n318353046",
     "name": "Apisaras thaimat",
     "category": "mat",
     "lat": 57.645907,
     "lng": 18.3191,
     "description": "Restaurang"
-  },
-  {
-    "id": "apotek-hjartat-n12907584777",
-    "name": "Apotek Hjärtat",
-    "category": "service",
-    "lat": 57.623572,
-    "lng": 18.322962,
-    "description": "Apotek"
-  },
-  {
-    "id": "apoteket-n272661796",
-    "name": "Apoteket",
-    "category": "service",
-    "lat": 57.238794,
-    "lng": 18.371294,
-    "description": "Apotek"
-  },
-  {
-    "id": "apoteket-n444414776",
-    "name": "Apoteket",
-    "category": "service",
-    "lat": 57.637744,
-    "lng": 18.300747,
-    "description": "Apotek"
-  },
-  {
-    "id": "apoteket-n1480391826",
-    "name": "Apoteket",
-    "category": "service",
-    "lat": 57.648089,
-    "lng": 18.300521,
-    "description": "Apotek"
-  },
-  {
-    "id": "apoteket-n13888128005",
-    "name": "Apoteket",
-    "category": "service",
-    "lat": 57.621861,
-    "lng": 18.322582,
-    "description": "Apotek"
-  },
-  {
-    "id": "apoteksgruppen-n9982432314",
-    "name": "Apoteksgruppen",
-    "category": "service",
-    "lat": 57.505343,
-    "lng": 18.455209,
-    "description": "Apotek"
   },
   {
     "id": "ardre-bildsten-viii-n6373542757",
@@ -330,14 +224,6 @@ const MOCK_PLACES = [
     "lat": 57.363584,
     "lng": 18.755923,
     "description": "Badplats"
-  },
-  {
-    "id": "ardrebo-cafe-n10740046612",
-    "name": "Ardrebo Café",
-    "category": "service",
-    "lat": 57.35937,
-    "lng": 18.68505,
-    "description": "Laddstation"
   },
   {
     "id": "aron-s-kaffebar-n639299814",
@@ -388,14 +274,6 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "avis-n4978365554",
-    "name": "Avis",
-    "category": "service",
-    "lat": 57.638867,
-    "lng": 18.290771,
-    "description": "Service"
-  },
-  {
     "id": "b-m-gard-w559809576",
     "name": "B&M Gård",
     "category": "familj",
@@ -404,28 +282,12 @@ const MOCK_PLACES = [
     "description": "Djurpark"
   },
   {
-    "id": "babyland-r14479325",
-    "name": "Babyland",
-    "category": "aktivitet",
-    "lat": 57.608531,
-    "lng": 18.243517,
-    "description": "Aktivitet"
-  },
-  {
     "id": "bad-wolf-n5595023609",
     "name": "Bad Wolf",
     "category": "mat",
     "lat": 57.635581,
     "lng": 18.292401,
     "description": "Restaurang"
-  },
-  {
-    "id": "badlagunen-r14479311",
-    "name": "Badlagunen",
-    "category": "aktivitet",
-    "lat": 57.608561,
-    "lng": 18.242791,
-    "description": "Aktivitet"
   },
   {
     "id": "bagarns-n11080928116",
@@ -572,38 +434,6 @@ const MOCK_PLACES = [
     "description": "Museum"
   },
   {
-    "id": "best-western-solhem-w432546876",
-    "name": "Best Western Solhem",
-    "category": "boende",
-    "lat": 57.634789,
-    "lng": 18.286616,
-    "description": "Hotell"
-  },
-  {
-    "id": "best-western-strand-hotel-n366598391",
-    "name": "Best Western Strand Hotel",
-    "category": "boende",
-    "lat": 57.641646,
-    "lng": 18.29264,
-    "description": "Hotell"
-  },
-  {
-    "id": "bik-bok-n11691721474",
-    "name": "Bik Bok",
-    "category": "shopping",
-    "lat": 57.637781,
-    "lng": 18.299863,
-    "description": "Butik"
-  },
-  {
-    "id": "bil-o-bat-n10740026986",
-    "name": "Bil o Båt",
-    "category": "service",
-    "lat": 57.03366,
-    "lng": 18.25829,
-    "description": "Laddstation"
-  },
-  {
     "id": "bildstenen-vid-stenbro-n6374182224",
     "name": "Bildstenen vid Stenbro",
     "category": "sevardhet",
@@ -668,44 +498,12 @@ const MOCK_PLACES = [
     "description": "Badplats"
   },
   {
-    "id": "bjorkhaga-by-n2358007157",
-    "name": "Björkhaga By",
-    "category": "boende",
-    "lat": 57.405572,
-    "lng": 18.178162,
-    "description": "Camping"
-  },
-  {
-    "id": "bjorkhaga-camping-n10743405410",
-    "name": "Björkhaga Camping",
-    "category": "boende",
-    "lat": 57.404086,
-    "lng": 18.171276,
-    "description": "Camping"
-  },
-  {
     "id": "bjorkhaga-standby-restaurang-n10743405608",
     "name": "Björkhaga Standby & Restaurang",
     "category": "mat",
     "lat": 57.404047,
     "lng": 18.171146,
     "description": "Restaurang"
-  },
-  {
-    "id": "bjorkhaga-strandby-n1313897393",
-    "name": "Björkhaga strandby",
-    "category": "boende",
-    "lat": 57.404906,
-    "lng": 18.171613,
-    "description": "Pensionat och gästboende"
-  },
-  {
-    "id": "bjorkhags-strandby-n10740026984",
-    "name": "Björkhags Strandby",
-    "category": "service",
-    "lat": 57.40516,
-    "lng": 18.1737,
-    "description": "Laddstation"
   },
   {
     "id": "bjorkume-naturreservat-w102775611",
@@ -754,14 +552,6 @@ const MOCK_PLACES = [
     "lat": 57.653985,
     "lng": 18.699938,
     "description": "Naturupplevelse"
-  },
-  {
-    "id": "blase-kalkbruk-stallplats-n6658465740",
-    "name": "Bläse Kalkbruk Ställplats",
-    "category": "boende",
-    "lat": 57.894833,
-    "lng": 18.839832,
-    "description": "Ställplats och husvagnscamping"
   },
   {
     "id": "blase-kalkbruksmuseum-w1068987684",
@@ -822,7 +612,7 @@ const MOCK_PLACES = [
   {
     "id": "bogeklintens-raukar-n1844666556",
     "name": "Bogeklintens raukar",
-    "category": "natur",
+    "category": "sevardhet",
     "lat": 57.671531,
     "lng": 18.773678,
     "description": "Besöksmål"
@@ -860,28 +650,12 @@ const MOCK_PLACES = [
     "description": "Café"
   },
   {
-    "id": "bokhandeln-wessman-pettersson-n766160692",
-    "name": "Bokhandeln Wessman & Pettersson",
-    "category": "shopping",
-    "lat": 57.635859,
-    "lng": 18.292776,
-    "description": "Butik"
-  },
-  {
     "id": "bolaget-n315871852",
     "name": "Bolaget",
     "category": "mat",
     "lat": 57.640658,
     "lng": 18.296726,
     "description": "Restaurang"
-  },
-  {
-    "id": "borgvik-w1310423631",
-    "name": "Borgvik",
-    "category": "boende",
-    "lat": 57.434427,
-    "lng": 18.852876,
-    "description": "Stuga"
   },
   {
     "id": "bosarve-lovskogs-naturreservat-w102775826",
@@ -924,14 +698,6 @@ const MOCK_PLACES = [
     "description": "Museum"
   },
   {
-    "id": "botvaldavik-n2093538687",
-    "name": "Botvaldavik",
-    "category": "aktivitet",
-    "lat": 57.585385,
-    "lng": 18.803859,
-    "description": "Småbåtshamn"
-  },
-  {
     "id": "botvaldetrask-w378696982",
     "name": "Botvaldeträsk",
     "category": "natur",
@@ -940,28 +706,12 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "boules-court-n13962187850",
-    "name": "Boules court",
-    "category": "aktivitet",
-    "lat": 57.767157,
-    "lng": 18.42147,
-    "description": "Aktivitet och idrott"
-  },
-  {
     "id": "bovikariv-r7100659",
     "name": "Bovikariv",
     "category": "natur",
     "lat": 57.854084,
     "lng": 19.124974,
     "description": "Naturupplevelse"
-  },
-  {
-    "id": "boviken-hide-hamn-n9196547078",
-    "name": "Boviken Hide Hamn",
-    "category": "aktivitet",
-    "lat": 57.732055,
-    "lng": 18.87302,
-    "description": "Småbåtshamn"
   },
   {
     "id": "braidfloar-gravfalt-w680732876",
@@ -986,14 +736,6 @@ const MOCK_PLACES = [
     "lat": 57.82527,
     "lng": 18.514366,
     "description": "Restaurang"
-  },
-  {
-    "id": "bravida-visby-n10740046614",
-    "name": "Bravida Visby",
-    "category": "service",
-    "lat": 57.64396,
-    "lng": 18.32622,
-    "description": "Laddstation"
   },
   {
     "id": "bro-kyrka-w546818438",
@@ -1108,28 +850,12 @@ const MOCK_PLACES = [
     "description": "Café"
   },
   {
-    "id": "brodboden-n11700876173",
-    "name": "Brödboden",
-    "category": "shopping",
-    "lat": 57.587465,
-    "lng": 18.268363,
-    "description": "Butik"
-  },
-  {
     "id": "brodernas-n11091668944",
     "name": "Brödernas",
     "category": "mat",
     "lat": 57.639883,
     "lng": 18.292363,
     "description": "Restaurang"
-  },
-  {
-    "id": "bubbelpoolen-w1087514340",
-    "name": "Bubbelpoolen",
-    "category": "aktivitet",
-    "lat": 57.609028,
-    "lng": 18.244524,
-    "description": "Aktivitet"
   },
   {
     "id": "bulverket-w378884344",
@@ -1154,14 +880,6 @@ const MOCK_PLACES = [
     "lat": 57.853697,
     "lng": 19.023591,
     "description": "Kyrka och besöksmål"
-  },
-  {
-    "id": "bunge-kyrka-toalett-n8900585380",
-    "name": "Bunge Kyrka Toalett",
-    "category": "service",
-    "lat": 57.687294,
-    "lng": 18.763734,
-    "description": "Service"
   },
   {
     "id": "bungemuseet-n687936955",
@@ -1204,14 +922,6 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "burgsvik-n2083024628",
-    "name": "Burgsvik",
-    "category": "aktivitet",
-    "lat": 57.034569,
-    "lng": 18.259041,
-    "description": "Småbåtshamn"
-  },
-  {
     "id": "burgsvikens-havspool-n11039325018",
     "name": "Burgsvikens Havspool",
     "category": "strand",
@@ -1220,28 +930,12 @@ const MOCK_PLACES = [
     "description": "Badplats"
   },
   {
-    "id": "burgsviks-camping-w1083462558",
-    "name": "Burgsviks Camping",
-    "category": "boende",
-    "lat": 57.03193,
-    "lng": 18.255914,
-    "description": "Camping"
-  },
-  {
     "id": "burgsviks-krog-n1369232280",
     "name": "Burgsviks krog",
     "category": "mat",
     "lat": 57.030616,
     "lng": 18.274665,
     "description": "Restaurang"
-  },
-  {
-    "id": "burgsviks-rogeri-w1075537134",
-    "name": "Burgsviks Rögeri",
-    "category": "shopping",
-    "lat": 57.031469,
-    "lng": 18.284818,
-    "description": "Butik"
   },
   {
     "id": "burs-65-1-ringcross-n6373566315",
@@ -1268,14 +962,6 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "butiken-n9874892791",
-    "name": "Butiken",
-    "category": "aktivitet",
-    "lat": 58.391884,
-    "lng": 19.192772,
-    "description": "Butik"
-  },
-  {
     "id": "butravjs-skeppssattningar-n6373661542",
     "name": "Butravjs Skeppssättningar",
     "category": "sevardhet",
@@ -1298,14 +984,6 @@ const MOCK_PLACES = [
     "lat": 57.402707,
     "lng": 18.529913,
     "description": "Kyrka och besöksmål"
-  },
-  {
-    "id": "bysens-livs-n2960655148",
-    "name": "Bysens Livs",
-    "category": "shopping",
-    "lat": 57.486391,
-    "lng": 18.132012,
-    "description": "Butik"
   },
   {
     "id": "baken-n9730122846",
@@ -1404,28 +1082,12 @@ const MOCK_PLACES = [
     "description": "Restaurang"
   },
   {
-    "id": "carlings-n11691721472",
-    "name": "Carlings",
-    "category": "shopping",
-    "lat": 57.637854,
-    "lng": 18.299672,
-    "description": "Butik"
-  },
-  {
     "id": "carlssons-n4308983757",
     "name": "Carlssons",
     "category": "mat",
     "lat": 57.955315,
     "lng": 19.245107,
     "description": "Restaurang"
-  },
-  {
-    "id": "cementa-arena-w379071919",
-    "name": "Cementa Arena",
-    "category": "aktivitet",
-    "lat": 57.707667,
-    "lng": 18.793398,
-    "description": "Aktivitet och idrott"
   },
   {
     "id": "chili-n318925573",
@@ -1452,132 +1114,12 @@ const MOCK_PLACES = [
     "description": "Historisk plats"
   },
   {
-    "id": "cias-keramik-w526079000",
-    "name": "Cias Keramik",
-    "category": "shopping",
-    "lat": 57.907094,
-    "lng": 19.107812,
-    "description": "Butik"
-  },
-  {
-    "id": "circle-k-n54045238",
-    "name": "Circle K",
-    "category": "service",
-    "lat": 57.630115,
-    "lng": 18.287078,
-    "description": "Bensinstation"
-  },
-  {
-    "id": "circle-k-w502562973",
-    "name": "Circle K",
-    "category": "service",
-    "lat": 57.644922,
-    "lng": 18.314797,
-    "description": "Bensinstation"
-  },
-  {
-    "id": "clarion-hotel-n4450109490",
-    "name": "Clarion Hotel",
-    "category": "boende",
-    "lat": 57.63861,
-    "lng": 18.290902,
-    "description": "Hotell"
-  },
-  {
-    "id": "clarion-hotell-visby-n10740026995",
-    "name": "Clarion hotell Visby",
-    "category": "service",
-    "lat": 57.63814,
-    "lng": 18.29001,
-    "description": "Laddstation"
-  },
-  {
     "id": "coffee-art-gotland-n11961361623",
     "name": "Coffee & Art Gotland",
     "category": "mat",
     "lat": 57.641626,
     "lng": 18.29421,
     "description": "Café"
-  },
-  {
-    "id": "coop-w290377569",
-    "name": "Coop",
-    "category": "shopping",
-    "lat": 57.621439,
-    "lng": 18.322859,
-    "description": "Butik"
-  },
-  {
-    "id": "coop-w305107184",
-    "name": "Coop",
-    "category": "shopping",
-    "lat": 57.504639,
-    "lng": 18.455865,
-    "description": "Butik"
-  },
-  {
-    "id": "coop-grabo-w231514886",
-    "name": "Coop Gråbo",
-    "category": "shopping",
-    "lat": 57.619114,
-    "lng": 18.301478,
-    "description": "Butik"
-  },
-  {
-    "id": "coop-hemse-n272661792",
-    "name": "Coop Hemse",
-    "category": "shopping",
-    "lat": 57.239,
-    "lng": 18.377277,
-    "description": "Butik"
-  },
-  {
-    "id": "coop-klintehamn-n1348602411",
-    "name": "Coop Klintehamn",
-    "category": "shopping",
-    "lat": 57.387249,
-    "lng": 18.204198,
-    "description": "Butik"
-  },
-  {
-    "id": "coop-ljugarn-w203181957",
-    "name": "Coop Ljugarn",
-    "category": "shopping",
-    "lat": 57.332927,
-    "lng": 18.702124,
-    "description": "Butik"
-  },
-  {
-    "id": "coop-larbro-w197364337",
-    "name": "Coop Lärbro",
-    "category": "shopping",
-    "lat": 57.784778,
-    "lng": 18.78884,
-    "description": "Butik"
-  },
-  {
-    "id": "coop-romakloster-n10740046628",
-    "name": "Coop Romakloster",
-    "category": "service",
-    "lat": 57.50463,
-    "lng": 18.45587,
-    "description": "Laddstation"
-  },
-  {
-    "id": "coop-slite-w378740698",
-    "name": "Coop Slite",
-    "category": "shopping",
-    "lat": 57.70423,
-    "lng": 18.803233,
-    "description": "Butik"
-  },
-  {
-    "id": "coop-oster-n315981839",
-    "name": "Coop Öster",
-    "category": "shopping",
-    "lat": 57.637943,
-    "lng": 18.30141,
-    "description": "Butik"
   },
   {
     "id": "creperie-logi-n305501226",
@@ -1602,14 +1144,6 @@ const MOCK_PLACES = [
     "lat": 57.934155,
     "lng": 19.164521,
     "description": "Restaurang"
-  },
-  {
-    "id": "cubus-n11691721471",
-    "name": "Cubus",
-    "category": "shopping",
-    "lat": 57.637913,
-    "lng": 18.299496,
-    "description": "Butik"
   },
   {
     "id": "dagghagens-naturreservat-w102775363",
@@ -1642,14 +1176,6 @@ const MOCK_PLACES = [
     "lat": 57.552397,
     "lng": 18.534129,
     "description": "Kyrka och besöksmål"
-  },
-  {
-    "id": "dalhemstaget-n10740046638",
-    "name": "Dalhemståget",
-    "category": "service",
-    "lat": 57.544935,
-    "lng": 18.531646,
-    "description": "Laddstation"
   },
   {
     "id": "dalmansporten-n6641861710",
@@ -1690,14 +1216,6 @@ const MOCK_PLACES = [
     "lat": 57.876145,
     "lng": 18.890184,
     "description": "Café"
-  },
-  {
-    "id": "destination-tofta-n10740046617",
-    "name": "Destination Tofta",
-    "category": "service",
-    "lat": 57.48169,
-    "lng": 18.13391,
-    "description": "Laddstation"
   },
   {
     "id": "digarojr-cist-n6373556120",
@@ -1748,30 +1266,6 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "din-x-n637797561",
-    "name": "din-X",
-    "category": "service",
-    "lat": 57.337716,
-    "lng": 18.700179,
-    "description": "Bensinstation"
-  },
-  {
-    "id": "djaupdy-n2089139098",
-    "name": "Djaupdy",
-    "category": "aktivitet",
-    "lat": 57.250001,
-    "lng": 18.709231,
-    "description": "Småbåtshamn"
-  },
-  {
-    "id": "djupvik-hotell-restaurang-n1489906377",
-    "name": "Djupvik Hotell & Restaurang",
-    "category": "boende",
-    "lat": 57.30732,
-    "lng": 18.152055,
-    "description": "Hotell"
-  },
-  {
     "id": "djupvik-skeppssattning-n6374203622",
     "name": "Djupvik Skeppssättning",
     "category": "sevardhet",
@@ -1788,36 +1282,12 @@ const MOCK_PLACES = [
     "description": "Besöksmål"
   },
   {
-    "id": "djupviks-hamn-n1489906379",
-    "name": "Djupviks hamn",
-    "category": "aktivitet",
-    "lat": 57.30841,
-    "lng": 18.149024,
-    "description": "Småbåtshamn"
-  },
-  {
-    "id": "dollarstore-n13888128007",
-    "name": "Dollarstore",
-    "category": "shopping",
-    "lat": 57.62246,
-    "lng": 18.323125,
-    "description": "Butik"
-  },
-  {
     "id": "domarlunden-n6373753073",
     "name": "Domarlunden",
     "category": "sevardhet",
     "lat": 57.783933,
     "lng": 18.817456,
     "description": "Historisk plats"
-  },
-  {
-    "id": "donners-hotel-n3034225922",
-    "name": "Donners Hotel",
-    "category": "boende",
-    "lat": 57.638713,
-    "lng": 18.291453,
-    "description": "Hotell"
   },
   {
     "id": "donnersporten-n1798336943",
@@ -1834,14 +1304,6 @@ const MOCK_PLACES = [
     "lat": 57.156104,
     "lng": 18.221277,
     "description": "Historisk plats"
-  },
-  {
-    "id": "dressmann-n11691721473",
-    "name": "Dressmann",
-    "category": "shopping",
-    "lat": 57.637822,
-    "lng": 18.299724,
-    "description": "Butik"
   },
   {
     "id": "drottens-kyrkoruin-n12897024931",
@@ -1868,14 +1330,6 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "dambaskogen-n10608395040",
-    "name": "Dämbaskogen",
-    "category": "service",
-    "lat": 57.898337,
-    "lng": 19.091143,
-    "description": "Laddstation"
-  },
-  {
     "id": "east-coast-n446780014",
     "name": "East Coast",
     "category": "mat",
@@ -1890,14 +1344,6 @@ const MOCK_PLACES = [
     "lat": 57.957384,
     "lng": 19.23749,
     "description": "Restaurang"
-  },
-  {
-    "id": "ebbes-n2320537405",
-    "name": "Ebbes",
-    "category": "shopping",
-    "lat": 57.957228,
-    "lng": 19.237981,
-    "description": "Butik"
   },
   {
     "id": "eden-n12877364873",
@@ -1946,14 +1392,6 @@ const MOCK_PLACES = [
     "lat": 57.59513,
     "lng": 18.514649,
     "description": "Kyrka och besöksmål"
-  },
-  {
-    "id": "ekevikens-w436131428",
-    "name": "Ekevikens",
-    "category": "boende",
-    "lat": 57.97152,
-    "lng": 19.263853,
-    "description": "Camping"
   },
   {
     "id": "eksta-kyrka-w1191887706",
@@ -2100,14 +1538,6 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "fide-aventyrsby-camping-w1071034656",
-    "name": "Fide Äventyrsby & Camping",
-    "category": "boende",
-    "lat": 57.092668,
-    "lng": 18.300758,
-    "description": "Camping"
-  },
-  {
     "id": "fiket-n5726695650",
     "name": "Fiket",
     "category": "mat",
@@ -2132,28 +1562,12 @@ const MOCK_PLACES = [
     "description": "Besöksmål"
   },
   {
-    "id": "first-hotel-kokoloko-n9706050493",
-    "name": "First Hotel Kokoloko",
-    "category": "boende",
-    "lat": 57.626083,
-    "lng": 18.281051,
-    "description": "Hotell"
-  },
-  {
     "id": "fiskarporten-n6634264864",
     "name": "Fiskarporten",
     "category": "sevardhet",
     "lat": 57.642114,
     "lng": 18.291341,
     "description": "Historisk plats"
-  },
-  {
-    "id": "fiskehamnen-n94203057",
-    "name": "Fiskehamnen",
-    "category": "aktivitet",
-    "lat": 57.636147,
-    "lng": 18.282557,
-    "description": "Småbåtshamn"
   },
   {
     "id": "fjale-gard-i-ala-raa-nummer-ala-98-1-n2167598744",
@@ -2186,22 +1600,6 @@ const MOCK_PLACES = [
     "lat": 57.86965,
     "lng": 18.876968,
     "description": "Kyrka och besöksmål"
-  },
-  {
-    "id": "flundrevikens-fiskelage-w705673422",
-    "name": "Flundrevikens Fiskeläge",
-    "category": "aktivitet",
-    "lat": 57.66738,
-    "lng": 18.324238,
-    "description": "Småbåtshamn"
-  },
-  {
-    "id": "flying-tiger-copenhagen-n11691721488",
-    "name": "Flying Tiger Copenhagen",
-    "category": "shopping",
-    "lat": 57.637324,
-    "lng": 18.300932,
-    "description": "Butik"
   },
   {
     "id": "flyktingarna-fran-estland-lettland-och-litauen-n8900440073",
@@ -2244,14 +1642,6 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "form-visborg-n1462723100",
-    "name": "Form Visborg",
-    "category": "aktivitet",
-    "lat": 57.613413,
-    "lng": 18.284044,
-    "description": "Idrottsanläggning"
-  },
-  {
     "id": "fornborg-w530645625",
     "name": "Fornborg",
     "category": "sevardhet",
@@ -2292,14 +1682,6 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "fotb-pl-w474066161",
-    "name": "Fotb.pl.",
-    "category": "aktivitet",
-    "lat": 57.727373,
-    "lng": 18.600245,
-    "description": "Aktivitet och idrott"
-  },
-  {
     "id": "fransan-n476025510",
     "name": "Fransan",
     "category": "mat",
@@ -2322,30 +1704,6 @@ const MOCK_PLACES = [
     "lat": 57.599762,
     "lng": 18.214464,
     "description": "Café"
-  },
-  {
-    "id": "fridhems-pensionat-w38108991",
-    "name": "Fridhems pensionat",
-    "category": "boende",
-    "lat": 57.600282,
-    "lng": 18.216794,
-    "description": "Hotell"
-  },
-  {
-    "id": "friendhs-n11687573162",
-    "name": "Friendhs",
-    "category": "shopping",
-    "lat": 57.635423,
-    "lng": 18.291663,
-    "description": "Butik"
-  },
-  {
-    "id": "fritidsanlaggning-kneippbyn-n431825111",
-    "name": "Fritidsanläggning Kneippbyn",
-    "category": "boende",
-    "lat": 57.60955,
-    "lng": 18.2454,
-    "description": "Camping"
   },
   {
     "id": "frojels-kyrka-w1117505199",
@@ -2668,22 +2026,6 @@ const MOCK_PLACES = [
     "description": "Historisk plats"
   },
   {
-    "id": "faro-hantverkshus-n6672566912",
-    "name": "Fårö Hantverkshus",
-    "category": "shopping",
-    "lat": 57.915234,
-    "lng": 19.132506,
-    "description": "Butik"
-  },
-  {
-    "id": "faro-kursgard-n812165735",
-    "name": "Fårö kursgård",
-    "category": "boende",
-    "lat": 57.915219,
-    "lng": 19.126967,
-    "description": "Vandrarhem"
-  },
-  {
     "id": "faro-kyrka-w344862510",
     "name": "Fårö kyrka",
     "category": "sevardhet",
@@ -2700,14 +2042,6 @@ const MOCK_PLACES = [
     "description": "Museum"
   },
   {
-    "id": "faro-sundersand-outdoor-gym-w1086975346",
-    "name": "Fårö Sundersand outdoor gym",
-    "category": "aktivitet",
-    "lat": 57.953926,
-    "lng": 19.252495,
-    "description": "Aktivitet och idrott"
-  },
-  {
     "id": "farogarden-n6741686385",
     "name": "Fårögården",
     "category": "mat",
@@ -2718,23 +2052,15 @@ const MOCK_PLACES = [
   {
     "id": "farohus-w485430511",
     "name": "Fåröhus",
-    "category": "boende",
+    "category": "mat",
     "lat": 57.913492,
     "lng": 19.126811,
     "description": "Restaurang"
   },
   {
-    "id": "farosunds-batklubb-n1079499531",
-    "name": "Fårösunds Båtklubb",
-    "category": "aktivitet",
-    "lat": 57.856091,
-    "lng": 19.066551,
-    "description": "Småbåtshamn"
-  },
-  {
     "id": "farosunds-fastning-n1079495895",
     "name": "Fårösunds Fästning",
-    "category": "boende",
+    "category": "mat",
     "lat": 57.846386,
     "lng": 19.07862,
     "description": "Restaurang"
@@ -2746,30 +2072,6 @@ const MOCK_PLACES = [
     "lat": 57.906533,
     "lng": 19.018891,
     "description": "Historisk plats"
-  },
-  {
-    "id": "farosunds-idrottsplats-w432616494",
-    "name": "Fårösunds Idrottsplats",
-    "category": "aktivitet",
-    "lat": 57.856649,
-    "lng": 19.043788,
-    "description": "Aktivitet och idrott"
-  },
-  {
-    "id": "farosunds-lanthamn-n1079496203",
-    "name": "Fårösunds Lanthamn",
-    "category": "aktivitet",
-    "lat": 57.866355,
-    "lng": 19.058256,
-    "description": "Småbåtshamn"
-  },
-  {
-    "id": "farosunds-marina-n1079497576",
-    "name": "Fårösunds Marina",
-    "category": "aktivitet",
-    "lat": 57.864171,
-    "lng": 19.05975,
-    "description": "Småbåtshamn"
   },
   {
     "id": "farosunds-sodra-batteri-w708193044",
@@ -2786,14 +2088,6 @@ const MOCK_PLACES = [
     "lat": 57.640026,
     "lng": 18.296572,
     "description": "Restaurang"
-  },
-  {
-    "id": "gahm-s-n2463099485",
-    "name": "Gahm's",
-    "category": "shopping",
-    "lat": 57.706909,
-    "lng": 18.806718,
-    "description": "Butik"
   },
   {
     "id": "galgberget-n52586897",
@@ -2836,14 +2130,6 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "gamla-jernvagshotellet-n2801318890",
-    "name": "Gamla Jernvägshotellet",
-    "category": "boende",
-    "lat": 57.736369,
-    "lng": 18.603748,
-    "description": "Vandrarhem"
-  },
-  {
     "id": "gamla-lagerplatsen-n3173424684",
     "name": "Gamla lägerplatsen",
     "category": "sevardhet",
@@ -2868,28 +2154,12 @@ const MOCK_PLACES = [
     "description": "Kyrka och besöksmål"
   },
   {
-    "id": "gangvide-farm-n10740027000",
-    "name": "Gangvide Farm",
-    "category": "service",
-    "lat": 57.2593,
-    "lng": 18.65491,
-    "description": "Laddstation"
-  },
-  {
     "id": "gannarve-w1117505215",
     "name": "Gannarve",
     "category": "sevardhet",
     "lat": 57.34786,
     "lng": 18.192245,
     "description": "Historisk plats"
-  },
-  {
-    "id": "gannarve-hotel-och-restaurang-n11058938600",
-    "name": "Gannarve Hotel Och Restaurang",
-    "category": "boende",
-    "lat": 57.348458,
-    "lng": 18.191315,
-    "description": "Hotell"
   },
   {
     "id": "gannarvemyr-r7241933",
@@ -3060,44 +2330,12 @@ const MOCK_PLACES = [
     "description": "Restaurang"
   },
   {
-    "id": "gothemsgarden-n10740046618",
-    "name": "Gothemsgården",
-    "category": "service",
-    "lat": 57.70156,
-    "lng": 18.80063,
-    "description": "Laddstation"
-  },
-  {
-    "id": "gotland-ring-w311644846",
-    "name": "Gotland Ring",
-    "category": "aktivitet",
-    "lat": 57.839707,
-    "lng": 18.834884,
-    "description": "Aktivitet och idrott"
-  },
-  {
-    "id": "gotlandring-n10740046629",
-    "name": "GotlandRing",
-    "category": "service",
-    "lat": 57.84415,
-    "lng": 18.8037,
-    "description": "Laddstation"
-  },
-  {
     "id": "gotlands-bryggeri-n6611013493",
     "name": "Gotlands bryggeri",
     "category": "mat",
     "lat": 57.641751,
     "lng": 18.294823,
     "description": "Bar"
-  },
-  {
-    "id": "gotlands-cykeluthyrning-n11697916467",
-    "name": "Gotlands Cykeluthyrning",
-    "category": "aktivitet",
-    "lat": 57.636594,
-    "lng": 18.287276,
-    "description": "Butik"
   },
   {
     "id": "gotlands-djurpark-n6588401485",
@@ -3108,14 +2346,6 @@ const MOCK_PLACES = [
     "description": "Besöksmål"
   },
   {
-    "id": "gotlands-fallskarmsklubb-w608445206",
-    "name": "Gotlands Fallskärmsklubb",
-    "category": "aktivitet",
-    "lat": 57.648106,
-    "lng": 18.326984,
-    "description": "Aktivitet och idrott"
-  },
-  {
     "id": "gotlands-fiskerimuseum-n4954644105",
     "name": "Gotlands Fiskerimuseum",
     "category": "sevardhet",
@@ -3124,36 +2354,12 @@ const MOCK_PLACES = [
     "description": "Besöksmål"
   },
   {
-    "id": "gotlands-flygklubb-w33471035",
-    "name": "Gotlands Flygklubb",
-    "category": "aktivitet",
-    "lat": 57.647781,
-    "lng": 18.327229,
-    "description": "Aktivitet och idrott"
-  },
-  {
     "id": "gotlands-forsvarsmuseum-w443245008",
     "name": "Gotlands försvarsmuseum",
     "category": "sevardhet",
     "lat": 57.734775,
     "lng": 18.613009,
     "description": "Museum"
-  },
-  {
-    "id": "gotlands-idrottscenter-n1079496563",
-    "name": "Gotlands Idrottscenter",
-    "category": "aktivitet",
-    "lat": 57.866005,
-    "lng": 19.039805,
-    "description": "Idrottsanläggning"
-  },
-  {
-    "id": "gotlands-idrottscenter-vandrarhem-n13009794336",
-    "name": "Gotlands Idrottscenter vandrarhem",
-    "category": "boende",
-    "lat": 57.86607,
-    "lng": 19.039834,
-    "description": "Vandrarhem"
   },
   {
     "id": "gotlands-konstmuseum-w396133930",
@@ -3188,30 +2394,6 @@ const MOCK_PLACES = [
     "description": "Museum"
   },
   {
-    "id": "gotlands-strumpfabrik-n11755799054",
-    "name": "Gotlands strumpfabrik",
-    "category": "shopping",
-    "lat": 57.639921,
-    "lng": 18.294529,
-    "description": "Butik"
-  },
-  {
-    "id": "gotlands-strumpfabrik-n6624547717",
-    "name": "Gotlands Strumpfabrik",
-    "category": "shopping",
-    "lat": 57.653484,
-    "lng": 18.768072,
-    "description": "Butik"
-  },
-  {
-    "id": "gotlands-turistbyra-n68327498",
-    "name": "Gotlands Turistbyrå",
-    "category": "service",
-    "lat": 57.639097,
-    "lng": 18.290981,
-    "description": "Turistinformation"
-  },
-  {
     "id": "gotlandsvafflan-n685981446",
     "name": "Gotlandsvåfflan",
     "category": "mat",
@@ -3236,28 +2418,12 @@ const MOCK_PLACES = [
     "description": "Glass"
   },
   {
-    "id": "gotlandska-souvenirer-n12892437651",
-    "name": "Gotländska Souvenirer",
-    "category": "shopping",
-    "lat": 57.636514,
-    "lng": 18.293541,
-    "description": "Butik"
-  },
-  {
     "id": "gotska-gk-r6846528",
     "name": "Gotska GK",
     "category": "aktivitet",
     "lat": 57.654105,
     "lng": 18.328256,
     "description": "Golfbana"
-  },
-  {
-    "id": "gotska-sandon-lagerplats-w1367400980",
-    "name": "Gotska Sandön Lägerplats",
-    "category": "boende",
-    "lat": 58.390413,
-    "lng": 19.192508,
-    "description": "Camping"
   },
   {
     "id": "gotska-sandons-kapell-w1076498884",
@@ -3460,22 +2626,6 @@ const MOCK_PLACES = [
     "description": "Restaurang"
   },
   {
-    "id": "gutars-bagskyttar-n12168389609",
-    "name": "Gutars Bågskyttar",
-    "category": "aktivitet",
-    "lat": 57.590252,
-    "lng": 18.2613,
-    "description": "Aktivitet och idrott"
-  },
-  {
-    "id": "gutavallen-r6852125",
-    "name": "Gutavallen",
-    "category": "aktivitet",
-    "lat": 57.635223,
-    "lng": 18.29685,
-    "description": "Idrottsanläggning"
-  },
-  {
     "id": "gute-glass-w707078442",
     "name": "Gute glass",
     "category": "mat",
@@ -3506,14 +2656,6 @@ const MOCK_PLACES = [
     "lat": 57.640898,
     "lng": 18.295407,
     "description": "Pub"
-  },
-  {
-    "id": "gutestugan-stenkumla-vandrarhem-n1348601459",
-    "name": "Gutestugan/Stenkumla vandrarhem",
-    "category": "boende",
-    "lat": 57.546527,
-    "lng": 18.230657,
-    "description": "Vandrarhem"
   },
   {
     "id": "gylar-w379456707",
@@ -3556,22 +2698,6 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "gasthamnen-r7403863",
-    "name": "Gästhamnen",
-    "category": "aktivitet",
-    "lat": 57.638224,
-    "lng": 18.287015,
-    "description": "Småbåtshamn"
-  },
-  {
-    "id": "h-m-n11691721485",
-    "name": "H&M",
-    "category": "shopping",
-    "lat": 57.637691,
-    "lng": 18.301053,
-    "description": "Butik"
-  },
-  {
     "id": "h10-bar-cafe-n6412104186",
     "name": "H10 Bar & Cafe",
     "category": "mat",
@@ -3594,14 +2720,6 @@ const MOCK_PLACES = [
     "lat": 57.187286,
     "lng": 18.262788,
     "description": "Kyrka och besöksmål"
-  },
-  {
-    "id": "hablingbo-vandrarhem-n1348602377",
-    "name": "hablingbo vandrarhem",
-    "category": "boende",
-    "lat": 57.1858,
-    "lng": 18.247366,
-    "description": "Vandrarhem"
   },
   {
     "id": "hagrojr-w1124781510",
@@ -3676,14 +2794,6 @@ const MOCK_PLACES = [
     "description": "Kyrka och besöksmål"
   },
   {
-    "id": "hallshuk-n2095433047",
-    "name": "Hallshuk",
-    "category": "aktivitet",
-    "lat": 57.925354,
-    "lng": 18.745856,
-    "description": "Småbåtshamn"
-  },
-  {
     "id": "hallshuks-kapell-w533013733",
     "name": "Hallshuks kapell",
     "category": "sevardhet",
@@ -3714,14 +2824,6 @@ const MOCK_PLACES = [
     "lat": 57.422091,
     "lng": 18.916639,
     "description": "Restaurang"
-  },
-  {
-    "id": "hamnterminalen-w311120396",
-    "name": "Hamnterminalen",
-    "category": "service",
-    "lat": 57.634332,
-    "lng": 18.280155,
-    "description": "Färjeterminal"
   },
   {
     "id": "hamra-helso-brunn-n4750824632",
@@ -3764,14 +2866,6 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "handelsbanken-n1079496158",
-    "name": "Handelsbanken",
-    "category": "service",
-    "lat": 57.861657,
-    "lng": 19.056607,
-    "description": "Service"
-  },
-  {
     "id": "hangvar-suderbys-naturreservat-w1416319556",
     "name": "Hangvar Suderbys naturreservat",
     "category": "natur",
@@ -3786,14 +2880,6 @@ const MOCK_PLACES = [
     "lat": 57.839332,
     "lng": 18.68858,
     "description": "Kyrka och besöksmål"
-  },
-  {
-    "id": "happy-hippie-n1844665495",
-    "name": "Happy Hippie",
-    "category": "shopping",
-    "lat": 57.779348,
-    "lng": 18.780599,
-    "description": "Butik"
   },
   {
     "id": "haugajnars-naturreservat-w102775326",
@@ -3924,36 +3010,12 @@ const MOCK_PLACES = [
     "description": "Kyrka och besöksmål"
   },
   {
-    "id": "hemmakvall-n5125961378",
-    "name": "Hemmakväll",
-    "category": "shopping",
-    "lat": 57.636455,
-    "lng": 18.301213,
-    "description": "Butik"
-  },
-  {
-    "id": "hemse-fisk-affar-n11054456583",
-    "name": "Hemse Fisk Affär",
-    "category": "shopping",
-    "lat": 57.240031,
-    "lng": 18.377422,
-    "description": "Butik"
-  },
-  {
     "id": "hemse-krog-bar-n11054456586",
     "name": "Hemse Krog & Bar",
     "category": "mat",
     "lat": 57.239674,
     "lng": 18.376319,
     "description": "Pub"
-  },
-  {
-    "id": "hemse-krut-och-pappershandel-n11080928354",
-    "name": "Hemse Krut och Pappershandel",
-    "category": "shopping",
-    "lat": 57.238938,
-    "lng": 18.375861,
-    "description": "Butik"
   },
   {
     "id": "hemse-kyrka-w1070695750",
@@ -3980,36 +3042,12 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "herrvik-n2091585389",
-    "name": "Herrvik",
-    "category": "aktivitet",
-    "lat": 57.423066,
-    "lng": 18.915271,
-    "description": "Småbåtshamn"
-  },
-  {
-    "id": "herte-n2088952296",
-    "name": "Herte",
-    "category": "aktivitet",
-    "lat": 57.21768,
-    "lng": 18.592531,
-    "description": "Småbåtshamn"
-  },
-  {
     "id": "herte-n8841697023",
     "name": "Herte",
     "category": "strand",
     "lat": 57.219096,
     "lng": 18.59822,
     "description": "Badplats"
-  },
-  {
-    "id": "herte-camping-n282839146",
-    "name": "Herte camping",
-    "category": "boende",
-    "lat": 57.220953,
-    "lng": 18.588857,
-    "description": "Camping"
   },
   {
     "id": "hesselby-jernvagskafe-w427277626",
@@ -4034,22 +3072,6 @@ const MOCK_PLACES = [
     "lat": 57.727432,
     "lng": 18.869134,
     "description": "Naturreservat"
-  },
-  {
-    "id": "hideviken-beachvolley-w1484673566",
-    "name": "Hideviken Beachvolley",
-    "category": "aktivitet",
-    "lat": 57.736223,
-    "lng": 18.876967,
-    "description": "Aktivitet och idrott"
-  },
-  {
-    "id": "hima-n11691721489",
-    "name": "Hima",
-    "category": "shopping",
-    "lat": 57.637289,
-    "lng": 18.301021,
-    "description": "Butik"
   },
   {
     "id": "hinsers-naturreservat-w895701667",
@@ -4124,14 +3146,6 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "holmhallar-pensionat-n9272286438",
-    "name": "Holmhällar Pensionat",
-    "category": "service",
-    "lat": 56.935108,
-    "lng": 18.288008,
-    "description": "Laddstation"
-  },
-  {
     "id": "holmvat-w485224681",
     "name": "Holmvät",
     "category": "natur",
@@ -4156,100 +3170,12 @@ const MOCK_PLACES = [
     "description": "Lekplats"
   },
   {
-    "id": "hopp-poolen-w1087514339",
-    "name": "Hopp-poolen",
-    "category": "aktivitet",
-    "lat": 57.608753,
-    "lng": 18.244662,
-    "description": "Aktivitet"
-  },
-  {
     "id": "horsan-w102775288",
     "name": "Horsan",
     "category": "natur",
     "lat": 57.868949,
     "lng": 18.837499,
     "description": "Naturreservat"
-  },
-  {
-    "id": "hotel-slottsbacken-w529368087",
-    "name": "Hotel Slottsbacken",
-    "category": "boende",
-    "lat": 57.63633,
-    "lng": 18.289445,
-    "description": "Hotell"
-  },
-  {
-    "id": "hotel-stelor-n5688752831",
-    "name": "Hotel Stelor",
-    "category": "boende",
-    "lat": 57.447701,
-    "lng": 18.141958,
-    "description": "Hotell"
-  },
-  {
-    "id": "hotel-villa-alma-n316140653",
-    "name": "Hotel Villa Alma",
-    "category": "boende",
-    "lat": 57.641268,
-    "lng": 18.29017,
-    "description": "Hotell"
-  },
-  {
-    "id": "hotell-breda-blick-n2320589453",
-    "name": "Hotell Breda Blick",
-    "category": "boende",
-    "lat": 57.644514,
-    "lng": 18.296528,
-    "description": "Hotell"
-  },
-  {
-    "id": "hotell-dalhem-n1313834231",
-    "name": "Hotell Dalhem",
-    "category": "boende",
-    "lat": 57.533521,
-    "lng": 18.50557,
-    "description": "Pensionat och gästboende"
-  },
-  {
-    "id": "hotell-repet-n11831864193",
-    "name": "Hotell Repet",
-    "category": "boende",
-    "lat": 57.638911,
-    "lng": 18.297179,
-    "description": "Hotell"
-  },
-  {
-    "id": "hotell-s-t-clemens-n11831909506",
-    "name": "Hotell S:t Clemens",
-    "category": "boende",
-    "lat": 57.643022,
-    "lng": 18.295761,
-    "description": "Hotell"
-  },
-  {
-    "id": "hotell-solhem-n10740046640",
-    "name": "Hotell Solhem",
-    "category": "service",
-    "lat": 57.63479,
-    "lng": 18.28695,
-    "description": "Laddstation"
-  },
-  {
-    "id": "hotell-stenugnen-n1470547034",
-    "name": "Hotell Stenugnen",
-    "category": "boende",
-    "lat": 57.638225,
-    "lng": 18.289574,
-    "description": "Hotell"
-  },
-  {
-    "id": "hotell-villa-borgen-n766160687",
-    "name": "Hotell Villa Borgen",
-    "category": "boende",
-    "lat": 57.636189,
-    "lng": 18.293156,
-    "description": "Hotell"
   },
   {
     "id": "hoxelmyr-w530657874",
@@ -4444,22 +3370,6 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "hogklint-utsiktsvagen-6-n10740046611",
-    "name": "Högklint Utsiktsvägen 6",
-    "category": "service",
-    "lat": 57.59869,
-    "lng": 18.20478,
-    "description": "Laddstation"
-  },
-  {
-    "id": "hogt-och-lagt-w1414328573",
-    "name": "Högt och Lågt",
-    "category": "aktivitet",
-    "lat": 57.39495,
-    "lng": 18.192003,
-    "description": "Aktivitet och idrott"
-  },
-  {
     "id": "horsne-kyrka-w611593275",
     "name": "Hörsne kyrka",
     "category": "sevardhet",
@@ -4484,140 +3394,12 @@ const MOCK_PLACES = [
     "description": "Restaurang"
   },
   {
-    "id": "ica-bungehallen-w431979233",
-    "name": "ICA Bungehallen",
-    "category": "shopping",
-    "lat": 57.86334,
-    "lng": 19.054617,
-    "description": "Butik"
-  },
-  {
-    "id": "ica-maxi-arena-w483446137",
-    "name": "Ica Maxi Arena",
-    "category": "aktivitet",
-    "lat": 57.606724,
-    "lng": 18.281533,
-    "description": "Idrottsanläggning"
-  },
-  {
-    "id": "ica-nystroms-w502110264",
-    "name": "ICA Nyströms",
-    "category": "shopping",
-    "lat": 57.961823,
-    "lng": 19.238593,
-    "description": "Butik"
-  },
-  {
-    "id": "ica-nara-n4959061081",
-    "name": "ICA Nära",
-    "category": "shopping",
-    "lat": 57.160796,
-    "lng": 18.333662,
-    "description": "Butik"
-  },
-  {
-    "id": "ica-nara-w480097957",
-    "name": "ICA Nära",
-    "category": "shopping",
-    "lat": 57.64708,
-    "lng": 18.310594,
-    "description": "Butik"
-  },
-  {
-    "id": "ica-nara-bodi-w414817656",
-    "name": "ICA Nära Bodi",
-    "category": "shopping",
-    "lat": 57.259465,
-    "lng": 18.636367,
-    "description": "Butik"
-  },
-  {
-    "id": "ica-nara-hoburgshallen-w550730125",
-    "name": "ICA Nära Hoburgshallen",
-    "category": "shopping",
-    "lat": 57.03196,
-    "lng": 18.277346,
-    "description": "Butik"
-  },
-  {
-    "id": "ica-nara-malmahallen-w203242134",
-    "name": "ICA Nära Malmahallen",
-    "category": "shopping",
-    "lat": 57.280253,
-    "lng": 18.47097,
-    "description": "Butik"
-  },
-  {
-    "id": "ica-nara-roma-w305107185",
-    "name": "ICA Nära Roma",
-    "category": "shopping",
-    "lat": 57.503232,
-    "lng": 18.457358,
-    "description": "Butik"
-  },
-  {
-    "id": "ica-nara-slite-w378723275",
-    "name": "ICA Nära Slite",
-    "category": "shopping",
-    "lat": 57.704423,
-    "lng": 18.805544,
-    "description": "Butik"
-  },
-  {
-    "id": "ica-supermarket-atterdags-n54043636",
-    "name": "ICA Supermarket Atterdags",
-    "category": "shopping",
-    "lat": 57.633506,
-    "lng": 18.289627,
-    "description": "Butik"
-  },
-  {
-    "id": "ica-supermarket-hemse-n272661780",
-    "name": "ICA Supermarket Hemse",
-    "category": "shopping",
-    "lat": 57.240198,
-    "lng": 18.376766,
-    "description": "Butik"
-  },
-  {
-    "id": "ica-torgkassen-n315981758",
-    "name": "ICA Torgkassen",
-    "category": "shopping",
-    "lat": 57.640824,
-    "lng": 18.2964,
-    "description": "Butik"
-  },
-  {
-    "id": "ica-vibblehallen-w415574775",
-    "name": "ICA Vibblehallen",
-    "category": "shopping",
-    "lat": 57.601482,
-    "lng": 18.251282,
-    "description": "Butik"
-  },
-  {
-    "id": "ica-wisborg-w315912053",
-    "name": "Ica Wisborg",
-    "category": "shopping",
-    "lat": 57.61745,
-    "lng": 18.284185,
-    "description": "Butik"
-  },
-  {
     "id": "icander-n12907583546",
     "name": "Icander",
     "category": "mat",
     "lat": 57.623629,
     "lng": 18.323116,
     "description": "Restaurang"
-  },
-  {
-    "id": "ihre-gard-w978846821",
-    "name": "Ihre Gård",
-    "category": "boende",
-    "lat": 57.832797,
-    "lng": 18.607952,
-    "description": "Vandrarhem"
   },
   {
     "id": "ihre-gard-cafe-n454142152",
@@ -4628,84 +3410,12 @@ const MOCK_PLACES = [
     "description": "Café"
   },
   {
-    "id": "incharge-n9123546782",
-    "name": "InCharge",
-    "category": "service",
-    "lat": 57.863422,
-    "lng": 19.054142,
-    "description": "Laddstation"
-  },
-  {
-    "id": "incharge-n10740046608",
-    "name": "InCharge",
-    "category": "service",
-    "lat": 57.24045,
-    "lng": 18.37558,
-    "description": "Laddstation"
-  },
-  {
-    "id": "incharge-n10740046615",
-    "name": "InCharge",
-    "category": "service",
-    "lat": 57.66129,
-    "lng": 18.33779,
-    "description": "Laddstation"
-  },
-  {
-    "id": "incharge-hamnkrogen-herrvik-n9272091873",
-    "name": "InCharge Hamnkrogen Herrvik",
-    "category": "service",
-    "lat": 57.422032,
-    "lng": 18.916338,
-    "description": "Laddstation"
-  },
-  {
-    "id": "incharge-nasudden-n10740046630",
-    "name": "InCharge Näsudden",
-    "category": "service",
-    "lat": 57.07413,
-    "lng": 18.22159,
-    "description": "Laddstation"
-  },
-  {
-    "id": "incharge-storgatan-68-n10740046626",
-    "name": "InCharge Storgatan 68",
-    "category": "service",
-    "lat": 57.703053,
-    "lng": 18.801019,
-    "description": "Laddstation"
-  },
-  {
-    "id": "incharge-verkstadsgatan-9-n10740046609",
-    "name": "InCharge Verkstadsgatan 9",
-    "category": "service",
-    "lat": 57.38715,
-    "lng": 18.203999,
-    "description": "Laddstation"
-  },
-  {
     "id": "indian-corner-n11691721492",
     "name": "Indian Corner",
     "category": "mat",
     "lat": 57.637997,
     "lng": 18.299309,
     "description": "Restaurang"
-  },
-  {
-    "id": "ingo-n687936949",
-    "name": "Ingo",
-    "category": "service",
-    "lat": 57.860145,
-    "lng": 19.051101,
-    "description": "Bensinstation"
-  },
-  {
-    "id": "innebandycenter-w514141846",
-    "name": "Innebandycenter",
-    "category": "aktivitet",
-    "lat": 57.611559,
-    "lng": 18.28182,
-    "description": "Aktivitet och idrott"
   },
   {
     "id": "inre-dynkarret-w590266421",
@@ -4730,22 +3440,6 @@ const MOCK_PLACES = [
     "lat": 57.839153,
     "lng": 18.598844,
     "description": "Naturreservat"
-  },
-  {
-    "id": "irisdals-blomsterhandel-n12909501919",
-    "name": "Irisdals Blomsterhandel",
-    "category": "shopping",
-    "lat": 57.638947,
-    "lng": 18.297405,
-    "description": "Butik"
-  },
-  {
-    "id": "irisdalsgatan-n10740046632",
-    "name": "Irisdalsgatan",
-    "category": "service",
-    "lat": 57.64001,
-    "lng": 18.31668,
-    "description": "Laddstation"
   },
   {
     "id": "irmas-cafe-n2397150489",
@@ -4780,14 +3474,6 @@ const MOCK_PLACES = [
     "description": "Besöksmål"
   },
   {
-    "id": "jernvagshostel-n766160686",
-    "name": "Jernvägshostel",
-    "category": "boende",
-    "lat": 57.636277,
-    "lng": 18.293235,
-    "description": "Vandrarhem"
-  },
-  {
     "id": "jessens-saluhall-bar-n4324785897",
     "name": "Jessens Saluhall & Bar",
     "category": "mat",
@@ -4810,14 +3496,6 @@ const MOCK_PLACES = [
     "lat": 57.638373,
     "lng": 18.28875,
     "description": "Restaurang"
-  },
-  {
-    "id": "jordnara-n6567691885",
-    "name": "Jordnära",
-    "category": "shopping",
-    "lat": 57.640454,
-    "lng": 18.294926,
-    "description": "Butik"
   },
   {
     "id": "josefinakallan-n80024855",
@@ -4878,7 +3556,7 @@ const MOCK_PLACES = [
   {
     "id": "kaffepannan-n448272971",
     "name": "Kaffepannan",
-    "category": "natur",
+    "category": "sevardhet",
     "lat": 57.943767,
     "lng": 19.088102,
     "description": "Besöksmål"
@@ -4908,22 +3586,6 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "kalk-hotel-n316140379",
-    "name": "Kalk Hotel",
-    "category": "boende",
-    "lat": 57.640143,
-    "lng": 18.292434,
-    "description": "Hotell"
-  },
-  {
-    "id": "kalkbrottets-vandrarhem-n12869191201",
-    "name": "Kalkbrottets vandrarhem",
-    "category": "boende",
-    "lat": 57.709481,
-    "lng": 18.79216,
-    "description": "Vandrarhem"
-  },
-  {
     "id": "kalkladan-n2973076805",
     "name": "Kalkladan",
     "category": "mat",
@@ -4938,14 +3600,6 @@ const MOCK_PLACES = [
     "lat": 57.891146,
     "lng": 19.086023,
     "description": "Historisk plats"
-  },
-  {
-    "id": "kallenbergs-villa-w1306526439",
-    "name": "Kallenbergs Villa",
-    "category": "boende",
-    "lat": 57.610903,
-    "lng": 18.247066,
-    "description": "Hotell"
   },
   {
     "id": "kallgatburgs-naturreservat-w102775285",
@@ -4964,22 +3618,6 @@ const MOCK_PLACES = [
     "description": "Restaurang"
   },
   {
-    "id": "kappahl-n5167647904",
-    "name": "KappAhl",
-    "category": "shopping",
-    "lat": 57.637399,
-    "lng": 18.300755,
-    "description": "Butik"
-  },
-  {
-    "id": "kappelshamns-camping-w1083462564",
-    "name": "Kappelshamns Camping",
-    "category": "boende",
-    "lat": 57.845333,
-    "lng": 18.781208,
-    "description": "Camping"
-  },
-  {
     "id": "kappelshamns-sandstrand-n11065575649",
     "name": "Kappelshamns sandstrand",
     "category": "strand",
@@ -4994,14 +3632,6 @@ const MOCK_PLACES = [
     "lat": 57.852488,
     "lng": 18.781714,
     "description": "Restaurang"
-  },
-  {
-    "id": "karamell-boden-n12909482242",
-    "name": "Karamell Boden",
-    "category": "shopping",
-    "lat": 57.639918,
-    "lng": 18.296374,
-    "description": "Butik"
   },
   {
     "id": "karaoke-baren-visby-n2970715907",
@@ -5044,14 +3674,6 @@ const MOCK_PLACES = [
     "description": "Kyrka och besöksmål"
   },
   {
-    "id": "katthammarsvik-n2091639427",
-    "name": "Katthammarsvik",
-    "category": "aktivitet",
-    "lat": 57.43542,
-    "lng": 18.851016,
-    "description": "Småbåtshamn"
-  },
-  {
     "id": "katthammarsviks-rokeri-n434439713",
     "name": "Katthammarsviks rökeri",
     "category": "mat",
@@ -5066,30 +3688,6 @@ const MOCK_PLACES = [
     "lat": 57.80392,
     "lng": 18.808858,
     "description": "Historisk plats"
-  },
-  {
-    "id": "kicks-n11691721484",
-    "name": "Kicks",
-    "category": "shopping",
-    "lat": 57.637758,
-    "lng": 18.301156,
-    "description": "Butik"
-  },
-  {
-    "id": "kinnerstugan-w361624423",
-    "name": "Kinnerstugan",
-    "category": "aktivitet",
-    "lat": 57.75376,
-    "lng": 18.417464,
-    "description": "Aktivitet och idrott"
-  },
-  {
-    "id": "kiosk-n12007256624",
-    "name": "Kiosk",
-    "category": "shopping",
-    "lat": 57.614947,
-    "lng": 18.760951,
-    "description": "Butik"
   },
   {
     "id": "kistanges-naturreservat-w897784134",
@@ -5124,22 +3722,6 @@ const MOCK_PLACES = [
     "description": "Kyrka och besöksmål"
   },
   {
-    "id": "klintehamn-n632446397",
-    "name": "Klintehamn",
-    "category": "service",
-    "lat": 57.388948,
-    "lng": 18.185237,
-    "description": "Färjeterminal"
-  },
-  {
-    "id": "klintehamns-smabatshamn-r12665315",
-    "name": "Klintehamns småbåtshamn",
-    "category": "aktivitet",
-    "lat": 57.388978,
-    "lng": 18.190052,
-    "description": "Småbåtshamn"
-  },
-  {
     "id": "klinteklinten-r7611520",
     "name": "Klinteklinten",
     "category": "natur",
@@ -5162,38 +3744,6 @@ const MOCK_PLACES = [
     "lat": 57.498056,
     "lng": 18.489418,
     "description": "Naturreservat"
-  },
-  {
-    "id": "kladbutiken-n11054456591",
-    "name": "Klädbutiken",
-    "category": "shopping",
-    "lat": 57.239338,
-    "lng": 18.375822,
-    "description": "Butik"
-  },
-  {
-    "id": "kneippbyn-n10740026998",
-    "name": "Kneippbyn",
-    "category": "service",
-    "lat": 57.61042,
-    "lng": 18.246485,
-    "description": "Laddstation"
-  },
-  {
-    "id": "kneippbyn-r14986026",
-    "name": "Kneippbyn",
-    "category": "boende",
-    "lat": 57.609486,
-    "lng": 18.241142,
-    "description": "Camping"
-  },
-  {
-    "id": "kneippbyn-minilivs-w511822750",
-    "name": "Kneippbyn Minilivs",
-    "category": "shopping",
-    "lat": 57.608431,
-    "lng": 18.245515,
-    "description": "Butik"
   },
   {
     "id": "kneippbyn-sommarland-w232286256",
@@ -5300,44 +3850,12 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "krampbroboden-n10764364326",
-    "name": "Krampbroboden",
-    "category": "shopping",
-    "lat": 57.634246,
-    "lng": 18.54145,
-    "description": "Butik"
-  },
-  {
     "id": "krokstade-troskvandring-n1313923830",
     "name": "Krokstäde Tröskvandring",
     "category": "mat",
     "lat": 57.494045,
     "lng": 18.144331,
     "description": "Café"
-  },
-  {
-    "id": "kronans-apotek-n1480393171",
-    "name": "Kronans Apotek",
-    "category": "service",
-    "lat": 57.635049,
-    "lng": 18.326984,
-    "description": "Apotek"
-  },
-  {
-    "id": "kronans-apotek-n1489880357",
-    "name": "Kronans Apotek",
-    "category": "service",
-    "lat": 57.386224,
-    "lng": 18.20061,
-    "description": "Apotek"
-  },
-  {
-    "id": "kronans-apotek-n12887191299",
-    "name": "Kronans Apotek",
-    "category": "service",
-    "lat": 57.617571,
-    "lng": 18.283992,
-    "description": "Apotek"
   },
   {
     "id": "kronholmen-w102775354",
@@ -5380,14 +3898,6 @@ const MOCK_PLACES = [
     "description": "Restaurang"
   },
   {
-    "id": "krutbrannaren-n4408590183",
-    "name": "Krutbrännaren",
-    "category": "boende",
-    "lat": 57.735935,
-    "lng": 18.612292,
-    "description": "Pensionat och gästboende"
-  },
-  {
     "id": "kruttornet-w508436750",
     "name": "Kruttornet",
     "category": "sevardhet",
@@ -5410,14 +3920,6 @@ const MOCK_PLACES = [
     "lat": 57.445242,
     "lng": 18.71134,
     "description": "Kyrka och besöksmål"
-  },
-  {
-    "id": "kranku-n4394818796",
-    "name": "Kränku",
-    "category": "shopping",
-    "lat": 57.63854,
-    "lng": 18.293233,
-    "description": "Butik"
   },
   {
     "id": "kullamyr-r7255021",
@@ -5444,14 +3946,6 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "kundparkeringen-ica-maxi-visby-n10740046639",
-    "name": "Kundparkeringen ICA Maxi Visby",
-    "category": "service",
-    "lat": 57.62442,
-    "lng": 18.321879,
-    "description": "Laddstation"
-  },
-  {
     "id": "kungens-sal-n12176664306",
     "name": "Kungens Sal",
     "category": "natur",
@@ -5466,14 +3960,6 @@ const MOCK_PLACES = [
     "lat": 57.387486,
     "lng": 18.200401,
     "description": "Snabbmat"
-  },
-  {
-    "id": "kustparken-b-b-w431979389",
-    "name": "Kustparken B&B",
-    "category": "boende",
-    "lat": 57.863661,
-    "lng": 19.048232,
-    "description": "Pensionat och gästboende"
   },
   {
     "id": "kutamora-w482648177",
@@ -5604,14 +4090,6 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "korkmacken-w494551727",
-    "name": "Körkmacken",
-    "category": "service",
-    "lat": 57.916815,
-    "lng": 19.136286,
-    "description": "Bensinstation"
-  },
-  {
     "id": "korsbarsgarden-n12090492989",
     "name": "Körsbärsgården",
     "category": "mat",
@@ -5650,22 +4128,6 @@ const MOCK_PLACES = [
     "lat": 57.784971,
     "lng": 18.814924,
     "description": "Historisk plats"
-  },
-  {
-    "id": "landningspool-w1306551543",
-    "name": "Landningspool",
-    "category": "aktivitet",
-    "lat": 57.608649,
-    "lng": 18.244093,
-    "description": "Aktivitet"
-  },
-  {
-    "id": "landningspool-tvillingarna-w1306551542",
-    "name": "Landningspool Tvillingarna",
-    "category": "aktivitet",
-    "lat": 57.609116,
-    "lng": 18.244559,
-    "description": "Aktivitet"
   },
   {
     "id": "landtraskdammen-w530645639",
@@ -5756,14 +4218,6 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "lauterhorn-r7297859",
-    "name": "Lauterhorn",
-    "category": "aktivitet",
-    "lat": 57.952883,
-    "lng": 19.082292,
-    "description": "Småbåtshamn"
-  },
-  {
     "id": "lauters-n448288824",
     "name": "Lauters",
     "category": "mat",
@@ -5786,14 +4240,6 @@ const MOCK_PLACES = [
     "lat": 57.187515,
     "lng": 18.481171,
     "description": "Besöksmål"
-  },
-  {
-    "id": "lena-scharp-keramik-n8901172267",
-    "name": "Lena Scharp Keramik",
-    "category": "shopping",
-    "lat": 57.326626,
-    "lng": 18.559818,
-    "description": "Butik"
   },
   {
     "id": "lergravsporten-n6373759856",
@@ -5836,30 +4282,6 @@ const MOCK_PLACES = [
     "description": "Restaurang"
   },
   {
-    "id": "lickershamn-n2095449089",
-    "name": "Lickershamn",
-    "category": "aktivitet",
-    "lat": 57.826639,
-    "lng": 18.513271,
-    "description": "Småbåtshamn"
-  },
-  {
-    "id": "lickershamns-semesterby-camping-no-tent-n431825100",
-    "name": "Lickershamns Semesterby & Camping // No Tent",
-    "category": "boende",
-    "lat": 57.82717,
-    "lng": 18.52552,
-    "description": "Camping"
-  },
-  {
-    "id": "lidl-visby-n10740027004",
-    "name": "Lidl Visby",
-    "category": "service",
-    "lat": 57.63477,
-    "lng": 18.32522,
-    "description": "Laddstation"
-  },
-  {
     "id": "liffridesskeppen-n6373528707",
     "name": "Liffridesskeppen",
     "category": "sevardhet",
@@ -5892,14 +4314,6 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "lilla-fabriken-n8892623223",
-    "name": "Lilla fabriken",
-    "category": "shopping",
-    "lat": 57.861333,
-    "lng": 19.052452,
-    "description": "Butik"
-  },
-  {
     "id": "lilla-fide-n5297357205",
     "name": "Lilla FIDE",
     "category": "mat",
@@ -5914,14 +4328,6 @@ const MOCK_PLACES = [
     "lat": 57.631363,
     "lng": 18.524501,
     "description": "Naturreservat"
-  },
-  {
-    "id": "lilla-karlso-n2078780737",
-    "name": "Lilla Karlsö",
-    "category": "service",
-    "lat": 57.311124,
-    "lng": 18.073763,
-    "description": "Färjeterminal"
   },
   {
     "id": "lilla-karlso-naturreservat-w102776100",
@@ -6052,14 +4458,6 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "linarve-visby-n6567706585",
-    "name": "Linarve Visby",
-    "category": "shopping",
-    "lat": 57.640241,
-    "lng": 18.294465,
-    "description": "Butik"
-  },
-  {
     "id": "linde-kyrka-w551235740",
     "name": "Linde kyrka",
     "category": "sevardhet",
@@ -6074,22 +4472,6 @@ const MOCK_PLACES = [
     "lat": 57.281317,
     "lng": 18.371232,
     "description": "Naturreservat"
-  },
-  {
-    "id": "lindex-n11691721491",
-    "name": "Lindex",
-    "category": "shopping",
-    "lat": 57.637157,
-    "lng": 18.301348,
-    "description": "Butik"
-  },
-  {
-    "id": "lindgarden-n7978347430",
-    "name": "Lindgården",
-    "category": "boende",
-    "lat": 57.640895,
-    "lng": 18.29389,
-    "description": "Hotell"
   },
   {
     "id": "lindhammarsmyr-w102775375",
@@ -6146,22 +4528,6 @@ const MOCK_PLACES = [
     "lat": 57.705739,
     "lng": 18.809969,
     "description": "Historisk plats"
-  },
-  {
-    "id": "ljugarns-camping-och-semesterby-w1071031578",
-    "name": "Ljugarns Camping och Semesterby",
-    "category": "boende",
-    "lat": 57.34147,
-    "lng": 18.717868,
-    "description": "Camping"
-  },
-  {
-    "id": "ljugarns-semesterby-och-camping-n10740026992",
-    "name": "Ljugarns Semesterby och camping",
-    "category": "service",
-    "lat": 57.34072,
-    "lng": 18.71729,
-    "description": "Laddstation"
   },
   {
     "id": "ljugarns-strand-n11944704104",
@@ -6246,7 +4612,7 @@ const MOCK_PLACES = [
   {
     "id": "lummelundagrottan-n702274593",
     "name": "Lummelundagrottan",
-    "category": "natur",
+    "category": "sevardhet",
     "lat": 57.7382,
     "lng": 18.406005,
     "description": "Turistinformation"
@@ -6300,22 +4666,6 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "lansforsakringar-gotland-n11691721477",
-    "name": "Länsförsäkringar Gotland",
-    "category": "service",
-    "lat": 57.636901,
-    "lng": 18.302601,
-    "description": "Service"
-  },
-  {
-    "id": "larbo-cng-n10814956091",
-    "name": "Lärbo CNG",
-    "category": "service",
-    "lat": 57.783804,
-    "lng": 18.788263,
-    "description": "Bensinstation"
-  },
-  {
     "id": "larbro-cafe-bar-n12169645732",
     "name": "Lärbro Cafe & Bar",
     "category": "mat",
@@ -6356,28 +4706,12 @@ const MOCK_PLACES = [
     "description": "Besöksmål"
   },
   {
-    "id": "mad-peach-n2320584939",
-    "name": "mad peach",
-    "category": "shopping",
-    "lat": 57.637621,
-    "lng": 18.295104,
-    "description": "Butik"
-  },
-  {
     "id": "magasinet-n8902078296",
     "name": "Magasinet",
     "category": "mat",
     "lat": 57.865021,
     "lng": 19.057726,
     "description": "Restaurang"
-  },
-  {
-    "id": "magasinet-w1087504449",
-    "name": "Magasinet",
-    "category": "shopping",
-    "lat": 57.609677,
-    "lng": 18.243936,
-    "description": "Butik"
   },
   {
     "id": "magazinet-n1313897479",
@@ -6404,14 +4738,6 @@ const MOCK_PLACES = [
     "description": "Historisk plats"
   },
   {
-    "id": "majstregarden-n10740046625",
-    "name": "Majstregården",
-    "category": "mat",
-    "lat": 56.92281,
-    "lng": 18.13248,
-    "description": "Laddstation"
-  },
-  {
     "id": "maldes-naturreservat-r12216218",
     "name": "Maldes naturreservat",
     "category": "natur",
@@ -6426,14 +4752,6 @@ const MOCK_PLACES = [
     "lat": 57.933528,
     "lng": 19.122713,
     "description": "Naturupplevelse"
-  },
-  {
-    "id": "mallas-stenstugu-n1383500036",
-    "name": "Mallas Stenstugu",
-    "category": "boende",
-    "lat": 57.597788,
-    "lng": 18.447315,
-    "description": "Pensionat och gästboende"
   },
   {
     "id": "mallgard-kallmyrs-naturreservat-w102776062",
@@ -6524,14 +4842,6 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "mavens-kustnara-stugor-n11065578164",
-    "name": "Mavens Kustnära Stugor",
-    "category": "boende",
-    "lat": 57.859731,
-    "lng": 18.776166,
-    "description": "Semesterboende"
-  },
-  {
     "id": "mavrajd-w378759384",
     "name": "Mavrajd",
     "category": "natur",
@@ -6554,14 +4864,6 @@ const MOCK_PLACES = [
     "lat": 57.637404,
     "lng": 18.303765,
     "description": "Snabbmat"
-  },
-  {
-    "id": "maxi-ica-stormarknad-visby-w126784267",
-    "name": "Maxi ICA Stormarknad Visby",
-    "category": "shopping",
-    "lat": 57.623798,
-    "lng": 18.322115,
-    "description": "Butik"
   },
   {
     "id": "mcdonald-s-n4977419516",
@@ -6652,52 +4954,12 @@ const MOCK_PLACES = [
     "description": "Café"
   },
   {
-    "id": "mix-ranch-stenkyrka-n10740026996",
-    "name": "Mix Ranch Stenkyrka",
-    "category": "service",
-    "lat": 57.79796,
-    "lng": 18.54881,
-    "description": "Laddstation"
-  },
-  {
     "id": "mojner-r7611521",
     "name": "Mojner",
     "category": "natur",
     "lat": 57.661998,
     "lng": 18.793159,
     "description": "Naturreservat"
-  },
-  {
-    "id": "mojo-independent-store-n2320584943",
-    "name": "Mojo Independent Store",
-    "category": "shopping",
-    "lat": 57.63715,
-    "lng": 18.294305,
-    "description": "Butik"
-  },
-  {
-    "id": "mosaic-n12877365917",
-    "name": "Mosaic",
-    "category": "shopping",
-    "lat": 57.637792,
-    "lng": 18.295016,
-    "description": "Butik"
-  },
-  {
-    "id": "mq-n11691721490",
-    "name": "MQ",
-    "category": "shopping",
-    "lat": 57.637256,
-    "lng": 18.301071,
-    "description": "Butik"
-  },
-  {
-    "id": "mtb-banor-w835739420",
-    "name": "MTB-banor",
-    "category": "aktivitet",
-    "lat": 57.606265,
-    "lng": 18.278733,
-    "description": "Idrottsanläggning"
   },
   {
     "id": "mulde-fornborg-w374191024",
@@ -6860,14 +5122,6 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "nabben-n2089197566",
-    "name": "Nabben",
-    "category": "aktivitet",
-    "lat": 57.265731,
-    "lng": 18.717308,
-    "description": "Småbåtshamn"
-  },
-  {
     "id": "nackhajden-n4341704710",
     "name": "Nackhajden",
     "category": "natur",
@@ -6906,14 +5160,6 @@ const MOCK_PLACES = [
     "lat": 56.968744,
     "lng": 18.230611,
     "description": "Museum"
-  },
-  {
-    "id": "nightmare-n766160693",
-    "name": "Nightmare",
-    "category": "shopping",
-    "lat": 57.635921,
-    "lng": 18.29308,
-    "description": "Butik"
   },
   {
     "id": "nissevikens-restaurang-n817398704",
@@ -6962,14 +5208,6 @@ const MOCK_PLACES = [
     "lat": 57.973086,
     "lng": 19.250435,
     "description": "Badplats"
-  },
-  {
-    "id": "norra-kyrkogarden-n10740046610",
-    "name": "Norra kyrkogården",
-    "category": "service",
-    "lat": 57.6565,
-    "lng": 18.31499,
-    "description": "Laddstation"
   },
   {
     "id": "norra-nyrajsemyr-w379617744",
@@ -7068,14 +5306,6 @@ const MOCK_PLACES = [
     "description": "Restaurang"
   },
   {
-    "id": "novi-ressort-visby-n4216100283",
-    "name": "NOVI Ressort Visby",
-    "category": "boende",
-    "lat": 57.652973,
-    "lng": 18.306615,
-    "description": "Hotell"
-  },
-  {
     "id": "nya-skafferiet-n766160699",
     "name": "Nya Skafferiet",
     "category": "mat",
@@ -7098,14 +5328,6 @@ const MOCK_PLACES = [
     "lat": 57.600683,
     "lng": 18.226587,
     "description": "Gårdsbutik"
-  },
-  {
-    "id": "nymans-beach-house-r6597539",
-    "name": "Nymans Beach House",
-    "category": "boende",
-    "lat": 57.485132,
-    "lng": 18.130657,
-    "description": "Camping"
   },
   {
     "id": "nyrajsu-w378759385",
@@ -7140,22 +5362,6 @@ const MOCK_PLACES = [
     "description": "Kyrka och besöksmål"
   },
   {
-    "id": "narbodi-n10740027003",
-    "name": "Närbodi",
-    "category": "service",
-    "lat": 57.25951,
-    "lng": 18.63631,
-    "description": "Laddstation"
-  },
-  {
-    "id": "narshamn-n2088990885",
-    "name": "Närshamn",
-    "category": "aktivitet",
-    "lat": 57.225302,
-    "lng": 18.663097,
-    "description": "Småbåtshamn"
-  },
-  {
     "id": "narsholmen-w102775876",
     "name": "Närsholmen",
     "category": "natur",
@@ -7182,7 +5388,7 @@ const MOCK_PLACES = [
   {
     "id": "offerkallan-n5712258179",
     "name": "Offerkällan",
-    "category": "natur",
+    "category": "sevardhet",
     "lat": 57.667551,
     "lng": 18.47313,
     "description": "Historisk plats"
@@ -7194,38 +5400,6 @@ const MOCK_PLACES = [
     "lat": 57.866248,
     "lng": 18.964461,
     "description": "Naturupplevelse"
-  },
-  {
-    "id": "okq8-n52582606",
-    "name": "OKQ8",
-    "category": "service",
-    "lat": 57.638378,
-    "lng": 18.300892,
-    "description": "Bensinstation"
-  },
-  {
-    "id": "okq8-n874386476",
-    "name": "OKQ8",
-    "category": "service",
-    "lat": 57.503838,
-    "lng": 18.456094,
-    "description": "Bensinstation"
-  },
-  {
-    "id": "okq8-n3002047436",
-    "name": "OKQ8",
-    "category": "service",
-    "lat": 57.237097,
-    "lng": 18.382505,
-    "description": "Bensinstation"
-  },
-  {
-    "id": "okq8-minipris-w295476054",
-    "name": "OKQ8 Minipris",
-    "category": "service",
-    "lat": 57.625651,
-    "lng": 18.274111,
-    "description": "Bensinstation"
   },
   {
     "id": "olf-palmes-minnesplats-sudersund-n9961775775",
@@ -7258,38 +5432,6 @@ const MOCK_PLACES = [
     "lat": 57.747395,
     "lng": 18.738785,
     "description": "Kyrka och besöksmål"
-  },
-  {
-    "id": "p18-idrottsplats-r15031848",
-    "name": "P18 idrottsplats",
-    "category": "aktivitet",
-    "lat": 57.61088,
-    "lng": 18.282117,
-    "description": "Idrottsanläggning"
-  },
-  {
-    "id": "p18-motionscentral-n5025051641",
-    "name": "P18 Motionscentral",
-    "category": "aktivitet",
-    "lat": 57.60593,
-    "lng": 18.280528,
-    "description": "Aktivitet och idrott"
-  },
-  {
-    "id": "p18-skjutbanor-r11489469",
-    "name": "P18 Skjutbanor",
-    "category": "aktivitet",
-    "lat": 57.605634,
-    "lng": 18.269061,
-    "description": "Idrottsanläggning"
-  },
-  {
-    "id": "paddeltennis-w834228005",
-    "name": "Paddeltennis",
-    "category": "aktivitet",
-    "lat": 57.486899,
-    "lng": 18.131786,
-    "description": "Aktivitet och idrott"
   },
   {
     "id": "pankar-w102775308",
@@ -7340,60 +5482,12 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "pelle-n12892450666",
-    "name": "Pelle",
-    "category": "shopping",
-    "lat": 57.636504,
-    "lng": 18.293788,
-    "description": "Butik"
-  },
-  {
-    "id": "pensionat-gra-gasen-n10740046624",
-    "name": "Pensionat Grå Gåsen",
-    "category": "service",
-    "lat": 57.03939,
-    "lng": 18.28701,
-    "description": "Laddstation"
-  },
-  {
-    "id": "pensionat-holmhallar-n4317566353",
-    "name": "Pensionat Holmhällar",
-    "category": "boende",
-    "lat": 56.934703,
-    "lng": 18.28813,
-    "description": "Pensionat och gästboende"
-  },
-  {
-    "id": "pensionat-warfsholm-n632446436",
-    "name": "Pensionat Warfsholm",
-    "category": "boende",
-    "lat": 57.390157,
-    "lng": 18.190655,
-    "description": "Vandrarhem"
-  },
-  {
     "id": "petarve-vattensag-n2384744219",
     "name": "Petarve vattensåg",
     "category": "sevardhet",
     "lat": 57.435164,
     "lng": 18.250317,
     "description": "Besöksmål"
-  },
-  {
-    "id": "phase-nine-n12877304746",
-    "name": "Phase Nine",
-    "category": "shopping",
-    "lat": 57.637694,
-    "lng": 18.294932,
-    "description": "Butik"
-  },
-  {
-    "id": "picco-n13059907748",
-    "name": "Picco",
-    "category": "shopping",
-    "lat": 57.635832,
-    "lng": 18.292983,
-    "description": "Butik"
   },
   {
     "id": "pinchos-n318701858",
@@ -7444,76 +5538,12 @@ const MOCK_PLACES = [
     "description": "Besöksmål"
   },
   {
-    "id": "polisen-w207319728",
-    "name": "Polisen",
-    "category": "service",
-    "lat": 57.637196,
-    "lng": 18.305537,
-    "description": "Service"
-  },
-  {
-    "id": "polisen-hemse-r115871",
-    "name": "Polisen Hemse",
-    "category": "service",
-    "lat": 57.239293,
-    "lng": 18.370637,
-    "description": "Service"
-  },
-  {
-    "id": "preem-n247134852",
-    "name": "Preem",
-    "category": "service",
-    "lat": 57.390661,
-    "lng": 18.198166,
-    "description": "Bensinstation"
-  },
-  {
-    "id": "preem-n247134865",
-    "name": "Preem",
-    "category": "service",
-    "lat": 57.64515,
-    "lng": 18.33195,
-    "description": "Bensinstation"
-  },
-  {
-    "id": "preem-n247134866",
-    "name": "Preem",
-    "category": "service",
-    "lat": 57.626405,
-    "lng": 18.31812,
-    "description": "Bensinstation"
-  },
-  {
-    "id": "preem-n247135391",
-    "name": "Preem",
-    "category": "service",
-    "lat": 57.63604,
-    "lng": 18.33201,
-    "description": "Bensinstation"
-  },
-  {
-    "id": "prima-i-backen-n12909499919",
-    "name": "Prima i backen",
-    "category": "shopping",
-    "lat": 57.63939,
-    "lng": 18.296641,
-    "description": "Butik"
-  },
-  {
     "id": "prasthagamyr-w485430541",
     "name": "Prästhagamyr",
     "category": "natur",
     "lat": 57.929141,
     "lng": 19.124157,
     "description": "Naturupplevelse"
-  },
-  {
-    "id": "putte-pa-lickers-w533036958",
-    "name": "Putte på Lickers",
-    "category": "shopping",
-    "lat": 57.825812,
-    "lng": 18.512721,
-    "description": "Butik"
   },
   {
     "id": "paangen-mat-bar-n13999828201",
@@ -7540,14 +5570,6 @@ const MOCK_PLACES = [
     "description": "Restaurang"
   },
   {
-    "id": "quality-hotel-visby-w315908934",
-    "name": "Quality Hotel Visby",
-    "category": "boende",
-    "lat": 57.631831,
-    "lng": 18.280394,
-    "description": "Hotell"
-  },
-  {
     "id": "rannarve-rose-n6374234542",
     "name": "Rannarve Röse",
     "category": "sevardhet",
@@ -7572,28 +5594,12 @@ const MOCK_PLACES = [
     "description": "Badplats"
   },
   {
-    "id": "rc-falt-w835980550",
-    "name": "RC-Fält",
-    "category": "aktivitet",
-    "lat": 57.56428,
-    "lng": 18.279973,
-    "description": "Aktivitet och idrott"
-  },
-  {
     "id": "re-market-n10764689258",
     "name": "Re:Market",
     "category": "mat",
     "lat": 57.38601,
     "lng": 18.199762,
     "description": "Café"
-  },
-  {
-    "id": "recharge-mcdonald-s-visby-n7519773057",
-    "name": "Recharge McDonald's Visby",
-    "category": "service",
-    "lat": 57.621449,
-    "lng": 18.320556,
-    "description": "Laddstation"
   },
   {
     "id": "restaurang-china-n315985687",
@@ -7668,22 +5674,6 @@ const MOCK_PLACES = [
     "description": "Kyrka och besöksmål"
   },
   {
-    "id": "ronehamns-camping-n272661585",
-    "name": "Ronehamns camping",
-    "category": "boende",
-    "lat": 57.171699,
-    "lng": 18.486005,
-    "description": "Camping"
-  },
-  {
-    "id": "ronehamns-livs-n272661160",
-    "name": "Ronehamns livs",
-    "category": "shopping",
-    "lat": 57.179797,
-    "lng": 18.479241,
-    "description": "Butik"
-  },
-  {
     "id": "rongarde-w102776159",
     "name": "Rongärde",
     "category": "natur",
@@ -7698,14 +5688,6 @@ const MOCK_PLACES = [
     "lat": 57.780927,
     "lng": 18.668969,
     "description": "Naturupplevelse"
-  },
-  {
-    "id": "royhuset-n8902966067",
-    "name": "Royhuset",
-    "category": "boende",
-    "lat": 57.864033,
-    "lng": 19.050732,
-    "description": "Hotell"
   },
   {
     "id": "runtumyr-w484281169",
@@ -7738,14 +5720,6 @@ const MOCK_PLACES = [
     "lat": 57.388863,
     "lng": 18.737003,
     "description": "Naturreservat"
-  },
-  {
-    "id": "rusta-n5190620232",
-    "name": "Rusta",
-    "category": "shopping",
-    "lat": 57.633278,
-    "lng": 18.326474,
-    "description": "Butik"
   },
   {
     "id": "rute-23-1-n6373759857",
@@ -7820,14 +5794,6 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "ravhagen-w205311727",
-    "name": "Rävhagen",
-    "category": "aktivitet",
-    "lat": 57.624972,
-    "lng": 18.326643,
-    "description": "Aktivitet och idrott"
-  },
-  {
     "id": "rojsu-w566746570",
     "name": "Röjsu",
     "category": "sevardhet",
@@ -7844,28 +5810,12 @@ const MOCK_PLACES = [
     "description": "Utsiktsplats"
   },
   {
-    "id": "s-t-goransgatan-31-n6631917770",
-    "name": "S:t Göransgatan 31",
-    "category": "service",
-    "lat": 57.652321,
-    "lng": 18.306378,
-    "description": "Laddstation"
-  },
-  {
     "id": "s-t-olofsholm-badstrand-n14006218026",
     "name": "S:t Olofsholm badstrand",
     "category": "strand",
     "lat": 57.729848,
     "lng": 18.955775,
     "description": "Badplats"
-  },
-  {
-    "id": "sail-racing-n12889094597",
-    "name": "Sail Racing",
-    "category": "shopping",
-    "lat": 57.638825,
-    "lng": 18.288682,
-    "description": "Butik"
   },
   {
     "id": "sajgs-r1459266",
@@ -7900,14 +5850,6 @@ const MOCK_PLACES = [
     "description": "Restaurang"
   },
   {
-    "id": "salvia-n12068486577",
-    "name": "Salvia",
-    "category": "shopping",
-    "lat": 56.969093,
-    "lng": 18.230813,
-    "description": "Butik"
-  },
-  {
     "id": "salvorev-kopparstenarnas-naturreservat-r1459272",
     "name": "Salvorev-Kopparstenarnas naturreservat",
     "category": "natur",
@@ -7940,36 +5882,12 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "sandhamns-camping-n5038781046",
-    "name": "Sandhamns Camping",
-    "category": "boende",
-    "lat": 57.31683,
-    "lng": 18.166516,
-    "description": "Camping"
-  },
-  {
     "id": "sandviken-n8841510024",
     "name": "Sandviken",
     "category": "strand",
     "lat": 57.397217,
     "lng": 18.873966,
     "description": "Badplats"
-  },
-  {
-    "id": "sandvikens-campig-w617270752",
-    "name": "Sandvikens Campig",
-    "category": "boende",
-    "lat": 57.401357,
-    "lng": 18.875597,
-    "description": "Camping"
-  },
-  {
-    "id": "sandvikens-camping-w617270900",
-    "name": "Sandvikens camping",
-    "category": "boende",
-    "lat": 57.399934,
-    "lng": 18.875056,
-    "description": "Camping"
   },
   {
     "id": "sandvikens-naturreservat-w528208449",
@@ -8100,14 +6018,6 @@ const MOCK_PLACES = [
     "description": "Kyrka och besöksmål"
   },
   {
-    "id": "scandic-hotels-w1358332507",
-    "name": "Scandic Hotels",
-    "category": "boende",
-    "lat": 57.633411,
-    "lng": 18.282242,
-    "description": "Hotell"
-  },
-  {
     "id": "segment-b-w280186210",
     "name": "segment B",
     "category": "natur",
@@ -8204,28 +6114,12 @@ const MOCK_PLACES = [
     "description": "Kyrka och besöksmål"
   },
   {
-    "id": "simbassang-w549036140",
-    "name": "Simbassäng",
-    "category": "aktivitet",
-    "lat": 57.507514,
-    "lng": 18.445531,
-    "description": "Aktivitet och idrott"
-  },
-  {
     "id": "sinkmyr-w525598034",
     "name": "Sinkmyr",
     "category": "natur",
     "lat": 57.55193,
     "lng": 18.719459,
     "description": "Naturupplevelse"
-  },
-  {
-    "id": "sjalso-bageri-n4345147110",
-    "name": "Sjalso Bageri",
-    "category": "shopping",
-    "lat": 57.690005,
-    "lng": 18.355234,
-    "description": "Butik"
   },
   {
     "id": "sjonhem-16-1-n6373692864",
@@ -8252,14 +6146,6 @@ const MOCK_PLACES = [
     "description": "Bar"
   },
   {
-    "id": "sjalso-fisk-w1311696006",
-    "name": "Själsö Fisk",
-    "category": "shopping",
-    "lat": 57.692919,
-    "lng": 18.352276,
-    "description": "Butik"
-  },
-  {
     "id": "sjalsoan-w102775381",
     "name": "Själsöån",
     "category": "natur",
@@ -8274,14 +6160,6 @@ const MOCK_PLACES = [
     "lat": 57.705691,
     "lng": 18.808921,
     "description": "Museum"
-  },
-  {
-    "id": "sjorovarskeppen-w1087514338",
-    "name": "Sjörövarskeppen",
-    "category": "aktivitet",
-    "lat": 57.608657,
-    "lng": 18.244507,
-    "description": "Aktivitet"
   },
   {
     "id": "skalahauar-r7100478",
@@ -8332,44 +6210,12 @@ const MOCK_PLACES = [
     "description": "Historisk plats"
   },
   {
-    "id": "skatehall-n274838463",
-    "name": "Skatehall",
-    "category": "aktivitet",
-    "lat": 57.639308,
-    "lng": 18.312763,
-    "description": "Idrottsanläggning"
-  },
-  {
     "id": "skeppsbron-n1798251637",
     "name": "Skeppsbron",
     "category": "mat",
     "lat": 57.637942,
     "lng": 18.288118,
     "description": "Restaurang"
-  },
-  {
-    "id": "skogshamra-n10740026982",
-    "name": "Skogshamra",
-    "category": "service",
-    "lat": 56.97989,
-    "lng": 18.31433,
-    "description": "Laddstation"
-  },
-  {
-    "id": "skokanonen-n1404612435",
-    "name": "Skokanonen",
-    "category": "shopping",
-    "lat": 57.623034,
-    "lng": 18.324817,
-    "description": "Butik"
-  },
-  {
-    "id": "skolhuset-n10740046633",
-    "name": "Skolhuset",
-    "category": "service",
-    "lat": 57.42153,
-    "lng": 18.85776,
-    "description": "Laddstation"
   },
   {
     "id": "skolhusets-tradgardscafe-n4358957393",
@@ -8396,14 +6242,6 @@ const MOCK_PLACES = [
     "description": "Badplats"
   },
   {
-    "id": "slite-camping-w377678267",
-    "name": "Slite Camping",
-    "category": "boende",
-    "lat": 57.69934,
-    "lng": 18.800775,
-    "description": "Camping"
-  },
-  {
     "id": "slite-golfklubb-r13081689",
     "name": "Slite Golfklubb",
     "category": "aktivitet",
@@ -8428,22 +6266,6 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "slite-strandby-n10740046637",
-    "name": "Slite strandby",
-    "category": "service",
-    "lat": 57.69805,
-    "lng": 18.79976,
-    "description": "Laddstation"
-  },
-  {
-    "id": "slitebaden-hotell-och-restaurang-n9666005187",
-    "name": "Slitebaden hotell och restaurang",
-    "category": "boende",
-    "lat": 57.704769,
-    "lng": 18.807342,
-    "description": "Hotell"
-  },
-  {
     "id": "slottet-n1809286612",
     "name": "Slottet",
     "category": "smultronstallen",
@@ -8452,36 +6274,12 @@ const MOCK_PLACES = [
     "description": "Utsiktsplats"
   },
   {
-    "id": "slottshamnen-n60018816",
-    "name": "Slottshamnen",
-    "category": "aktivitet",
-    "lat": 57.63527,
-    "lng": 18.281492,
-    "description": "Småbåtshamn"
-  },
-  {
-    "id": "slow-train-bed-breakfast-w496794607",
-    "name": "Slow Train Bed & Breakfast",
-    "category": "boende",
-    "lat": 57.934773,
-    "lng": 19.165184,
-    "description": "Pensionat och gästboende"
-  },
-  {
     "id": "slakmyr-w379563634",
     "name": "Släkmyr",
     "category": "natur",
     "lat": 57.860064,
     "lng": 18.920032,
     "description": "Naturupplevelse"
-  },
-  {
-    "id": "slakte-n12892439094",
-    "name": "Släkte",
-    "category": "shopping",
-    "lat": 57.637199,
-    "lng": 18.294551,
-    "description": "Butik"
   },
   {
     "id": "slaktaktsvagens-badstrand-n14006218867",
@@ -8506,14 +6304,6 @@ const MOCK_PLACES = [
     "lat": 57.33017,
     "lng": 18.708623,
     "description": "Restaurang"
-  },
-  {
-    "id": "smakrike-logi-n559420065",
-    "name": "Smakrike Logi",
-    "category": "boende",
-    "lat": 57.33018,
-    "lng": 18.708996,
-    "description": "Hotell"
   },
   {
     "id": "smaulmyrar-w525649506",
@@ -8572,14 +6362,6 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "snackan-w422062263",
-    "name": "Snäckan",
-    "category": "boende",
-    "lat": 57.39584,
-    "lng": 18.18624,
-    "description": "Camping"
-  },
-  {
     "id": "snackgardsporten-n2320592905",
     "name": "Snäckgärdsporten",
     "category": "sevardhet",
@@ -8594,22 +6376,6 @@ const MOCK_PLACES = [
     "lat": 57.646693,
     "lng": 18.296537,
     "description": "Historisk plats"
-  },
-  {
-    "id": "snogrindebanan-w491301932",
-    "name": "Snögrindebanan",
-    "category": "aktivitet",
-    "lat": 57.360404,
-    "lng": 18.249632,
-    "description": "Aktivitet och idrott"
-  },
-  {
-    "id": "snogrindebanan-pistol-w491302078",
-    "name": "Snögrindebanan pistol",
-    "category": "aktivitet",
-    "lat": 57.359474,
-    "lng": 18.252253,
-    "description": "Aktivitet och idrott"
   },
   {
     "id": "snogrindebanans-lekplats-w491300509",
@@ -8652,44 +6418,12 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "solbergabadet-w33352218",
-    "name": "Solbergabadet",
-    "category": "aktivitet",
-    "lat": 57.635672,
-    "lng": 18.30056,
-    "description": "Idrottsanläggning"
-  },
-  {
     "id": "solfagel-n5153154556",
     "name": "Solfågel",
     "category": "sevardhet",
     "lat": 57.640558,
     "lng": 18.291058,
     "description": "Sevärdhet"
-  },
-  {
-    "id": "solgrinde-w429887859",
-    "name": "Solgrinde",
-    "category": "boende",
-    "lat": 57.735849,
-    "lng": 18.885792,
-    "description": "Camping"
-  },
-  {
-    "id": "solhaga-w482648160",
-    "name": "Solhaga",
-    "category": "boende",
-    "lat": 57.889724,
-    "lng": 19.092512,
-    "description": "Camping"
-  },
-  {
-    "id": "solklintshallen-w378740703",
-    "name": "Solklintshallen",
-    "category": "aktivitet",
-    "lat": 57.706682,
-    "lng": 18.792648,
-    "description": "Idrottsanläggning"
   },
   {
     "id": "solsidan-w1087504467",
@@ -8732,22 +6466,6 @@ const MOCK_PLACES = [
     "description": "Kyrka och besöksmål"
   },
   {
-    "id": "st1-n52592674",
-    "name": "St1",
-    "category": "service",
-    "lat": 57.629428,
-    "lng": 18.286363,
-    "description": "Bensinstation"
-  },
-  {
-    "id": "st1-n1842225571",
-    "name": "St1",
-    "category": "shopping",
-    "lat": 57.631762,
-    "lng": 18.33019,
-    "description": "Bensinstation"
-  },
-  {
     "id": "stadshagen-w464127866",
     "name": "Stadshagen",
     "category": "natur",
@@ -8762,22 +6480,6 @@ const MOCK_PLACES = [
     "lat": 57.620555,
     "lng": 18.365188,
     "description": "Naturupplevelse"
-  },
-  {
-    "id": "stafva-gard-n10740026993",
-    "name": "Stafva gård",
-    "category": "service",
-    "lat": 57.55399,
-    "lng": 18.43845,
-    "description": "Laddstation"
-  },
-  {
-    "id": "stafva-gardsbutik-n12125059006",
-    "name": "Stafva gårdsbutik",
-    "category": "shopping",
-    "lat": 57.554516,
-    "lng": 18.435832,
-    "description": "Butik"
   },
   {
     "id": "stainstmyr-w533013707",
@@ -8844,14 +6546,6 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "stenhuggarvagen-5-7-n10740026987",
-    "name": "Stenhuggarvägen 5-7",
-    "category": "service",
-    "lat": 57.6214,
-    "lng": 18.32107,
-    "description": "Laddstation"
-  },
-  {
     "id": "stenhuse-gard-w208780746",
     "name": "Stenhuse Gård",
     "category": "shopping",
@@ -8882,14 +6576,6 @@ const MOCK_PLACES = [
     "lat": 57.547721,
     "lng": 18.268583,
     "description": "Kyrka och besöksmål"
-  },
-  {
-    "id": "stenkyrka-halge-149-n10740026991",
-    "name": "Stenkyrka Hälge 149",
-    "category": "service",
-    "lat": 57.8049,
-    "lng": 18.51608,
-    "description": "Laddstation"
   },
   {
     "id": "stenkyrka-kyrka-w610027234",
@@ -8924,84 +6610,12 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "stf-bunge-farosund-vandrarhem-w1068989724",
-    "name": "STF Bunge/Fårösund Vandrarhem",
-    "category": "boende",
-    "lat": 57.853011,
-    "lng": 19.03585,
-    "description": "Vandrarhem"
-  },
-  {
-    "id": "stf-larbro-vandrarhem-n448315584",
-    "name": "STF Lärbro Vandrarhem",
-    "category": "boende",
-    "lat": 57.792442,
-    "lng": 18.785466,
-    "description": "Vandrarhem"
-  },
-  {
-    "id": "stf-stora-karlso-n6651658880",
-    "name": "STF Stora Karlsö",
-    "category": "boende",
-    "lat": 57.289339,
-    "lng": 17.970332,
-    "description": "Vandrarhem"
-  },
-  {
-    "id": "stf-vandrarhem-ljugarn-w546620046",
-    "name": "STF Vandrarhem Ljugarn",
-    "category": "boende",
-    "lat": 57.323522,
-    "lng": 18.713205,
-    "description": "Vandrarhem"
-  },
-  {
-    "id": "stf-vandrarhem-visby-ravhagen-n624113029",
-    "name": "STF Vandrarhem Visby/Rävhagen",
-    "category": "boende",
-    "lat": 57.62632,
-    "lng": 18.331202,
-    "description": "Vandrarhem"
-  },
-  {
-    "id": "stf-visby-lagenhetshotell-n4216100282",
-    "name": "STF Visby Lägenhetshotell",
-    "category": "boende",
-    "lat": 57.631791,
-    "lng": 18.304975,
-    "description": "Hotell"
-  },
-  {
-    "id": "stf-ostra-flygeln-bunge-vandrarhem-w431979235",
-    "name": "STF Östra Flygeln Bunge Vandrarhem",
-    "category": "boende",
-    "lat": 57.864118,
-    "lng": 19.047618,
-    "description": "Vandrarhem"
-  },
-  {
     "id": "stigmyr-w530645633",
     "name": "Stigmyr",
     "category": "natur",
     "lat": 57.833192,
     "lng": 18.638531,
     "description": "Naturupplevelse"
-  },
-  {
-    "id": "stora-burge-gard-n10740046631",
-    "name": "Stora Burge gård",
-    "category": "service",
-    "lat": 57.19552,
-    "lng": 18.2294,
-    "description": "Laddstation"
-  },
-  {
-    "id": "stora-coop-n9726325370",
-    "name": "Stora Coop",
-    "category": "shopping",
-    "lat": 57.621591,
-    "lng": 18.322447,
-    "description": "Butik"
   },
   {
     "id": "stora-dappan-w1190202666",
@@ -9026,14 +6640,6 @@ const MOCK_PLACES = [
     "lat": 57.65987,
     "lng": 18.363324,
     "description": "Besöksmål"
-  },
-  {
-    "id": "stora-karlso-n2078763982",
-    "name": "Stora Karlsö",
-    "category": "service",
-    "lat": 57.29007,
-    "lng": 17.970767,
-    "description": "Färjeterminal"
   },
   {
     "id": "stora-karlso-naturreservat-w102775291",
@@ -9148,14 +6754,6 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "strand-hotell-n10740046621",
-    "name": "Strand hotell",
-    "category": "service",
-    "lat": 57.6419,
-    "lng": 18.29276,
-    "description": "Laddstation"
-  },
-  {
     "id": "strandakersvat-w482269663",
     "name": "Strandakersvät",
     "category": "natur",
@@ -9164,52 +6762,12 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "strandcampingen-taltcampingen-w1163078107",
-    "name": "Strandcampingen tältcampingen",
-    "category": "boende",
-    "lat": 57.951775,
-    "lng": 19.2415,
-    "description": "Camping"
-  },
-  {
     "id": "strandridaregarden-w546620045",
     "name": "Strandridaregården",
     "category": "sevardhet",
     "lat": 57.323709,
     "lng": 18.712832,
     "description": "Museum"
-  },
-  {
-    "id": "strandskogens-camping-w1163078106",
-    "name": "Strandskogens camping",
-    "category": "boende",
-    "lat": 57.952556,
-    "lng": 19.245753,
-    "description": "Ställplats och husvagnscamping"
-  },
-  {
-    "id": "strandskogens-camping-sudersand-faro-n431825095",
-    "name": "Strandskogens Camping Sudersand Fårö",
-    "category": "boende",
-    "lat": 57.95597,
-    "lng": 19.24943,
-    "description": "Camping"
-  },
-  {
-    "id": "strandvagen-5-n10740026999",
-    "name": "Strandvägen 5",
-    "category": "service",
-    "lat": 57.33028,
-    "lng": 18.71087,
-    "description": "Laddstation"
-  },
-  {
-    "id": "strandvagen-51-n10740026983",
-    "name": "Strandvägen 51",
-    "category": "service",
-    "lat": 57.3416,
-    "lng": 18.71932,
-    "description": "Laddstation"
   },
   {
     "id": "stutmyr-w532076115",
@@ -9228,28 +6786,12 @@ const MOCK_PLACES = [
     "description": "Kyrka och besöksmål"
   },
   {
-    "id": "stanga-macken-n1827460188",
-    "name": "Stånga-macken",
-    "category": "service",
-    "lat": 57.280587,
-    "lng": 18.470588,
-    "description": "Bensinstation"
-  },
-  {
     "id": "suderbys-w363022418",
     "name": "Suderbys",
     "category": "aktivitet",
     "lat": 57.579139,
     "lng": 18.216354,
     "description": "Golfbana"
-  },
-  {
-    "id": "suderbys-herrgard-n10740026988",
-    "name": "Suderbys Herrgård",
-    "category": "service",
-    "lat": 57.57508,
-    "lng": 18.21349,
-    "description": "Laddstation"
   },
   {
     "id": "sudersand-r7251331",
@@ -9260,28 +6802,12 @@ const MOCK_PLACES = [
     "description": "Badstrand"
   },
   {
-    "id": "sudersand-semesterby-och-camping-n10740046606",
-    "name": "Sudersand Semesterby och camping",
-    "category": "service",
-    "lat": 57.95296,
-    "lng": 19.24358,
-    "description": "Laddstation"
-  },
-  {
     "id": "sudersands-resort-w450812651",
     "name": "Sudersands resort",
     "category": "mat",
     "lat": 57.955569,
     "lng": 19.251498,
     "description": "Restaurang"
-  },
-  {
-    "id": "sudersands-vintage-cykeluthyrning-n8677241807",
-    "name": "Sudersands Vintage Cykeluthyrning",
-    "category": "aktivitet",
-    "lat": 57.95552,
-    "lng": 19.246335,
-    "description": "Aktivitet"
   },
   {
     "id": "sudervik-w378883449",
@@ -9412,54 +6938,6 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "swedbank-n5015353305",
-    "name": "Swedbank",
-    "category": "service",
-    "lat": 57.633546,
-    "lng": 18.290755,
-    "description": "Service"
-  },
-  {
-    "id": "sylvis-dottrar-n1841494618",
-    "name": "Sylvis Döttrar",
-    "category": "shopping",
-    "lat": 57.967892,
-    "lng": 19.233958,
-    "description": "Butik"
-  },
-  {
-    "id": "sysne-fiskbutik-n4359033491",
-    "name": "Sysne fiskbutik",
-    "category": "shopping",
-    "lat": 57.389315,
-    "lng": 18.876294,
-    "description": "Butik"
-  },
-  {
-    "id": "systembolaget-n3810626375",
-    "name": "Systembolaget",
-    "category": "shopping",
-    "lat": 57.70403,
-    "lng": 18.80162,
-    "description": "Butik"
-  },
-  {
-    "id": "systembolaget-n4977419493",
-    "name": "Systembolaget",
-    "category": "shopping",
-    "lat": 57.638006,
-    "lng": 18.299989,
-    "description": "Butik"
-  },
-  {
-    "id": "systembolaget-n11054456580",
-    "name": "Systembolaget",
-    "category": "shopping",
-    "lat": 57.240166,
-    "lng": 18.376972,
-    "description": "Butik"
-  },
-  {
     "id": "savvats-naturreservat-w102775473",
     "name": "Sävväts naturreservat",
     "category": "natur",
@@ -9474,14 +6952,6 @@ const MOCK_PLACES = [
     "lat": 57.634801,
     "lng": 18.291914,
     "description": "Historisk plats"
-  },
-  {
-    "id": "sodervarnshallen-w33334983",
-    "name": "Södervärnshallen",
-    "category": "aktivitet",
-    "lat": 57.624362,
-    "lng": 18.29001,
-    "description": "Idrottsanläggning"
   },
   {
     "id": "sodra-hallarnas-naturreservat-r7611531",
@@ -9508,70 +6978,6 @@ const MOCK_PLACES = [
     "description": "Snabbmat"
   },
   {
-    "id": "tankvart-n685981461",
-    "name": "Tankvärt",
-    "category": "service",
-    "lat": 57.784508,
-    "lng": 18.788706,
-    "description": "Bensinstation"
-  },
-  {
-    "id": "tankvart-n874386477",
-    "name": "Tankvärt",
-    "category": "service",
-    "lat": 57.508259,
-    "lng": 18.449668,
-    "description": "Bensinstation"
-  },
-  {
-    "id": "tankvart-w315912054",
-    "name": "Tankvärt",
-    "category": "service",
-    "lat": 57.61698,
-    "lng": 18.284273,
-    "description": "Bensinstation"
-  },
-  {
-    "id": "tankvart-w414817662",
-    "name": "Tankvärt",
-    "category": "service",
-    "lat": 57.259322,
-    "lng": 18.635903,
-    "description": "Bensinstation"
-  },
-  {
-    "id": "tankvart-hemse-n282849415",
-    "name": "Tankvärt Hemse",
-    "category": "service",
-    "lat": 57.237663,
-    "lng": 18.374654,
-    "description": "Bensinstation"
-  },
-  {
-    "id": "tempo-n814045749",
-    "name": "Tempo",
-    "category": "shopping",
-    "lat": 57.799925,
-    "lng": 18.513458,
-    "description": "Butik"
-  },
-  {
-    "id": "tempo-w1071027664",
-    "name": "Tempo",
-    "category": "shopping",
-    "lat": 57.426409,
-    "lng": 18.841039,
-    "description": "Butik"
-  },
-  {
-    "id": "tennisbana-w435933270",
-    "name": "Tennisbana",
-    "category": "aktivitet",
-    "lat": 57.955786,
-    "lng": 19.24615,
-    "description": "Aktivitet och idrott"
-  },
-  {
     "id": "thai-thai-n305501178",
     "name": "Thai Thai",
     "category": "mat",
@@ -9594,14 +7000,6 @@ const MOCK_PLACES = [
     "lat": 57.706426,
     "lng": 18.762848,
     "description": "Naturupplevelse"
-  },
-  {
-    "id": "time-n4271469390",
-    "name": "Time",
-    "category": "shopping",
-    "lat": 57.860063,
-    "lng": 19.051339,
-    "description": "Butik"
   },
   {
     "id": "tingstade-fastning-w311648678",
@@ -9652,14 +7050,6 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "tjauls-gard-n10740026994",
-    "name": "Tjauls gård",
-    "category": "service",
-    "lat": 57.75795,
-    "lng": 18.44305,
-    "description": "Laddstation"
-  },
-  {
     "id": "tjelvarkyrkan-n11102444105",
     "name": "Tjelvarkyrkan",
     "category": "sevardhet",
@@ -9708,22 +7098,6 @@ const MOCK_PLACES = [
     "description": "Restaurang"
   },
   {
-    "id": "tofta-camping-n10740046613",
-    "name": "Tofta camping",
-    "category": "boende",
-    "lat": 57.48634,
-    "lng": 18.13175,
-    "description": "Laddstation"
-  },
-  {
-    "id": "tofta-camping-r6597540",
-    "name": "Tofta Camping",
-    "category": "boende",
-    "lat": 57.484325,
-    "lng": 18.128362,
-    "description": "Camping"
-  },
-  {
     "id": "tofta-kyrka-w986655333",
     "name": "Tofta kyrka",
     "category": "sevardhet",
@@ -9740,36 +7114,12 @@ const MOCK_PLACES = [
     "description": "Badstrand"
   },
   {
-    "id": "tofta-strandbageri-n1313923825",
-    "name": "Tofta Strandbageri",
-    "category": "shopping",
-    "lat": 57.504405,
-    "lng": 18.153208,
-    "description": "Butik"
-  },
-  {
-    "id": "tofta-strandpensionat-n13068058308",
-    "name": "Tofta Strandpensionat",
-    "category": "boende",
-    "lat": 57.490744,
-    "lng": 18.129989,
-    "description": "Hotell"
-  },
-  {
     "id": "tofta-viking-village-w443274473",
     "name": "Tofta Viking Village",
     "category": "sevardhet",
     "lat": 57.483781,
     "lng": 18.14066,
     "description": "Besöksmål"
-  },
-  {
-    "id": "toftagarden-n10740026997",
-    "name": "Toftagården",
-    "category": "service",
-    "lat": 57.48608,
-    "lng": 18.13991,
-    "description": "Laddstation"
   },
   {
     "id": "toftalagret-w1204762705",
@@ -9826,14 +7176,6 @@ const MOCK_PLACES = [
     "lat": 57.90864,
     "lng": 18.886254,
     "description": "Naturupplevelse"
-  },
-  {
-    "id": "traume-idrottsplats-w942673721",
-    "name": "Traume idrottsplats",
-    "category": "aktivitet",
-    "lat": 57.587455,
-    "lng": 18.328061,
-    "description": "Idrottsanläggning"
   },
   {
     "id": "tre-stekare-n12075145347",
@@ -9964,14 +7306,6 @@ const MOCK_PLACES = [
     "description": "Historisk plats"
   },
   {
-    "id": "uncle-joe-s-n8223325802",
-    "name": "Uncle Joe's",
-    "category": "boende",
-    "lat": 57.61536,
-    "lng": 18.284053,
-    "description": "Vandrarhem"
-  },
-  {
     "id": "underbar-visby-n9883916617",
     "name": "Underbar Visby",
     "category": "mat",
@@ -10044,14 +7378,6 @@ const MOCK_PLACES = [
     "description": "Kyrka och besöksmål"
   },
   {
-    "id": "vandrarhem-koburg-w546620827",
-    "name": "Vandrarhem Koburg",
-    "category": "boende",
-    "lat": 57.333664,
-    "lng": 18.70087,
-    "description": "Vandrarhem"
-  },
-  {
     "id": "varpet-r7314975",
     "name": "Varpet",
     "category": "natur",
@@ -10100,14 +7426,6 @@ const MOCK_PLACES = [
     "description": "Naturupplevelse"
   },
   {
-    "id": "verkstan-n12909488803",
-    "name": "Verkstan",
-    "category": "shopping",
-    "lat": 57.639798,
-    "lng": 18.296356,
-    "description": "Butik"
-  },
-  {
     "id": "viklau-kyrka-w1125607519",
     "name": "Viklau kyrka",
     "category": "sevardhet",
@@ -10148,44 +7466,12 @@ const MOCK_PLACES = [
     "description": "Kyrka och besöksmål"
   },
   {
-    "id": "visby-nynashamn-n192373271",
-    "name": "Visby - Nynäshamn",
-    "category": "service",
-    "lat": 57.634678,
-    "lng": 18.279407,
-    "description": "Färjeterminal"
-  },
-  {
-    "id": "visby-bilcity-n10740046623",
-    "name": "Visby Bilcity",
-    "category": "service",
-    "lat": 57.62324,
-    "lng": 18.27693,
-    "description": "Laddstation"
-  },
-  {
     "id": "visby-bilmuseum-w467553339",
     "name": "Visby Bilmuseum",
     "category": "sevardhet",
     "lat": 57.651522,
     "lng": 18.387358,
     "description": "Museum"
-  },
-  {
-    "id": "visby-fangelse-n603093537",
-    "name": "Visby fängelse",
-    "category": "boende",
-    "lat": 57.635989,
-    "lng": 18.285566,
-    "description": "Vandrarhem"
-  },
-  {
-    "id": "visby-golfklubb-n10740046635",
-    "name": "Visby Golfklubb",
-    "category": "service",
-    "lat": 57.44299,
-    "lng": 18.13251,
-    "description": "Laddstation"
   },
   {
     "id": "visby-golfklubb-w199830330",
@@ -10204,84 +7490,12 @@ const MOCK_PLACES = [
     "description": "Restaurang"
   },
   {
-    "id": "visby-gustavsvik-n5711786374",
-    "name": "Visby Gustavsvik",
-    "category": "boende",
-    "lat": 57.661804,
-    "lng": 18.321674,
-    "description": "Camping"
-  },
-  {
-    "id": "visby-gustavsvik-stugby-n10740027001",
-    "name": "Visby Gustavsvik Stugby",
-    "category": "service",
-    "lat": 57.66216,
-    "lng": 18.32221,
-    "description": "Laddstation"
-  },
-  {
-    "id": "visby-hyrcykel-n6641525528",
-    "name": "Visby Hyrcykel",
-    "category": "aktivitet",
-    "lat": 57.63859,
-    "lng": 18.298782,
-    "description": "Butik"
-  },
-  {
-    "id": "visby-ishall-w9357257",
-    "name": "Visby ishall",
-    "category": "aktivitet",
-    "lat": 57.62624,
-    "lng": 18.329611,
-    "description": "Aktivitet och idrott"
-  },
-  {
-    "id": "visby-kryssningskaj-n9979711827",
-    "name": "Visby kryssningskaj",
-    "category": "service",
-    "lat": 57.629659,
-    "lng": 18.267682,
-    "description": "Färjeterminal"
-  },
-  {
-    "id": "visby-lasarett-w204060138",
-    "name": "Visby Lasarett",
-    "category": "service",
-    "lat": 57.648788,
-    "lng": 18.300307,
-    "description": "Sjukhus"
-  },
-  {
-    "id": "visby-lagenhetshotell-n10740046619",
-    "name": "Visby Lägenhetshotell",
-    "category": "service",
-    "lat": 57.63171,
-    "lng": 18.30519,
-    "description": "Laddstation"
-  },
-  {
-    "id": "visby-n-cng-n10814952967",
-    "name": "Visby N CNG",
-    "category": "service",
-    "lat": 57.640212,
-    "lng": 18.334474,
-    "description": "Bensinstation"
-  },
-  {
     "id": "visby-ringmur-r14377275",
     "name": "Visby ringmur",
     "category": "sevardhet",
     "lat": 57.640772,
     "lng": 18.293868,
     "description": "Besöksmål"
-  },
-  {
-    "id": "visby-s-cng-n10814960014",
-    "name": "Visby S CNG",
-    "category": "service",
-    "lat": 57.625664,
-    "lng": 18.274656,
-    "description": "Bensinstation"
   },
   {
     "id": "visby-strandbad-n11710843286",
@@ -10292,60 +7506,12 @@ const MOCK_PLACES = [
     "description": "Badplats"
   },
   {
-    "id": "visby-strandby-norderstrands-camping-w427887880",
-    "name": "Visby Strandby - Norderstrands Camping",
-    "category": "boende",
-    "lat": 57.655481,
-    "lng": 18.308232,
-    "description": "Camping"
-  },
-  {
-    "id": "visby-strandby-snacks-camping-w468935656",
-    "name": "Visby Strandby & Snäcks Camping",
-    "category": "boende",
-    "lat": 57.674748,
-    "lng": 18.336009,
-    "description": "Camping"
-  },
-  {
     "id": "visby-take-away-w462905907",
     "name": "Visby Take Away",
     "category": "mat",
     "lat": 57.616533,
     "lng": 18.285497,
     "description": "Snabbmat"
-  },
-  {
-    "id": "visby-tennis-klubb-w394990318",
-    "name": "Visby Tennis Klubb",
-    "category": "aktivitet",
-    "lat": 57.646691,
-    "lng": 18.306042,
-    "description": "Aktivitet och idrott"
-  },
-  {
-    "id": "visby-traningscenter-n12305044339",
-    "name": "Visby Träningscenter",
-    "category": "aktivitet",
-    "lat": 57.643091,
-    "lng": 18.31896,
-    "description": "Träningsanläggning"
-  },
-  {
-    "id": "visbytravet-w531567860",
-    "name": "Visbytravet",
-    "category": "aktivitet",
-    "lat": 57.616797,
-    "lng": 18.327483,
-    "description": "Idrottsanläggning"
-  },
-  {
-    "id": "vitvikens-cafe-camping-n13983513159",
-    "name": "Vitvikens Café & Camping",
-    "category": "boende",
-    "lat": 57.618754,
-    "lng": 18.762418,
-    "description": "Camping"
   },
   {
     "id": "vitvikens-strand-w1081103331",
@@ -10556,38 +7722,6 @@ const MOCK_PLACES = [
     "description": "Café"
   },
   {
-    "id": "warfsholm-bageri-n11157925569",
-    "name": "Warfsholm Bageri",
-    "category": "shopping",
-    "lat": 57.386123,
-    "lng": 18.201358,
-    "description": "Butik"
-  },
-  {
-    "id": "warfsholm-bageri-n12909481387",
-    "name": "Warfsholm Bageri",
-    "category": "shopping",
-    "lat": 57.640005,
-    "lng": 18.296421,
-    "description": "Butik"
-  },
-  {
-    "id": "willys-visby-n5191007104",
-    "name": "Willys Visby",
-    "category": "shopping",
-    "lat": 57.635233,
-    "lng": 18.327457,
-    "description": "Butik"
-  },
-  {
-    "id": "wisby-biluthyrning-n6609209985",
-    "name": "Wisby Biluthyrning",
-    "category": "service",
-    "lat": 57.634776,
-    "lng": 18.282277,
-    "description": "Service"
-  },
-  {
     "id": "wisby-hof-n5029421553",
     "name": "Wisby Hof",
     "category": "mat",
@@ -10596,52 +7730,12 @@ const MOCK_PLACES = [
     "description": "Bar"
   },
   {
-    "id": "wisby-hotell-n271876129",
-    "name": "Wisby hotell",
-    "category": "boende",
-    "lat": 57.638535,
-    "lng": 18.290952,
-    "description": "Hotell"
-  },
-  {
-    "id": "wisby-ost-n12896340478",
-    "name": "Wisby Ost",
-    "category": "shopping",
-    "lat": 57.638962,
-    "lng": 18.296095,
-    "description": "Butik"
-  },
-  {
-    "id": "wisby-ridklubb-w464127887",
-    "name": "Wisby Ridklubb",
-    "category": "aktivitet",
-    "lat": 57.624156,
-    "lng": 18.330554,
-    "description": "Idrottsanläggning"
-  },
-  {
-    "id": "yllet-n12877366445",
-    "name": "Yllet",
-    "category": "shopping",
-    "lat": 57.639116,
-    "lng": 18.293791,
-    "description": "Butik"
-  },
-  {
     "id": "ytterholmen-naturreservat-r7093052",
     "name": "Ytterholmen naturreservat",
     "category": "natur",
     "lat": 57.128632,
     "lng": 18.506378,
     "description": "Naturreservat"
-  },
-  {
-    "id": "ahlens-n10252318044",
-    "name": "Åhléns",
-    "category": "shopping",
-    "lat": 57.637748,
-    "lng": 18.299954,
-    "description": "Butik"
   },
   {
     "id": "alarve-r1459275",
@@ -10658,14 +7752,6 @@ const MOCK_PLACES = [
     "lat": 57.614797,
     "lng": 18.761045,
     "description": "Restaurang"
-  },
-  {
-    "id": "aminne-camping-n431825040",
-    "name": "Åminne Camping",
-    "category": "boende",
-    "lat": 57.61387,
-    "lng": 18.7566,
-    "description": "Camping"
   },
   {
     "id": "aminne-strand-w707430389",
@@ -10692,14 +7778,6 @@ const MOCK_PLACES = [
     "description": "Historisk plats"
   },
   {
-    "id": "anggarde-n1313846804",
-    "name": "Änggårde",
-    "category": "boende",
-    "lat": 57.189778,
-    "lng": 18.4864,
-    "description": "Pensionat och gästboende"
-  },
-  {
     "id": "askakersvat-w432645009",
     "name": "Äskåkersvät",
     "category": "natur",
@@ -10714,14 +7792,6 @@ const MOCK_PLACES = [
     "lat": 57.56386,
     "lng": 18.670202,
     "description": "Naturupplevelse"
-  },
-  {
-    "id": "aventyrstrasket-w1087514337",
-    "name": "Äventyrsträsket",
-    "category": "aktivitet",
-    "lat": 57.608744,
-    "lng": 18.24432,
-    "description": "Aktivitet"
   },
   {
     "id": "oja-kyrka-w202596417",
@@ -10740,14 +7810,6 @@ const MOCK_PLACES = [
     "description": "Naturreservat"
   },
   {
-    "id": "oob-n4383883785",
-    "name": "ÖoB",
-    "category": "shopping",
-    "lat": 57.630224,
-    "lng": 18.289314,
-    "description": "Butik"
-  },
-  {
     "id": "osterdahls-brygga-n13231526901",
     "name": "Österdahls Brygga",
     "category": "mat",
@@ -10762,14 +7824,6 @@ const MOCK_PLACES = [
     "lat": 57.421767,
     "lng": 18.8588,
     "description": "Kyrka och besöksmål"
-  },
-  {
-    "id": "ostergarns-idrottsplats-w975104259",
-    "name": "Östergarns idrottsplats",
-    "category": "aktivitet",
-    "lat": 57.423394,
-    "lng": 18.856074,
-    "description": "Idrottsanläggning"
   },
   {
     "id": "ostergarnsberget-w102775478",

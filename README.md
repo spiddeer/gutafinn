@@ -32,11 +32,15 @@ Produkten kombinerar:
   1024px landskap eller 1280px bredd
 - 460-540px scrollande desktop-feed, flexibel sticky karta och aterstallbart
   `Kartfokus` som bevarar aktiv sokning och kategori
-- Kombinerad sok- och kategorifiltrering for Allt, Gora, Se och Ata
+- Kombinerad sok- och kategorifiltrering for Mat & dryck, Sevardheter, Bad,
+  Natur, Aktiviteter, Familj och Lokalt
 - `Overraska mig` skapar ett GPS-baserat mikroaventyr fran vald tid och fardsatt
   med faktabaserade skal, adaptiv sokradie och repetitionsskydd
 - Featured-kort med verifieringsdatum, GPS-avstand, gangtid, oppetstatus och `Ta mig hit`
-- Alla 1 345 aktiva platser laddas fran produktions-API:t
+- Varje platskort oppnar en informationspanel med all tillganglig adress,
+  kontakt, oppettid, tillganglighet, position, kalla och aktualitet
+- Den kuraterade snapshoten innehaller 977 besoksmal; bensin, laddning, boende,
+  generisk handel och vanlig service ingar inte i den publika katalogen
 - Synkroniserad Leaflet-karta: listval fokuserar markor och markorklick lyfter
   motsvarande kort utan att kartinstansen byggs om
 - OpenStreetMap-plattor, markercluster och permanent synlig attribution
@@ -45,7 +49,7 @@ Produkten kombinerar:
 - Fem genererade, optimerade WebP-bilder i `src/assets/`
 - shadcn/ui-komponenter, Lucide-ikoner och semantiska OKLCH-tokens
 - Tillgangliga fokus-, save- och navigationsstates samt safe-area-stod
-- Befintligt API med 1 345 aktiva OSM-platser fortsatt tillgangligt under `/api/*`
+- Befintligt API med rik platsdata fortsatt tillgangligt under `/api/*`
 
 ## Tech stack
 
@@ -128,7 +132,8 @@ Urvalet anvander endast avstand, produktkategori, `lastVerifiedAt` och lokal
 visningshistorik. Motiveringar ar fasta faktamallar; oppettider, vader och
 platsbilder anvands inte som urvalsloften. Kortets bild ar uttryckligen en
 stamningsbild fran Gotland, inte ett foto av den exakta platsen.
-Boenden och rena servicepunkter filtreras bort innan urvalet.
+Katalogen och urvalet anvander endast besokskategorier; boende, service,
+bensin och laddning ar borttagna redan i importunderlaget.
 
 Val och historik ligger endast i browserns localStorage:
 
@@ -205,16 +210,14 @@ Tillatna kategorier:
 - sevardhet
 - mat
 - smultronstallen
-- boende
 - aktivitet
 - natur
 - shopping
 - familj
-- service
 
 API:t fortsatter exponera `/api/categories` och `/api/places`. Gutafinns aktiva
-startsida laddar `/api/places`, grupperar API-kategorierna i Gora, Se och Ata,
-och sorterar efter verkligt GPS-avstand nar anvandaren godkanner positionering.
+startsida laddar `/api/places`, mappar kategorierna till sju begripliga
+besoksteman och sorterar efter verkligt GPS-avstand nar anvandaren godkanner positionering.
 Den inbyggda OpenStreetMap-snapshoten i `public/` bevaras for importens
 reproducerbarhet men ar inte den frontend som Compose serverar.
 
@@ -244,18 +247,22 @@ npm test
 Importen hamtar namngivna platser inom Gotland inklusive Gotska Sandon, delar
 upp Overpass-fragan i mindre batchar, deduplicerar samma plats inom 250 meter
 och skriver bade `backend/seed-data.json` och frontendens fallback-snapshot.
-Varje plats kallsparas till sitt OpenStreetMap-objekt. Aktuell snapshot innehaller
-1 345 platser fordelade over samtliga tio kategorier.
+Varje plats kallsparas till sitt OpenStreetMap-objekt. Importen valjer mat och
+dryck, sevardheter, bad, natur, utflykter, aktiviteter, familjemal och lokala
+gards-/hantverksmal. Den hamtar inte boende, bensin, laddning, bank, vard eller
+generisk handel. `node import-osm.js --curate-existing` kan renodla en verifierad
+snapshot deterministiskt nar Overpass tillfalligt ar otillgangligt.
 
-## Aktuell dataproduktion
+## Aktuellt releaseunderlag
 
-Produktionsdatabasen innehaller vid senaste kontrollen:
+Den kuraterade seed-snapshoten innehaller:
 
-- 1 345 aktiva platser och 17 inaktiva historiska platser
-- 10 kategorier och 4 applicerade databasmigreringar
-- 165 platser med oppettider
-- 131 platser med adress
-- 250 platser med minst en kontaktuppgift
+- 977 besoksmal i 8 interna kategorier och 7 anvandarfilter
+- 0 service-, boende-, bensin-, ladd- eller generiska butiksposter
+- 81 platser med oppettider
+- 58 platser med adress
+- 138 platser med minst en kontaktuppgift
+- OpenStreetMap-kalla och verifieringsdatum for samtliga 977 platser
 
 SQLite ar kallan i drift. `backend/seed-data.json` och
 `public/js/places-data.js` versionsstyrs for reproducerbar seed respektive

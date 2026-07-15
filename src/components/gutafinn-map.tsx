@@ -40,6 +40,10 @@ function createPopup(place: ApiPlace) {
   heading.className = "gutafinn-map-popup__heading"
   heading.textContent = place.name
 
+  const address = document.createElement("p")
+  address.className = "gutafinn-map-popup__address"
+  address.textContent = place.address?.formatted || "Öppna platskortet för all information"
+
   const directions = document.createElement("a")
   directions.className = "gutafinn-map-popup__link"
   directions.href = `https://www.openstreetmap.org/?mlat=${place.lat}&mlon=${place.lng}#map=16/${place.lat}/${place.lng}`
@@ -47,7 +51,7 @@ function createPopup(place: ApiPlace) {
   directions.rel = "noopener noreferrer"
   directions.textContent = "Visa vägen"
 
-  popup.append(label, heading, directions)
+  popup.append(label, heading, address, directions)
   return popup
 }
 

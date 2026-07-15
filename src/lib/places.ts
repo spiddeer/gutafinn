@@ -1,4 +1,12 @@
-export type Category = "Allt" | "Göra" | "Se" | "Äta"
+export type Category =
+  | "Allt"
+  | "Mat & dryck"
+  | "Sevärdheter"
+  | "Bad"
+  | "Natur"
+  | "Aktiviteter"
+  | "Familj"
+  | "Lokalt"
 export type PlaceCategory = Exclude<Category, "Allt">
 
 export type Coordinates = {
@@ -28,6 +36,23 @@ export type ApiPlace = {
   lat: number
   lng: number
   description: string
+  address?: {
+    street?: string | null
+    postalCode?: string | null
+    locality?: string | null
+    municipality?: string | null
+    formatted?: string | null
+  } | null
+  accessibility?: string | null
+  priceLevel?: number | null
+  website?: string | null
+  phone?: string | null
+  email?: string | null
+  contacts?: {
+    websites?: Array<{ value: string; label?: string | null }>
+    phones?: Array<{ value: string; label?: string | null }>
+    emails?: Array<{ value: string; label?: string | null }>
+  }
   openingHours?: {
     raw?: string | null
     note?: string | null
@@ -39,6 +64,12 @@ export type ApiPlace = {
     }>
   } | null
   images?: Array<{ url: string; altText?: string | null }>
+  sources?: Array<{
+    sourceType: string
+    sourceUrl?: string | null
+    externalId?: string | null
+    lastVerifiedAt?: string | null
+  }>
   lastVerifiedAt?: string | null
 }
 
@@ -59,10 +90,17 @@ export type PlaceViewModel = ApiPlace & {
 }
 
 const categoryGroups: Record<PlaceCategory, Set<string>> = {
-  Göra: new Set(["aktivitet", "strand", "familj", "boende", "service"]),
-  Se: new Set(["sevardhet", "natur", "smultronstallen", "shopping"]),
-  Äta: new Set(["mat"]),
+  "Mat & dryck": new Set(["mat"]),
+  Sevärdheter: new Set(["sevardhet"]),
+  Bad: new Set(["strand"]),
+  Natur: new Set(["natur", "smultronstallen"]),
+  Aktiviteter: new Set(["aktivitet"]),
+  Familj: new Set(["familj"]),
+  Lokalt: new Set(["shopping"]),
 }
+const discoverableCategoryIds = new Set(
+  Object.values(categoryGroups).flatMap((categories) => [...categories]),
+)
 
 const curatedPlaceIds = [
   "folhammars-naturreservat-w102775376",
@@ -80,7 +118,7 @@ export function toProductCategories(categories: string[]): PlaceCategory[] {
       }
     }
   }
-  return matches.length > 0 ? matches : ["Se"]
+  return matches.length > 0 ? matches : ["Sevärdheter"]
 }
 
 export function toProductCategory(category: string): PlaceCategory {
@@ -134,6 +172,45 @@ function isImage(value: unknown) {
   return typeof image.url === "string" && isNullableString(image.altText)
 }
 
+function isAddress(value: unknown) {
+  if (value == null) return true
+  if (typeof value !== "object") return false
+  const address = value as Record<string, unknown>
+  return (
+    isNullableString(address.street) &&
+    isNullableString(address.postalCode) &&
+    isNullableString(address.locality) &&
+    isNullableString(address.municipality) &&
+    isNullableString(address.formatted)
+  )
+}
+
+function isContactItem(value: unknown) {
+  if (!value || typeof value !== "object") return false
+  const contact = value as Record<string, unknown>
+  return typeof contact.value === "string" && isNullableString(contact.label)
+}
+
+function isContacts(value: unknown) {
+  if (value == null) return true
+  if (typeof value !== "object") return false
+  const contacts = value as Record<string, unknown>
+  return [contacts.websites, contacts.phones, contacts.emails].every(
+    (items) => items == null || (Array.isArray(items) && items.every(isContactItem)),
+  )
+}
+
+function isSource(value: unknown) {
+  if (!value || typeof value !== "object") return false
+  const source = value as Record<string, unknown>
+  return (
+    typeof source.sourceType === "string" &&
+    isNullableString(source.sourceUrl) &&
+    isNullableString(source.externalId) &&
+    isNullableString(source.lastVerifiedAt)
+  )
+}
+
 export function parseApiPlaces(input: unknown): ApiPlace[] {
   if (!Array.isArray(input)) throw new Error("API response must be an array")
   const isPlace = (value: unknown): value is ApiPlace => {
@@ -156,16 +233,29 @@ export function parseApiPlaces(input: unknown): ApiPlace[] {
         (Array.isArray(place.categories) && place.categories.every((category) => typeof category === "string"))) &&
       (place.categoryDetails == null ||
         (Array.isArray(place.categoryDetails) && place.categoryDetails.every(isCategoryDetail))) &&
+      isAddress(place.address) &&
+      isNullableString(place.accessibility) &&
+      (place.priceLevel == null ||
+        (typeof place.priceLevel === "number" && [1, 2, 3, 4].includes(place.priceLevel))) &&
+      isNullableString(place.website) &&
+      isNullableString(place.phone) &&
+      isNullableString(place.email) &&
+      isContacts(place.contacts) &&
       isOpeningHours(place.openingHours) &&
       (place.images == null || (Array.isArray(place.images) && place.images.every(isImage))) &&
+      (place.sources == null || (Array.isArray(place.sources) && place.sources.every(isSource))) &&
       isNullableString(place.lastVerifiedAt)
     )
   }
-  const places = input.filter(isPlace)
-  if (input.length > 0 && places.length === 0) {
+  const validPlaces = input.filter(isPlace)
+  if (input.length > 0 && validPlaces.length === 0) {
     throw new Error("API response contains no valid places")
   }
-  return places
+  return validPlaces.filter((place) =>
+    [place.category, ...(place.categories ?? [])].some((category) =>
+      discoverableCategoryIds.has(category),
+    ),
+  )
 }
 
 export function distanceKilometers(from: Coordinates, to: Coordinates) {
@@ -284,7 +374,13 @@ export function filterPlaces(
       const matchesCategory = category === "Allt" || place.kinds.includes(category)
       const matchesQuery =
         normalizedQuery.length === 0 ||
-        [place.name, place.description, place.tag]
+        [
+          place.name,
+          place.description,
+          place.tag,
+          place.address?.formatted,
+          place.website,
+        ]
           .join(" ")
           .toLocaleLowerCase("sv")
           .includes(normalizedQuery)

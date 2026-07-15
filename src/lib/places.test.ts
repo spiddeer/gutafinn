@@ -23,17 +23,17 @@ const place = (overrides: Partial<ApiPlace> = {}): ApiPlace => ({
 })
 
 describe("place mapping", () => {
-  it("maps API categories into the four product filters", () => {
-    expect(toProductCategory("aktivitet")).toBe("Göra")
-    expect(toProductCategory("strand")).toBe("Göra")
-    expect(toProductCategory("natur")).toBe("Se")
-    expect(toProductCategory("mat")).toBe("Äta")
+  it("maps API categories into visitor-facing filters", () => {
+    expect(toProductCategory("aktivitet")).toBe("Aktiviteter")
+    expect(toProductCategory("strand")).toBe("Bad")
+    expect(toProductCategory("natur")).toBe("Natur")
+    expect(toProductCategory("mat")).toBe("Mat & dryck")
   })
 
   it("matches filters through secondary API categories", () => {
     const results = filterPlaces(
       [place({ category: "service", categories: ["service", "mat"] })],
-      "Äta",
+      "Mat & dryck",
       "",
       null,
     )
@@ -47,8 +47,8 @@ describe("place mapping", () => {
       "",
       null,
     )
-    expect(result.kind).toBe("Göra")
-    expect(result.kinds).toEqual(["Göra", "Äta"])
+    expect(result.kind).toBe("Mat & dryck")
+    expect(result.kinds).toEqual(["Mat & dryck"])
   })
 
   it("computes honest GPS distance and radius counts", () => {
@@ -62,7 +62,7 @@ describe("place mapping", () => {
     const position = { lat: 57.333, lng: 18.711 }
     const results = filterPlaces(
       [place({ id: "far", name: "Visby mat", lat: 57.64, lng: 18.29 }), place({ id: "near", name: "Ljugarn mat" })],
-      "Äta",
+      "Mat & dryck",
       "mat",
       position,
     )
@@ -102,6 +102,27 @@ describe("place mapping", () => {
     malformedNestedPlace.images = [{ url: 42 }]
 
     expect(parseApiPlaces([place(), malformedNestedPlace])).toEqual([place()])
+  })
+
+  it("removes utility and accommodation records from the public catalogue", () => {
+    expect(
+      parseApiPlaces([
+        place(),
+        place({ id: "fuel", category: "service", categories: ["service"] }),
+        place({ id: "hotel", category: "boende", categories: ["boende"] }),
+      ]).map((item) => item.id),
+    ).toEqual(["place-1"])
+  })
+
+  it("accepts address, contact and source facts used by the information view", () => {
+    const enriched = place({
+      address: { formatted: "Strandvägen 1, Ljugarn" },
+      phone: "+46 498 00 00 00",
+      website: "https://example.test",
+      contacts: { websites: [{ value: "https://example.test" }] },
+      sources: [{ sourceType: "OpenStreetMap", sourceUrl: "https://www.openstreetmap.org/node/1" }],
+    })
+    expect(parseApiPlaces([enriched])).toEqual([enriched])
   })
 
   it("validates nested structures used by the UI", () => {

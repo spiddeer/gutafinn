@@ -10,8 +10,9 @@ Gutafinn backend and deployment stack.
 - Runtime for frontend tooling: Node.js 22 or newer
 - UI: shadcn/ui `new-york`, Lucide icons, Fraunces and Inter
 - Backend: Node.js, Express and SQLite (`better-sqlite3`) in `backend/`
-- Data: Gutafinn loads the production API and its 1,345-place SQLite dataset
-  under `/api/*`; GPS drives real distances and Open-Meteo supplies live weather
+- Data: Gutafinn loads a curated 977-place visitor snapshot through `/api/*`;
+  utility, accommodation, fuel and charging records are excluded before seed,
+  while GPS drives real distances and Open-Meteo supplies live weather
 - Responsive layout: mobile and portrait tablets use one feed column; from
   1024px landscape or 1280px the 460-540px feed and flexible map sit side by side
 - Map: `Karta` is a restorable focus mode on desktop and an embedded Leaflet
@@ -34,6 +35,8 @@ Gutafinn backend and deployment stack.
 - Initialize Leaflet once. Keep marker clusters, GPS and selected-place updates
   in separate effects; filtering and navigation must preserve the map instance.
 - Keep `activeNav` separate from `feedMode` so map focus preserves filters and feed state.
+- Keep the seven visitor filters and the per-place information dialog aligned
+  with API address, contacts, opening hours, accessibility and sources.
 - Preserve the 320px mobile, 768/820px portrait-tablet and 1024-1440px split
   contracts, Swedish copy, 44px targets, focus states and safe areas.
 - Saved place IDs persist in localStorage under `gutafinn_saved_places`.

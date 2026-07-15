@@ -1,15 +1,15 @@
 const DEFAULT_CATEGORIES = [
-  { id: "strand", label: "Stränder", color: "#3f9bc0", emoji: "🏖️", sortOrder: 10 },
+  { id: "mat", label: "Mat & dryck", color: "#c0603f", emoji: "🍽️", sortOrder: 10 },
   { id: "sevardhet", label: "Sevärdheter", color: "#e0a458", emoji: "🏛️", sortOrder: 20 },
-  { id: "mat", label: "Mat & dryck", color: "#c0603f", emoji: "🍽️", sortOrder: 30 },
+  { id: "strand", label: "Bad", color: "#3f9bc0", emoji: "🏖️", sortOrder: 30 },
   { id: "smultronstallen", label: "Smultronställen", color: "#60a074", emoji: "🌿", sortOrder: 40 },
-  { id: "boende", label: "Boende", color: "#7667a8", emoji: "🛏️", sortOrder: 50 },
+  { id: "natur", label: "Natur & utflykter", color: "#4f8661", emoji: "🌲", sortOrder: 50 },
   { id: "aktivitet", label: "Aktiviteter", color: "#d1764f", emoji: "🚲", sortOrder: 60 },
-  { id: "natur", label: "Natur & friluftsliv", color: "#4f8661", emoji: "🌲", sortOrder: 70 },
-  { id: "shopping", label: "Butiker & gårdsbutiker", color: "#aa6c84", emoji: "🛍️", sortOrder: 80 },
-  { id: "familj", label: "För familjen", color: "#bd7f2f", emoji: "🧸", sortOrder: 90 },
-  { id: "service", label: "Service", color: "#607d8b", emoji: "ℹ️", sortOrder: 100 },
+  { id: "familj", label: "För familjen", color: "#bd7f2f", emoji: "🧸", sortOrder: 70 },
+  { id: "shopping", label: "Lokalt & gårdsbutiker", color: "#aa6c84", emoji: "🛍️", sortOrder: 80 },
 ];
+const PUBLIC_CATEGORY_IDS = DEFAULT_CATEGORIES.map((category) => category.id);
+const PUBLIC_CATEGORY_SET = new Set(PUBLIC_CATEGORY_IDS);
 
 function groupBy(rows, key) {
   const grouped = new Map();
@@ -50,11 +50,13 @@ function ensureCategories(db, categories = DEFAULT_CATEGORIES) {
 }
 
 function listCategories(db) {
+  const placeholders = PUBLIC_CATEGORY_IDS.map(() => "?").join(", ");
   return db.prepare(`
     SELECT id, label, color, emoji, sort_order AS sortOrder
     FROM categories
+    WHERE id IN (${placeholders})
     ORDER BY sort_order, label
-  `).all();
+  `).all(...PUBLIC_CATEGORY_IDS);
 }
 
 function upsertCorePlace(db, place, source = null) {
@@ -240,12 +242,14 @@ function serializePlaces(db, baseRows) {
 
   return baseRows.map((place) => {
     const detail = details.get(place.id) || null;
-    const placeCategories = categories.get(place.id) || [];
+    const placeCategories = (categories.get(place.id) || [])
+      .filter((category) => PUBLIC_CATEGORY_SET.has(category.id));
     const placeContacts = contacts.get(place.id) || [];
     const placeSources = (sources.get(place.id) || []).map(withoutPlaceId);
     const hours = (weeklyHours.get(place.id) || []).map(withoutPlaceId);
     const hourExceptions = (exceptions.get(place.id) || []).map(withoutPlaceId);
     const primaryCategory = placeCategories.find((category) => category.isPrimary)?.id
+      || placeCategories[0]?.id
       || place.category;
     const websites = placeContacts.filter((item) => item.type === "website").map(withoutPlaceId);
     const phones = placeContacts.filter((item) => item.type === "phone").map(withoutPlaceId);
@@ -293,20 +297,31 @@ function serializePlaces(db, baseRows) {
 }
 
 function listPlaces(db) {
+  const placeholders = PUBLIC_CATEGORY_IDS.map(() => "?").join(", ");
   const places = db.prepare(`
     SELECT id, name, category, lat, lng, description
     FROM places
     WHERE is_active = 1
+      AND EXISTS (
+        SELECT 1 FROM place_categories pc
+        WHERE pc.place_id = places.id AND pc.category_id IN (${placeholders})
+      )
     ORDER BY name COLLATE NOCASE
-  `).all();
+  `).all(...PUBLIC_CATEGORY_IDS);
   return serializePlaces(db, places);
 }
 
 function getPlace(db, id) {
+  const placeholders = PUBLIC_CATEGORY_IDS.map(() => "?").join(", ");
   const place = db.prepare(`
     SELECT id, name, category, lat, lng, description
-    FROM places WHERE id = ? AND is_active = 1
-  `).get(id);
+    FROM places
+    WHERE id = ? AND is_active = 1
+      AND EXISTS (
+        SELECT 1 FROM place_categories pc
+        WHERE pc.place_id = places.id AND pc.category_id IN (${placeholders})
+      )
+  `).get(id, ...PUBLIC_CATEGORY_IDS);
   return place ? serializePlaces(db, [place])[0] : null;
 }
 
