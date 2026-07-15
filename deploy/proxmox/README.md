@@ -18,8 +18,10 @@ Denna runbook beskriver den faktiska produktionssetupen och hur den driftas.
 1. Cloudflare edge tar emot trafik pa `gotland.tobtech.se`.
 2. Cloudflare Tunnel route i CT 200 skickar vidare till `http://192.168.1.224:3003`.
 3. I CT 201 terminerar Nginx-container (`web`) pa port 3003.
-4. `web` proxyar `/api/*` till `backend:8080`.
-5. `backend` anvander SQLite i `deploy/proxmox/data/places.db`.
+4. `web` byggs i tva steg: Node 22 skapar Gutafinns Vite-`dist/`, som kopieras
+   till en ren Nginx-image via `deploy/Dockerfile`.
+5. `web` proxyar `/api/*` till `backend:8080`.
+6. `backend` anvander SQLite i `deploy/proxmox/data/places.db`.
 
 Backend kor additiva databasmigreringar automatiskt vid start. Seed-steget
 anvander `UPSERT`, sa befintlig berikning bevaras nar OSM-snapshoten importeras igen.
@@ -55,9 +57,15 @@ cd /opt/gotlandsguiden
 Kontrollera fore deploy att `main` ar pushad och att backendtesterna passerar:
 
 ```bash
+cd /opt/gotlandsguiden
+npm run build
 cd /opt/gotlandsguiden/backend
 npm test
 ```
+
+Root-builden verifierar TanStack-routegenerering, TypeScript och Vite. Docker
+installerar frontendberoenden med `npm ci`, sa Node behover inte finnas pa CT:n
+for normal deploy om Dockerbygget ar den enda verifieringen dar.
 
 ## Grundinstallation (om ny CT byggs)
 
@@ -165,8 +173,10 @@ docker-compose -f deploy/proxmox/docker-compose.yml exec backend node -e \
 ### Vanliga problem
 
 1. `git pull` failar: kontrollera remote och branch i `/opt/gotlandsguiden`.
-2. API svarar inte: kontrollera `backend`-container och DB-volym.
-3. Domanen svarar inte: kontrollera cloudflared-process i CT 200 och ingress-regel.
+2. Frontend-imagen byggs inte: kontrollera `docker compose ... build web` och
+   att `package-lock.json`, `src/` och `deploy/Dockerfile` finns i aktuell SHA.
+3. API svarar inte: kontrollera `backend`-container och DB-volym.
+4. Domanen svarar inte: kontrollera cloudflared-process i CT 200 och ingress-regel.
 
 ## Viktiga regler
 
@@ -175,3 +185,5 @@ docker-compose -f deploy/proxmox/docker-compose.yml exec backend node -e \
 3. Vid andrad infra/topologi: uppdatera denna fil, `AGENTS.md` och `.github/hooks/README.md`.
 4. Kor aldrig seed/import utan att behalla backup och manuellt berikade falt.
 5. Verifiera Git-SHA, containerstatus och publikt webb/API separat efter deploy.
+6. Verifiera `npm run build` vid frontendandringar; `public/` ar legacy och
+   monteras inte langre av Compose.

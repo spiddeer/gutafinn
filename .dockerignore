@@ -1,0 +1,14 @@
+.git
+.github
+.claude
+.ijfw
+.tokensave
+node_modules
+dist
+data
+deploy/proxmox/data
+deploy/proxmox/backups
+backend/node_modules
+backend/test
+public
+*.log

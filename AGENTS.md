@@ -22,7 +22,7 @@ Detta dokument ar den primara kontexten for AI-agenter som jobbar i repot.
 
 ## System Snapshot
 
-- Frontend: Vanilla JavaScript + Leaflet i `public/`
+- Frontend: React 19 + TypeScript + Vite + TanStack Router + Tailwind CSS v4 i `src/`
 - Backend: Node.js + Express + SQLite i `backend/`
 - Deploy: Docker Compose i `deploy/proxmox/`
 - Driftmiljo: Proxmox LXC CT 201 (`gotlandsguiden`)
@@ -36,17 +36,21 @@ Detta dokument ar den primara kontexten for AI-agenter som jobbar i repot.
 
 ### Applikationsflode
 
-1. Browser laddar frontend via Nginx-container (`web`).
-2. Frontend kallar `/api/places`.
-3. Nginx proxyar `/api/*` till Express-container (`backend:8080`).
-4. Backend laser/skriver SQLite i monterad volym `deploy/proxmox/data/places.db`.
+1. Docker bygger Vite-frontenden i `deploy/Dockerfile` och kopierar `dist/` till Nginx.
+2. Browser laddar Gutafinn via Nginx-container (`web`).
+3. Den aktiva startsidan anvander fyra mockade platser i `src/routes/index.tsx`.
+4. Nginx proxyar fortfarande `/api/*` till Express-container (`backend:8080`).
+5. Backend laser/skriver SQLite i monterad volym `deploy/proxmox/data/places.db`.
 
 ### Frontendfiler
 
-- `public/index.html`: Struktur, Leaflet/cluster script includes.
-- `public/css/style.css`: Mobil-forst, modern UI, dark mode, detaljpanel.
-- `public/js/app.js`: State, rendering, filter, favorites, geolocation, detail sheet.
-- `public/js/places-data.js`: API-first laddning, kategorier + fallback-dataset.
+- `index.html`: Vite-shell, fontlankar och statisk SEO-metadata.
+- `src/routes/__root.tsx`: TanStack Router-root och dynamisk head-metadata.
+- `src/routes/index.tsx`: Gutafinn-startsida, mockdata, sokning, filter och sparstatus.
+- `src/styles.css`: Tailwind v4, `@theme inline` och semantiska OKLCH-tokens.
+- `src/components/ui/`: shadcn/ui-komponenter i `new-york`-stil.
+- `src/assets/`: fem genererade och optimerade Gotlandsbilder.
+- `public/`: bevarad legacy-Leaflet-frontend; monteras inte langre av Compose.
 
 ### Backendfiler
 
@@ -60,26 +64,16 @@ Detta dokument ar den primara kontexten for AI-agenter som jobbar i repot.
 - `backend/seed-data.json`: Seed-dataset.
 - `backend/test/`: Tester for API, migreringar/databas och OSM-import.
 
-## State & Rendering-kontrakt
+## Frontend-state och designkontrakt
 
-I `public/js/app.js` ar huvudprincipen: uppdatera state -> kalla `render()`.
+Gutafinn anvander lokal React-state i `src/routes/index.tsx`. Kategorin maste
+fortsatt vara `useState<Category>` med `Allt`, `Göra`, `Se` och `Äta`; sokning
+och kategori kombineras i en memoiserad filtrering. Sparstatus och aktiv
+bottom-nav ar lokal session-state och ingar inte i SQLite eller API-kontraktet.
 
-Aktuell state-nycklar:
-
-- `places`
-- `userLatLng`
-- `activeCategory`
-- `query`
-- `favorites` (platser markerade “Vill besoka”)
-- `visited`
-- `selectedId`
-- `activeTab`
-
-Bryt inte detta monster utan bra skal.
-
-De personliga listorna lagras lokalt i webblasaren: `gg_favorites` for
-“Vill besoka” och `gg_visited` for “Besokta”. De ar frontend-state och ingar
-inte i SQLite eller API-kontraktet.
+All fargsattning i komponenter ska ga via semantiska tokens fran
+`src/styles.css`. Bevara 440px mobilcanvas, svenska texter, 44px touch targets,
+fokusmarkeringar, safe areas och reduced-motion-stod enligt `DESIGN.md`.
 
 ## Data-kontrakt
 
@@ -94,8 +88,9 @@ En plats kan tillhora flera kategorier, men `category` ar alltid primar kategori
 Kategori-nycklar maste finnas i bade SQLite-tabellen `categories` och fallbacken
 `CATEGORIES` i `public/js/places-data.js`.
 
-Frontend ska lasa `/api/categories` och `/api/places`. Fallback-datasetet far
-bara anvandas nar API:t inte ar tillgangligt, exempelvis frontend-only-lage.
+API:t ska fortsatt exponera `/api/categories` och `/api/places`. Den aktiva
+Gutafinn-prototypen anvander avsiktligt fyra mockade kort; `public/`-fallbacken
+bevaras for importens reproducerbarhet men ar inte aktiv runtime-frontend.
 
 Seed/import far uppdatera karndata med `UPSERT`, men aldrig radera manuellt
 berikade oppettider, kontaktuppgifter, bilder eller kallor.
@@ -123,7 +118,7 @@ Andra inte den ena snapshoten utan att synka och testa den andra.
 ### Compose services
 
 - `backend` (Node/Express, intern 8080)
-- `web` (Nginx, publiceras pa port 3003 i CT 201)
+- `web` (multi-stage Vite-build + Nginx, publiceras pa port 3003 i CT 201)
 
 ## Standardoperativa kommandon
 
@@ -148,9 +143,11 @@ systemctl status gotlandsguiden-backup.timer
 systemctl list-timers --all | grep gotlandsguiden-backup
 ```
 
-Lokal verifiering fran `backend/`:
+Lokal verifiering fran projektroten och `backend/`:
 
 ```bash
+npm run build
+cd backend
 npm test
 ```
 
@@ -164,21 +161,23 @@ curl -fsS https://gotland.tobtech.se/api/places
 
 ## AI-agent policy (viktigt)
 
-1. Andra aldrig API-schemat utan att uppdatera frontend + seed + docs.
-2. Bevara mobilforst-design, responsivitet och svensk copy.
+1. Andra aldrig API-schemat utan att uppdatera backend + seed + docs och eventuell ny API-konsument.
+2. Bevara Gutafinns mobilforst-design, semantiska tokens, tillganglighet och svensk copy.
 3. Undvik hardkodad runtime-data i git (`deploy/proxmox/data/`, `backups/`).
 4. Anvand befintligt deployscript i stallet for ad-hoc deploykommando.
 5. Om Cloudflare-routing andras: dokumentera ny ingress i denna fil och i `deploy/proxmox/README.md`.
 6. Vid nya driftsattningssteg: uppdatera samtliga markdownfiler i repot.
 7. Kor backendtester efter andringar i schema, repository, seed eller import.
 8. Hall `backend/seed-data.json` och `public/js/places-data.js` synkroniserade.
+9. Kor `npm run build` efter andringar i `src/`, Vite, Tailwind eller frontend-Dockerbygget.
 
 ## Snabb felsokning
 
 - Inget svar publikt: verifiera cloudflared i CT 200 och ingress-regel.
-- Frontend uppe men tom data: kontrollera `GET /api/places` i CT 201.
+- Frontendbygge misslyckas: kor `npm run build` och kontrollera TanStack-routegenerering.
+- API-data saknas: kontrollera `GET /api/places` i CT 201; Gutafinns fyra kort ar tills vidare mockade lokalt.
 - DB-problem: kontrollera att `deploy/proxmox/data/places.db` finns och ar skrivbar.
-- Styling bruten: kontrollera att endast `public/css/style.css` andrats for UI.
+- Styling behover skarpas: kontrollera `src/styles.css`, semantiska tokens och Tailwind-klasser.
 
 ## Relaterad dokumentation
 

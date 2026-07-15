@@ -4,13 +4,16 @@ Detta dokument forklarar hur hooks i `.github/hooks` hjalper AI-tjanster och utv
 
 ## Syfte
 
-Hooks ska minska regressionsrisk i tre kritiska ytor:
+Hooks ska minska regressionsrisk i tre legacy-ytor:
 
 1. Fallback-datakvalitet i `public/js/places-data.js`
 2. State/render-disciplin i `public/js/app.js`
 3. Frontendkvalitet i `public/index.html` och `public/css/style.css`
 
-Hooks ar snabba redigeringskontroller, inte en full CI-svit. De bevakar inte
+Den aktiva Gutafinn-frontenden finns nu i `src/`. Befintliga hooks bevakar
+fortfarande den bevarade `public/`-frontenden och ska behandlas som legacy-skydd
+tills hookscope har migrerats till TypeScript/Tailwind. Hooks ar snabba
+redigeringskontroller, inte en full CI-svit. De bevakar inte
 `backend/seed-data.json`, `backend/import-osm.js`, databasmigreringar eller API:t.
 Dessa ytor verifieras med backendtesterna och de manuella datakontrollerna nedan.
 
@@ -70,10 +73,11 @@ Skyddar mot:
 
 ## Hur AI-tjanster ska anvanda hooks
 
-1. Se hook-varningar som krav, inte bara forslag.
-2. Om hook signalerar schemafel: justera dataforandringen direkt.
-3. Om hook signalerar render/state-fel: los problemet innan fler features laggs till.
-4. Om hook signalerar CSS/HTML-problem: bevara mobilforst och tillganglighet.
+1. Kor `npm run build` for alla andringar i `src/`, root-konfig eller frontend-Dockerbygget.
+2. Se hook-varningar for `public/` som krav, inte bara forslag.
+3. Om hook signalerar schemafel: justera dataforandringen direkt.
+4. Om hook signalerar render/state-fel: los problemet innan fler features laggs till.
+5. Om hook signalerar CSS/HTML-problem: bevara mobilforst och tillganglighet.
 
 ## Praktiska regler vid redigering
 
@@ -88,6 +92,8 @@ Skyddar mot:
    samma importkorning.
 6. Vid andring i kategorier: verifiera SQLite-kategorier, seedens primara och
    sekundara kategorier samt `CATEGORIES` i fallbacken.
+7. Vid andring i Gutafinn: hall farger tokenbaserade i `src/styles.css`, routefiler
+   i `src/routes/` och verifiera TypeScript/Vite med `npm run build`.
 
 ## Backend- och datasynkronisering
 

@@ -1,6 +1,8 @@
-# Gotlandsguiden
+# Gutafinn / Gotlandsguiden
 
-En mobilforst webbapp for att hitta platser pa Gotland med karta, sok, filtrering och favoriter.
+Gutafinn ar den aktiva mobilforst-frontenden for att hitta saker att gora, se
+och ata pa Gotland just nu. Repot innehaller ocksa Gotlandsguidens befintliga
+Express/SQLite-API, OSM-import och Proxmox-drift.
 
 Dokumentationen ar avstamd mot kodbasen och commit `5869c3a` den 14 juli 2026.
 
@@ -10,36 +12,35 @@ Dokumentationen ar avstamd mot kodbasen och commit `5869c3a` den 14 juli 2026.
 
 ## Vad vi bygger
 
-Gotlandsguiden ar en platsguide som kombinerar:
+Produkten kombinerar:
 
-- Interaktiv karta (Leaflet)
-- Sokning och kategorifilter
-- Personliga listor for platser att besoka och redan besokta platser
-- Detaljvy for varje plats
+- GPS-inspirerad Gutafinn-startsida med sokning och kategorifilter
+- Fotografiska kort for narhet, aktivitet, sevardhet och mat
+- Lokal sparstatus och fast mobilnavigation
+- Vader- och solnedgangsoversikt for Ljugarn
 - Backend-API for lasning/skapande av platser
 - Driftbar setup i Proxmox med Docker Compose, backup och Cloudflare-routing
 
 ## Huvudfunktioner
 
-- Karta centrerad pa Gotland
-- Filter for tillgangliga kategorier, inklusive boende, aktiviteter, natur och service
-- Sokruta over namn, beskrivning, adress och kategori
-- Geolokalisering och avstandsvisning
-- “Vill besoka” och “Besokta” via localStorage
-- Flikarna Upptack, Sparade och Guide
-- Snabbval for narheten, mat, strander och ett slumpat tips
-- Enkel ruttbyggare fran “Vill besoka”-listan
-- Adress, kontaktuppgifter och oppettider nar kallan innehaller dem
-- Light/dark mode
-- Marker clustering for battre prestanda med manga platser
+- 440px mobilcanvas med fotografisk kusthero och Live GPS-status
+- Kombinerad sok- och kategorifiltrering for Allt, Gora, Se och Ata
+- Featured-kort med rating, avstand, gangtid, oppetstatus och `Ta mig hit`
+- Fyra mockade platser i `src/routes/index.tsx`
+- Fem genererade, optimerade WebP-bilder i `src/assets/`
+- shadcn/ui-komponenter, Lucide-ikoner och semantiska OKLCH-tokens
+- Tillgangliga fokus-, save- och navigationsstates samt safe-area-stod
+- Befintligt API med 1 345 aktiva OSM-platser fortsatt tillgangligt under `/api/*`
 
 ## Tech stack
 
 ### Frontend
 
-- Vanilla JavaScript
-- Leaflet + Leaflet MarkerCluster
-- HTML/CSS (mobilforst, responsiv)
+- React 19 + TypeScript + Vite
+- TanStack Router med file-based routes
+- Tailwind CSS v4 via `@theme inline`
+- shadcn/ui (`new-york`) + Lucide
+- Fraunces + Inter
 
 ### Backend
 
@@ -56,6 +57,13 @@ Gotlandsguiden ar en platsguide som kombinerar:
 ## Projektstruktur
 
 ```text
+src/
+  assets/                 # fem optimerade Gotlandsbilder
+  components/ui/          # shadcn/ui-grundkomponenter
+  routes/                 # TanStack Router-routes
+  styles.css              # Tailwind v4 + semantiska OKLCH-tokens
+deploy/
+  Dockerfile              # Vite-build till Nginx
 backend/
   db.js
   import-osm.js
@@ -68,7 +76,7 @@ backend/
   package.json
   test/
 
-public/
+public/                    # bevarad legacy-Leaflet-frontend
   index.html
   css/style.css
   js/app.js
@@ -157,8 +165,10 @@ Tillatna kategorier:
 - familj
 - service
 
-Frontend laser `/api/categories` och `/api/places` som primar kalla. Den
-inbyggda OpenStreetMap-snapshoten anvands bara som fallback i frontend-only-lage.
+API:t fortsatter exponera `/api/categories` och `/api/places`. Gutafinns aktiva
+startsida anvander enligt aktuell designspec fyra mockade kort. Den inbyggda
+OpenStreetMap-snapshoten i `public/` bevaras for importens reproducerbarhet men
+ar inte den frontend som Compose serverar.
 
 ## Databas och import
 
@@ -205,9 +215,12 @@ frontend-fallback, men ersatter inte produktionsdatabasen.
 
 ## Verifiering
 
-Backendens migrations-, API- och importtester kors fran `backend/`:
+Frontendens produktionstypning/build kors fran projektroten och backendens
+migrations-, API- och importtester fran `backend/`:
 
 ```bash
+npm run build
+cd backend
 npm test
 ```
 
@@ -231,9 +244,14 @@ docker compose up -d --build
 
 App: http://localhost:3003
 
-### Alternativ B: Frontend-only
+### Alternativ B: lokal Vite-utveckling
 
-Oppna public/index.html i en lokal webserver.
+```bash
+npm install
+npm run dev
+```
+
+Verifiera produktionsbygget med `npm run build`.
 
 ## Produktion och drift
 
@@ -257,7 +275,7 @@ cd /opt/gotlandsguiden
 Scriptet gor:
 
 1. git pull --ff-only
-2. docker-compose up -d --build
+2. bygger och startar backend samt Gutafinns Vite/Nginx-image med Docker Compose
 3. visar containerstatus
 
 ## Backup
