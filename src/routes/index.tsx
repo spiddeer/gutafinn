@@ -653,8 +653,8 @@ function FeaturedPlace({
       </div>
 
       <div className="gutafinn-featured-body p-5">
-        <div className="flex items-start justify-between gap-4">
-          <div>
+        <div className="flex flex-col items-start gap-3 min-[380px]:flex-row min-[380px]:justify-between">
+          <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-sea">{place.kind}</p>
             <h3 className="mt-1 font-display text-[1.7rem] leading-tight font-semibold text-sea-deep">{place.name}</h3>
           </div>
@@ -928,7 +928,7 @@ function CompactPlace({
       <button type="button" className="min-w-0 flex-1 text-left outline-none focus-visible:ring-[3px] focus-visible:ring-ring/40" onClick={onShowDetails}>
         <p className="text-[0.65rem] font-bold uppercase tracking-[0.13em] text-sea">{place.tag}</p>
         <h3 className="mt-1 truncate font-display text-lg leading-tight font-semibold text-sea-deep">{place.name}</h3>
-        <div className="mt-2 flex items-center gap-3 text-xs font-semibold text-muted-foreground">
+        <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold text-muted-foreground">
           {place.distanceLabel ? <span>{place.distanceLabel}</span> : <span>{place.kind}</span>}
           <span className={cn(place.opening.kind === "open" && "text-meadow")}>{place.opening.label}</span>
         </div>
@@ -937,30 +937,32 @@ function CompactPlace({
           Visa information
         </span>
       </button>
-      {mapSelectionEnabled && (
+      <div className="flex shrink-0 flex-col gap-1">
+        {mapSelectionEnabled && (
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="size-10"
+            aria-label={isSelected ? `${place.name} är vald på kartan` : `Visa ${place.name} på kartan`}
+            aria-pressed={isSelected}
+            onClick={onSelectMap}
+          >
+            <MapPin className={cn("size-4", isSelected && "fill-current text-sea")} aria-hidden="true" />
+          </Button>
+        )}
         <Button
           type="button"
           variant="ghost"
           size="icon"
           className="size-10"
-          aria-label={isSelected ? `${place.name} är vald på kartan` : `Visa ${place.name} på kartan`}
-          aria-pressed={isSelected}
-          onClick={onSelectMap}
+          aria-label={isSaved ? `Ta bort ${place.name} från sparade` : `Spara ${place.name}`}
+          aria-pressed={isSaved}
+          onClick={onToggleSaved}
         >
-          <MapPin className={cn("size-4", isSelected && "fill-current text-sea")} aria-hidden="true" />
+          <Heart className={cn("size-4", isSaved && "fill-current text-poppy")} aria-hidden="true" />
         </Button>
-      )}
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon"
-        className="size-10"
-        aria-label={isSaved ? `Ta bort ${place.name} från sparade` : `Spara ${place.name}`}
-        aria-pressed={isSaved}
-        onClick={onToggleSaved}
-      >
-        <Heart className={cn("size-4", isSaved && "fill-current text-poppy")} aria-hidden="true" />
-      </Button>
+      </div>
     </Card>
   )
 }
