@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 import {
+  ArrowRight,
   Bookmark,
   Camera,
   CheckCircle2,
@@ -14,6 +15,7 @@ import {
   Navigation,
   RefreshCw,
   Search,
+  Sparkles,
   Sun,
   Sunset,
   Utensils,
@@ -32,6 +34,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { GutafinnMap } from "@/components/gutafinn-map"
+import { SurpriseAdventure } from "@/components/surprise-adventure"
 import {
   countWithinRadius,
   filterPlaces,
@@ -42,6 +45,10 @@ import {
   type PlaceViewModel,
 } from "@/lib/places"
 import { cn } from "@/lib/utils"
+import {
+  buildOpenStreetMapDirectionsUrl,
+  type TravelMode,
+} from "@/lib/surprise"
 import { loadWeather, type Weather } from "@/lib/weather"
 
 export const Route = createFileRoute("/")({
@@ -103,6 +110,7 @@ function GutafinnPage() {
   const [position, setPosition] = useState<Coordinates | null>(null)
   const [locationState, setLocationState] = useState<"idle" | "loading" | "ready" | "unavailable">("idle")
   const [routeTarget, setRouteTarget] = useState<string | null>(null)
+  const [showSurprise, setShowSurprise] = useState(false)
   const requestedLocation = useRef(false)
   const placeRequestId = useRef(0)
 
@@ -186,11 +194,13 @@ function GutafinnPage() {
     })
   }
 
-  function openDirections(place: ApiPlace) {
-    const destination = `${place.lat},${place.lng}`
-    const url = position
-      ? `https://www.openstreetmap.org/directions?engine=fossgis_osrm_car&route=${position.lat}%2C${position.lng}%3B${destination}`
-      : `https://www.openstreetmap.org/?mlat=${place.lat}&mlon=${place.lng}#map=15/${place.lat}/${place.lng}`
+  function openDirections(place: ApiPlace, travelMode: TravelMode = "car") {
+    const directionsUrl = position
+      ? buildOpenStreetMapDirectionsUrl(position, { lat: place.lat, lng: place.lng }, travelMode)
+      : null
+    const url =
+      directionsUrl ??
+      `https://www.openstreetmap.org/?mlat=${place.lat}&mlon=${place.lng}#map=15/${place.lat}/${place.lng}`
     window.open(url, "_blank", "noopener,noreferrer")
     setRouteTarget(place.name)
   }
@@ -202,6 +212,23 @@ function GutafinnPage() {
       setQuery("")
     }
     if (label === "Nära") requestLocation()
+  }
+
+  if (showSurprise) {
+    return (
+      <main className="mx-auto min-h-screen w-full max-w-[440px] overflow-x-hidden bg-background shadow-[var(--shadow-float)]">
+        <SurpriseAdventure
+          places={places}
+          position={position}
+          apiState={apiState}
+          locationState={locationState}
+          onBack={() => setShowSurprise(false)}
+          onRequestLocation={requestLocation}
+          onRetryPlaces={loadPlaces}
+          onNavigate={openDirections}
+        />
+      </main>
+    )
   }
 
   return (
@@ -226,6 +253,7 @@ function GutafinnPage() {
           <div className="safe-bottom relative z-10 -mt-7 space-y-8 px-5">
             <SearchBar query={query} onQueryChange={setQuery} onRequestLocation={requestLocation} />
             <CategoryFilter selected={category} onSelect={setCategory} />
+            {activeNav === "Hem" && <SurpriseCallout onOpen={() => setShowSurprise(true)} />}
 
             {apiState === "error" ? (
           <ApiUnavailable onRetry={loadPlaces} />
@@ -282,6 +310,27 @@ function GutafinnPage() {
 
       <BottomNavigation active={activeNav} onSelect={selectNavigation} />
     </main>
+  )
+}
+
+function SurpriseCallout({ onOpen }: { onOpen: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className="group flex min-h-24 w-full items-center gap-4 rounded-3xl bg-sea-deep p-5 text-left text-sea-deep-foreground shadow-[var(--shadow-card)] outline-none transition-transform focus-visible:ring-[3px] focus-visible:ring-ring/40 active:scale-[0.99]"
+    >
+      <span className="grid size-12 shrink-0 place-items-center rounded-full bg-sand text-sand-foreground">
+        <Sparkles className="size-5" aria-hidden="true" />
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block font-display text-xl font-semibold">Överraska mig</span>
+        <span className="mt-1 block text-xs leading-5 text-sea-deep-foreground/75">
+          Hitta något nära som du annars hade missat.
+        </span>
+      </span>
+      <ArrowRight className="size-5 shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+    </button>
   )
 }
 

@@ -44,8 +44,10 @@ Detta dokument ar den primara kontexten for AI-agenter som jobbar i repot.
 4. Kartfliken renderar alla platser i Leaflet-markercluster och laddar kartplattor
    direkt fran OpenStreetMap med permanent synlig attribution.
 5. Browsern ber om geolokalisering for verkligt avstand/GPS-markor och hamtar vader fran Open-Meteo.
-6. Nginx proxyar `/api/*` till Express-container (`backend:8080`).
-7. Backend laser/skriver SQLite i monterad volym `deploy/proxmox/data/places.db`.
+6. `Overraska mig` gor ett lokalt urval fran samma platslista och oppnar
+   fardsattsanpassad navigation hos OpenStreetMap.
+7. Nginx proxyar `/api/*` till Express-container (`backend:8080`).
+8. Backend laser/skriver SQLite i monterad volym `deploy/proxmox/data/places.db`.
 
 ### Frontendfiler
 
@@ -53,7 +55,10 @@ Detta dokument ar den primara kontexten for AI-agenter som jobbar i repot.
 - `src/routes/__root.tsx`: TanStack Router-root och dynamisk head-metadata.
 - `src/routes/index.tsx`: Gutafinn-startsida, API-laddning, GPS, sokning, filter och sparstatus.
 - `src/components/gutafinn-map.tsx`: aktiv Leaflet-karta, kluster, popups, GPS-markor och OSM-attribution.
+- `src/components/surprise-adventure.tsx`: tillgangligt helskarmsflode for tid, fardsatt, GPS-states och aventyrskort.
 - `src/lib/places.ts`: API-typer, kategorimappning, avstand, oppettider och filtrering.
+- `src/lib/surprise.ts`: ren radie-/urvalslogik, faktamotiveringar, restidsestimat och OSM-URL:er.
+- `src/lib/surprise-storage.ts`: validerad localStorage-state med max 20 historikposter.
 - `src/lib/weather.ts`: livevader och solnedgang fran Open-Meteo.
 - `src/lib/places.test.ts`: frontendtester for datamappning och sanningsenliga states.
 - `src/styles.css`: Tailwind v4, Leaflet/markercluster-CSS, `@theme inline` och semantiska OKLCH-tokens.
@@ -81,6 +86,15 @@ och kategori kombineras i en memoiserad filtrering. Sparstatus och aktiv
 bottom-nav ar lokal UI-state. Sparade plats-id:n lagras beständigt i localStorage
 under `gutafinn_saved_places` och ingar inte i SQLite eller API-kontraktet.
 `Karta` ar en intern React-vy; den far inte bytas tillbaka till en extern lank.
+
+`Overraska mig` ar ocksa en intern React-vy och ska ateranvanda redan laddade
+platser samt befintlig GPS-state. Kandidater filtrerar bort primarkategorierna
+`boende` och `service`. V1 far endast ranka pa avstand, kategorivariation,
+`lastVerifiedAt` och lokal visningshistorik. Radien far vaxa
+i 1 km-steg men aldrig over 10 km. De fyra `gutafinn_surprise_*`-nycklarna
+lagrar tid, fardsatt och hogst 20 senaste plats-id:n/kategorier; GPS-koordinater
+far inte lagras. Bevara faktamallar, tydlig stamningsbildsetikett och
+fardsattsanpassade OSM-motorer for gang, cykel och bil.
 
 All fargsattning i komponenter ska ga via semantiska tokens fran
 `src/styles.css`. Bevara 440px mobilcanvas, svenska texter, 44px touch targets,

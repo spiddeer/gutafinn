@@ -27,6 +27,8 @@ Produkten kombinerar:
 
 - 440px mobilcanvas med fotografisk kusthero och Live GPS-status
 - Kombinerad sok- och kategorifiltrering for Allt, Gora, Se och Ata
+- `Overraska mig` skapar ett GPS-baserat mikroaventyr fran vald tid och fardsatt
+  med faktabaserade skal, adaptiv sokradie och repetitionsskydd
 - Featured-kort med verifieringsdatum, GPS-avstand, gangtid, oppetstatus och `Ta mig hit`
 - Alla 1 345 aktiva platser laddas fran produktions-API:t
 - Kartflik med OpenStreetMap-plattor, markercluster och permanent synlig attribution
@@ -67,7 +69,10 @@ Produkten kombinerar:
 src/
   assets/                 # fem optimerade Gotlandsbilder
   components/gutafinn-map.tsx # aktiv Leaflet-karta, kluster och GPS-markor
+  components/surprise-adventure.tsx # tillgangligt helskarmsflode for Overraska mig
   components/ui/          # shadcn/ui-grundkomponenter
+  lib/surprise.ts         # radie, urval, motiveringar och OSM-navigation
+  lib/surprise-storage.ts # validerad, begransad lokal historik
   routes/                 # TanStack Router-routes
   styles.css              # Tailwind v4, Leaflet-krom och semantiska OKLCH-tokens
 deploy/
@@ -101,6 +106,31 @@ deploy/
     gotlandsguiden-backup.timer
     README.md
 ```
+
+## Overraska mig
+
+Funktionen kraver GPS och ateranvander de platser som redan laddats fran
+`/api/places`. Anvandaren valjer `30 min`, `1-2 timmar` eller `Halvdag` och
+fardsattet `Till fots`, `Cykel` eller `Bil`. Kandidatradien beraknas fran vald
+tid och uppskattad hastighet, vaxer i steg om 1 km nar underlaget ar glest och
+stannar alltid vid 10 km.
+
+Urvalet anvander endast avstand, produktkategori, `lastVerifiedAt` och lokal
+visningshistorik. Motiveringar ar fasta faktamallar; oppettider, vader och
+platsbilder anvands inte som urvalsloften. Kortets bild ar uttryckligen en
+stamningsbild fran Gotland, inte ett foto av den exakta platsen.
+Boenden och rena servicepunkter filtreras bort innan urvalet.
+
+Val och historik ligger endast i browserns localStorage:
+
+- `gutafinn_surprise_time_budget`
+- `gutafinn_surprise_travel_mode`
+- `gutafinn_surprise_recent_place_ids`
+- `gutafinn_surprise_recent_categories`
+
+Historiklistorna valideras vid lasning och begransas till 20 poster. GPS-position
+lagras inte. `Ta mig dit` oppnar OpenStreetMap med gang-, cykel- eller bilmotor
+enligt valt fardsatt.
 
 ## API
 

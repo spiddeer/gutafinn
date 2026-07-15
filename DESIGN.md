@@ -75,12 +75,14 @@ color alone.
 3. Truthful location state, time-aware greeting and real nearby count in the hero.
 4. A search card overlapping the hero by 28px and searching the full API response.
 5. Horizontally scrolling category pills for Allt, Göra, Se and Äta.
-6. A large featured place with save, source verification, distance, walk time, opening state
+6. A prominent `Överraska mig` callout opens an internal full-screen flow for
+   time, travel mode and one nearby micro-adventure.
+7. A large featured place with save, source verification, distance, walk time, opening state
    and a poppy-colored `Ta mig hit` action.
-7. Compact horizontal place cards filtered by search and category.
-8. A sea-deep weather strip.
-9. A fixed safe-area-aware pill navigation for Hem, Karta, Nära and Sparat.
-10. Karta opens an embedded Leaflet atlas view with clustered live places, a GPS marker,
+8. Compact horizontal place cards filtered by search and category.
+9. A sea-deep weather strip.
+10. A fixed safe-area-aware pill navigation for Hem, Karta, Nära and Sparat.
+11. Karta opens an embedded Leaflet atlas view with clustered live places, a GPS marker,
     keyboard-visible controls and persistently readable OpenStreetMap attribution.
 
 No desktop-specific information architecture is required. On wider screens the
@@ -108,6 +110,14 @@ warm restrained light and no embedded text or logos. Preserve meaningful
 - Opening claims require structured source hours; raw hours use a neutral state.
 - Weather and sunset come from Open-Meteo for the user position or Ljugarn fallback.
 - Save controls persist IDs in localStorage and expose `aria-pressed`.
+- Surprise time/mode controls use labelled fieldsets and `aria-pressed`; rerolls
+  announce the new place through a polite live region.
+- Surprise loading, denied-GPS, unavailable-data and empty-radius states always
+  provide truthful copy and a clear next action where one exists.
+- Adventure photography is labelled `Stämningsbild från Gotland`; never imply
+  that a category asset depicts the recommended place.
+- Preserve time and travel mode across rerolls, avoid the first five place
+  repetitions when the pool permits and bound local history to 20 entries.
 - The active bottom-nav item uses `aria-current="page"`.
 - The map renders the full API dataset through marker clusters and uses the GPS
   position as a separate, non-interactive user marker.
@@ -128,6 +138,9 @@ interface labels.
 - All component colors use semantic tokens.
 - Hero copy remains readable across the full image crop.
 - Category, search, save and navigation states are keyboard accessible.
+- `Överraska mig` works with GPS granted and denied, all three time choices,
+  all three travel modes and five consecutive rerolls.
+- Each surprise navigation action uses the correct OpenStreetMap direction engine.
 - Karta loads tiles and clusters without runtime errors and keeps attribution visible.
 - Generated assets are optimized and committed under `src/assets/`.
 - Root `npm test` verifies data mapping before `npm run build` completes TypeScript and Vite verification.

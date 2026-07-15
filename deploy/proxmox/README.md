@@ -22,8 +22,10 @@ Denna runbook beskriver den faktiska produktionssetupen och hur den driftas.
    till en ren Nginx-image via `deploy/Dockerfile`.
 5. Gutafinns `Karta` laddar OpenStreetMap-plattor direkt i browsern och klustrar
    `/api/places` med Leaflet.markercluster.
-6. `web` proxyar `/api/*` till `backend:8080`.
-7. `backend` anvander SQLite i `deploy/proxmox/data/places.db`.
+6. `Overraska mig` kor helt i browsern mot samma API-svar, anvander browser-GPS
+   och lagrar endast begransad preferens-/visningshistorik i localStorage.
+7. `web` proxyar `/api/*` till `backend:8080`.
+8. `backend` anvander SQLite i `deploy/proxmox/data/places.db`.
 
 Backend kor additiva databasmigreringar automatiskt vid start. Seed-steget
 anvander `UPSERT`, sa befintlig berikning bevaras nar OSM-snapshoten importeras igen.
@@ -70,6 +72,14 @@ Root-builden verifierar TanStack-routegenerering, TypeScript och Vite. Docker
 installerar frontendberoenden med `npm ci`, sa Node behover inte finnas pa CT:n
 for normal deploy om Dockerbygget ar den enda verifieringen dar.
 Webbimagen kor dessutom rootens Vitest-svit fore varje produktionsbuild.
+
+Efter en release som andrar `Overraska mig`, browser-verifiera dessutom:
+
+1. GPS tillaten och nekad.
+2. `30 min`, `1-2 timmar` och `Halvdag`.
+3. `Till fots`, `Cykel` och `Bil` med respektive OpenStreetMap-motor.
+4. Fem `Visa ett annat tips` utan upprepning nar kandidatpoolen racker.
+5. Att stamningsbildsetiketten ar synlig och att back aterstaller startsidan.
 
 ## Grundinstallation (om ny CT byggs)
 

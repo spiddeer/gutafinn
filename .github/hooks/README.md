@@ -100,6 +100,14 @@ Skyddar mot:
    i `src/routes/` och verifiera datamappning samt TypeScript/Vite med `npm test` och `npm run build`.
 8. Vid andring i `src/components/gutafinn-map.tsx`: behall Leaflet-markercluster,
    tangentbordsfokus, GPS-markor och OSM-attribution; verifiera mot `/api/places`.
+9. Vid andring i `Overraska mig`: kor testerna for `src/lib/surprise*.test.ts`,
+   bygg frontenden och browser-verifiera GPS tillaten/nekad, tre tider, tre
+   fardsatt, fem rerolls, live-region och respektive OSM-motor.
+
+`Overraska mig` ska fortsatt ha ren, testbar domanlogik i `src/lib/surprise.ts`,
+begransad localStorage-hantering i `src/lib/surprise-storage.ts` och UI i
+`src/components/surprise-adventure.tsx`. Hooks bevakar inte dessa kontrakt fullt
+ut; Vitest, TypeScript/Vite och browserkontrollen ar releasegrinden.
 
 ## Backend- och datasynkronisering
 

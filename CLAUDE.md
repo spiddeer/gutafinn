@@ -14,6 +14,8 @@ backend and deployment stack.
   under `/api/*`; GPS drives real distances and Open-Meteo supplies live weather
 - Map: the `Karta` tab is an embedded Leaflet atlas with clustered live places,
   a GPS marker and persistently readable OpenStreetMap attribution
+- Discovery: `Overraska mig` is an internal GPS-required micro-adventure flow
+  backed by pure selection logic and bounded browser-only history
 - Deployment: Docker Compose in Proxmox LXC CT 201 behind Cloudflare Tunnel in CT 200
 - Production: `https://gotland.tobtech.se`
 - Deploy: `./deploy/proxmox/deploy.sh` from `/opt/gotlandsguiden`
@@ -26,6 +28,11 @@ backend and deployment stack.
   back to the unmounted `public/` frontend or hide OpenStreetMap attribution.
 - Preserve mobile-first Swedish copy, 44px targets, focus states and safe areas.
 - Saved place IDs persist in localStorage under `gutafinn_saved_places`.
+- Surprise preferences/history use the four `gutafinn_surprise_*` keys, keep at
+  most 20 IDs/categories and never persist GPS coordinates.
+- Surprise ranking is limited to distance, product-category diversity,
+  verification date and recent local history; keep the 10 km cap and factual copy.
+- Walking, bicycle and car actions must keep their matching OpenStreetMap routing engines.
 - `public/` is the preserved legacy Leaflet frontend and is no longer mounted by Compose.
 - Preserve API, SQLite migrations, OSM source tracking and manually enriched data.
 - Never commit runtime data from `deploy/proxmox/data/` or `backups/`.
