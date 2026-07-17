@@ -101,6 +101,45 @@ jobs:
             -v "$PWD/deploy/nginx.conf:/etc/nginx/conf.d/default.conf:ro" \
             gutafinn-web-ci nginx -t
       - name: Build backend image
-        run: docker build -f backend/Dockerfile backend
+        run: docker build -t gutafinn-backend-ci -f backend/Dockerfile backend
       - name: Build CMS image
-        run: docker build -f cms/Dockerfile cms
+        run: docker build -t gutafinn-cms-ci -f cms/Dockerfile cms
+      - name: Smoke shared SQLite runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          cleanup() {
+            docker rm -f gutafinn-cms-ci gutafinn-backend-ci >/dev/null 2>&1 || true
+            docker volume rm gutafinn-data-ci >/dev/null 2>&1 || true
+          }
+          trap cleanup EXIT
+          docker volume create gutafinn-data-ci
+          docker run -d --name gutafinn-backend-ci \
+            -v gutafinn-data-ci:/data gutafinn-backend-ci
+          for attempt in {1..30}; do
+            if [[ "$(docker inspect -f '{{.State.Health.Status}}' gutafinn-backend-ci)" == healthy ]]; then
+              break
+            fi
+            if [[ "$attempt" == 30 ]]; then
+              docker logs gutafinn-backend-ci
+              exit 1
+            fi
+            sleep 1
+          done
+          docker run -d --name gutafinn-cms-ci \
+            -e DATABASE_PATH=/data/places.db \
+            -e ADMIN_PASSWORD=ci-password \
+            -e SESSION_SECRET=ci-session-secret-with-at-least-thirty-two-characters \
+            -e PASSKEY_RP_ID=cms.example.test \
+            -e PASSKEY_ORIGIN=https://cms.example.test \
+            -v gutafinn-data-ci:/data gutafinn-cms-ci
+          for attempt in {1..30}; do
+            if [[ "$(docker inspect -f '{{.State.Health.Status}}' gutafinn-cms-ci)" == healthy ]]; then
+              exit 0
+            fi
+            if [[ "$attempt" == 30 ]]; then
+              docker logs gutafinn-cms-ci
+              exit 1
+            fi
+            sleep 1
+          done

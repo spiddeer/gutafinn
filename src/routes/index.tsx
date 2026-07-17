@@ -47,6 +47,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { DayPlanner } from "@/components/day-planner"
 import { PracticalFilters } from "@/components/practical-filters"
+import { VisitorCorrectionForm } from "@/components/visitor-correction-form"
 import { GutafinnMap } from "@/components/gutafinn-map"
 import { SurpriseAdventure } from "@/components/surprise-adventure"
 import { buildDiscoverySearch, parseDiscoverySearch } from "@/lib/discovery-url"
@@ -1100,6 +1101,8 @@ export function PlaceDetailsDialog({
               )}
             </PlaceInfoRow>
           </section>
+
+          <VisitorCorrectionForm placeId={place.id} placeName={place.name} />
 
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
             <Button type="button" variant="secondary" onClick={onToggleSaved} aria-pressed={isSaved}>

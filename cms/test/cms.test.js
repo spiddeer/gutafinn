@@ -214,6 +214,45 @@ test('admin routes require authentication and reject bad credentials', async () 
   assert.match(await loginResponse.text(), /Fel användarnamn eller lösenord/);
 });
 
+test('admin can review visitor corrections without changing place data', async () => {
+  app.store.db.prepare(`INSERT OR IGNORE INTO places
+    (id,name,category,lat,lng,description,is_active) VALUES (?,?,?,?,?,?,1)`)
+    .run('correction-place', 'Rättelseplats', 'natur', 57.5, 18.5, 'Oförändrad beskrivning');
+  app.store.db.prepare(`INSERT INTO visitor_corrections
+    (place_id,issue_type,message,contact_email) VALUES (?,?,?,?)`)
+    .run('correction-place', 'hours', 'Öppettiderna stämmer inte längre.', 'visitor@example.test');
+  const correction = app.store.db.prepare('SELECT id FROM visitor_corrections ORDER BY id DESC').get();
+  const cookie = await login();
+  const token = await csrf(cookie);
+
+  const queue = await fetch(`${baseUrl}/admin/corrections`, { headers: { cookie } });
+  assert.equal(queue.status, 200);
+  const html = await queue.text();
+  assert.match(html, /Rättelseplats/);
+  assert.match(html, /Öppettiderna stämmer inte längre/);
+  assert.match(html, /visitor@example\.test/);
+
+  const updated = await fetch(`${baseUrl}/admin/corrections/${correction.id}`, {
+    method: 'POST', redirect: 'manual', headers: {
+      cookie, 'content-type': 'application/x-www-form-urlencoded',
+    },
+    body: new URLSearchParams({
+      csrf: token, status: 'resolved', resolutionNote: 'Kontrollerat mot officiell webbplats.',
+    }),
+  });
+  assert.equal(updated.status, 303);
+  const stored = app.store.db.prepare('SELECT * FROM visitor_corrections WHERE id=?').get(correction.id);
+  assert.equal(stored.status, 'resolved');
+  assert.equal(stored.reviewed_by, 'editor');
+  assert.equal(stored.resolution_note, 'Kontrollerat mot officiell webbplats.');
+  assert.equal(
+    app.store.db.prepare('SELECT description FROM places WHERE id=?').get('correction-place').description,
+    'Oförändrad beskrivning',
+  );
+  app.store.db.prepare('DELETE FROM visitor_corrections WHERE id=?').run(correction.id);
+  app.store.db.prepare('DELETE FROM places WHERE id=?').run('correction-place');
+});
+
 test('a user can sign up with a passkey and receives an authenticated CMS session', async () => {
   const signupPage = await fetch(`${baseUrl}/signup`);
   assert.equal(signupPage.status, 200);

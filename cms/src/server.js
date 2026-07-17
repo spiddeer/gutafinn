@@ -10,7 +10,7 @@ import {
   sessionCookie, verifyCredentials,
 } from './security.js';
 import {
-  dashboardView, errorView, loginView, notFoundView, placeFormView, placesView, signupView,
+  correctionsView, dashboardView, errorView, loginView, notFoundView, placeFormView, placesView, signupView,
 } from './views.js';
 
 const assetsDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public');
@@ -89,7 +89,7 @@ function isValidCsrf(body, session) {
 }
 
 function notice(code) {
-  return ({ created: 'Platsen skapades och är nu sparad.', updated: 'Ändringarna sparades.', archived: 'Platsen arkiverades.', restored: 'Platsen återställdes.' })[code] || '';
+  return ({ created: 'Platsen skapades och är nu sparad.', updated: 'Ändringarna sparades.', archived: 'Platsen arkiverades.', restored: 'Platsen återställdes.', correction: 'Rättelsen uppdaterades.' })[code] || '';
 }
 
 async function serveAsset(pathname, response) {
@@ -205,6 +205,25 @@ export function createApp(overrides = {}, dependencies = {}) {
           page: Number.parseInt(url.searchParams.get('page') || '1', 10),
         };
         return send(response, 200, placesView({ result: store.listPlaces(filters), categories: store.categories(), filters, csrf: session.csrf, user, notice: notice(url.searchParams.get('notice')) }));
+      }
+      if (url.pathname === '/admin/corrections' && method === 'GET') {
+        const status = ['new', 'reviewed', 'resolved', 'dismissed', 'all'].includes(url.searchParams.get('status'))
+          ? url.searchParams.get('status') : 'new';
+        return send(response, 200, correctionsView({
+          rows: store.listCorrections({ status }), status, csrf: session.csrf, user,
+          notice: notice(url.searchParams.get('notice')),
+        }));
+      }
+      const correctionMatch = url.pathname.match(/^\/admin\/corrections\/(\d+)$/);
+      if (correctionMatch && method === 'POST') {
+        const body = await readBody(request);
+        if (!isValidCsrf(body, session)) return send(response, 403, 'Ogiltig säkerhetstoken.', 'text/plain; charset=utf-8');
+        const status = body.get('status') || '';
+        const resolutionNote = (body.get('resolutionNote') || '').slice(0, 1000);
+        if (!store.updateCorrection(correctionMatch[1], { status, resolutionNote, reviewedBy: user })) {
+          return send(response, 404, notFoundView({ user }));
+        }
+        return redirect(response, `/admin/corrections?status=${encodeURIComponent(status)}&notice=correction`);
       }
       if (url.pathname === '/admin/places/new' && method === 'GET') {
         return send(response, 200, placeFormView({ place: { is_active: 1, contacts: {}, images: [] }, categories: store.categories(), csrf: session.csrf, user, isNew: true }));

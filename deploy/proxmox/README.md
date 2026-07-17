@@ -35,16 +35,24 @@ Denna runbook beskriver den faktiska produktionssetupen och hur den driftas.
 9. `web` proxyar `/api/*` till `backend:8080`.
 10. `backend` anvander SQLite i `deploy/proxmox/data/places.db`.
 
+Backendcontainern normaliserar den delade datavolymen till images gemensamma
+`node`-anvandare innan seed/API startar. Backend och CMS kan darfor bada skriva
+SQLite/WAL-filer utan att applikationsprocesserna behover koras som root.
+
 Backend kor additiva databasmigreringar automatiskt vid start. Seed-steget
 anvander `UPSERT`, sa befintlig berikning bevaras nar OSM-snapshoten importeras igen.
 Tidigare OSM-poster som saknas i den nya snapshoten markeras inaktiva men ligger
 kvar i SQLite for historik och eventuell manuell berikning.
 
-Backend ar ensam agare av domanschemat. Fyra migreringar ar aktiva. Migrering 4
+Backend ar ensam agare av domanschemat. Fem migreringar ar aktiva. Migrering 4
 kallmarker importerade
 kategorikopplingar, sa nya OSM-snapshots kan synka just de kopplingarna utan att
 ta bort manuellt tillagda kategorier. Publika API-anrop visar bara
 `is_active = 1` medan inaktiva poster behalls i databasen.
+Migrering 5 skapar besokarnas rattelseko. Publika rapporter begransas som
+standard till fem forsok per IP/timme utan att IP lagras; frivillig e-post och
+rapporttext sparas for manuell CMS-granskning. Statusandringar i kon far aldrig
+andra platsdata automatiskt.
 
 ## Kataloger i CT 201
 
@@ -155,6 +163,8 @@ databasen ligger utanfor Git och ska inte ersattas med `seed-data.json`.
 Backupscriptet anvander SQLite online-backup inuti backend-containern, kor
 `PRAGMA quick_check` pa snapshoten och publicerar arkivet atomart forst nar
 verifieringen ar godkand. Arkivet innehaller en aterlasningsbar `places.db`.
+Samma snapshot omfattar `visitor_corrections`, sa aven den manuella
+rattelsekon och dess granskningsstatus foljer med i backupen.
 
 ### Manuell backup
 

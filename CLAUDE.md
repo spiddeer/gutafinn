@@ -11,7 +11,8 @@ Gutafinn backend and deployment stack.
 - UI: shadcn/ui `new-york`, Lucide icons, Fraunces and Inter
 - Backend: Node.js, Express and SQLite (`better-sqlite3`) in `backend/`
 - CMS: Node.js adminapp med passkeys/reservkonto i `cms/`; backend ar ensam
-  agare av domanschema och CMS vantar pa backend-health
+  agare av domanschema och CMS vantar pa backend-health; besokarnas rattelser
+  granskas manuellt dar utan automatisk platsandring
 - Data: Gutafinn loads a curated 977-place visitor snapshot through `/api/*`;
   utility, accommodation, fuel and charging records are excluded before seed,
   while GPS drives real distances and Open-Meteo supplies live weather
@@ -48,6 +49,10 @@ Gutafinn backend and deployment stack.
 - PWA build assets come from `src/pwa/` plus generated icons. Keep the service
   worker same-origin and limited to the app shell and public API data; never
   cache GPS, OSM tiles or Open-Meteo responses.
+- Visitor corrections use `POST /api/places/:id/corrections`, migration 5 and
+  the CMS status queue. Preserve the six correction types, 10-1000 character
+  message, optional email, honeypot, five attempts/IP/hour and no stored IP.
+  The form is online-only and the queue must never mutate place data directly.
 - Keep the seven visitor filters and the per-place information dialog aligned
   with API address, contacts, opening hours, accessibility and sources.
 - Preserve the 320px mobile, 768/820px portrait-tablet and 1024-1440px split

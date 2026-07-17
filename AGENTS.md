@@ -65,6 +65,8 @@ Detta dokument ar den primara kontexten for AI-agenter som jobbar i repot.
 - `src/components/gutafinn-map.test.tsx`: jsdom-regressionstester for engangsinitiering,
   separata GPS-/klusteruppdateringar, val och markorklick.
 - `src/components/surprise-adventure.tsx`: tillgangligt helskarmsflode for tid, fardsatt, GPS-states och aventyrskort.
+- `src/components/visitor-correction-form.tsx`: validerat onlineformular som
+  koar besokarnas rattelseforslag utan direkt platsandring.
 - `src/components/day-planner.tsx`: intern dagsplan fran sparade platser med
   fardsatt, etapper och sanningsenliga uppskattningar.
 - `src/lib/places.ts`: API-typer, kategorimappning, avstand, oppettider och filtrering.
@@ -94,6 +96,8 @@ Detta dokument ar den primara kontexten for AI-agenter som jobbar i repot.
 - `backend/db.js`: SQLite-anslutning och migreringsstart.
 - `backend/migrations.js`: Versionsstyrda, additiva SQLite-migreringar.
 - `backend/place-repository.js`: Datakontrakt, relationslasning och skrivning.
+- `backend/correction-repository.js`: Validering och lagring av besokarnas
+  rattelseforslag.
 - `backend/import-osm.js`: Overpass-import, kategorisering, deduplicering och
   generering av seed- samt fallback-snapshot.
 - `backend/seed.js`: Idempotent OSM-import vid containerstart.
@@ -103,6 +107,8 @@ Detta dokument ar den primara kontexten for AI-agenter som jobbar i repot.
 ### CMS-filer
 
 - `cms/src/`: Passkey-/reservkontoskyddad platsadministration mot samma SQLite.
+- Rattelsekon i CMS flyttar rapporter mellan `new`, `reviewed`, `resolved` och
+  `dismissed`; den skriver aldrig automatiskt till platsregistret.
 - `cms/test/`: Auth-, WebAuthn-, validerings- och CRUD-regressionstester.
 - Backend ager domanschemat och migreringarna. CMS far aldrig initiera eller
   andra domanschemat och ska vagra start mot en oinitierad databas.
@@ -166,6 +172,8 @@ workern far inte cacha GPS, externa OSM-plattor, Open-Meteo eller godtyckliga
 bildorigin. Navigation ar network-first med `index.html` som fallback; publika
 API-anrop ar network-first med separat datacache. `/sw.js` maste ha `no-store`
 vid Nginx och registreras med `updateViaCache: none`.
+Rattelseforslag ar uttryckligen online-only och far inte koas i service worker
+eller localStorage.
 Leaflet-kontroller, markorer och attribution maste vara tangentbords-/touchbara,
 och OpenStreetMap-krediteringen ska vara permanent lasbar pa alla viewportstorlekar.
 
@@ -191,6 +199,12 @@ dessutom all tillganglig adress, kontakt, oppettid och tillganglighet.
 API:t ska fortsatt exponera `/api/categories` och `/api/places`. Den aktiva
 Gutafinn-frontenden anvander `/api/places` som enda platskalla. `public/`-
 fallbacken bevaras for importens reproducerbarhet men ar inte aktiv runtime-frontend.
+
+`POST /api/places/:id/corrections` accepterar sex definierade rattelsetyper,
+10-1000 teckens meddelande och frivillig e-post. Honeypot och standardgransen
+fem forsok per IP/timme ska bevaras, men IP-adresser far inte lagras. Backend
+ager migrering 5 och tabellen `visitor_corrections`; CMS far bara krava och
+anvanda tabellen. Inga koandringar far automatiskt andra en plats.
 
 Seed/import far uppdatera karndata med `UPSERT`, men aldrig radera manuellt
 berikade oppettider, kontaktuppgifter, bilder eller kallor.
@@ -289,6 +303,8 @@ aterstallbart kartfokus, bevarade filter och synlig OpenStreetMap-attribution.
     behall och utoka `gutafinn-map.test.tsx` vid livscykelandringar.
 12. Responsiva andringar ska browserkontrolleras over hela 320-1440px-matrisen
     och far inte skapa mobil sidscroll eller dolja bottom-nav/topnavigation.
+13. Vid rattelsekoandringar: kor frontend-, backend- och CMS-tester; bevara
+    online-only-flodet, rate limit, integritet och manuell granskning.
 13. Vid Nginx-/headerandringar: bygg web-imagen, kor `nginx -t` och kontrollera
     GPS, Open-Meteo, Google Fonts, kartplattor och bada hostnamnens CSP.
 14. Vid kartomradesandringar: testa bounds-filtret och callbacken utan att flytta

@@ -38,6 +38,18 @@ export function initializeDomainDatabase(databasePath) {
       is_primary INTEGER NOT NULL DEFAULT 0 CHECK (is_primary IN (0, 1)),
       source_type TEXT, PRIMARY KEY (place_id, category_id)
     );
+    CREATE TABLE visitor_corrections (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      place_id TEXT NOT NULL REFERENCES places(id) ON DELETE CASCADE,
+      issue_type TEXT NOT NULL CHECK (issue_type IN ('hours','contact','location','accessibility','closed','other')),
+      message TEXT NOT NULL CHECK (length(message) BETWEEN 10 AND 1000),
+      contact_email TEXT,
+      status TEXT NOT NULL DEFAULT 'new' CHECK (status IN ('new','reviewed','resolved','dismissed')),
+      resolution_note TEXT,
+      created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      reviewed_at TEXT,
+      reviewed_by TEXT
+    );
     INSERT INTO categories (id, label, color, emoji, sort_order) VALUES
       ('mat', 'Mat & dryck', '#c0603f', '🍽️', 10),
       ('sevardhet', 'Sevärdheter', '#e0a458', '🏛️', 20),

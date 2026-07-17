@@ -102,3 +102,91 @@ test("write endpoints require a configured API key", async () => {
     assert.equal(response.status, 503);
   });
 });
+
+test("visitors can queue a validated correction without changing the place", async () => {
+  await withServer({}, async ({ baseUrl, database }) => {
+    database.prepare(`INSERT INTO places
+      (id,name,category,lat,lng,description,is_active) VALUES (?,?,?,?,?,?,1)`)
+      .run("test-place", "Testplats", "natur", 57.5, 18.5, "Test");
+
+    const response = await fetch(`${baseUrl}/api/places/test-place/corrections`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        issueType: "hours",
+        message: "Öppettiderna har ändrats sedan förra veckan.",
+        email: "visitor@example.test",
+      }),
+    });
+    assert.equal(response.status, 202);
+    assert.equal(response.headers.get("cache-control"), "no-store");
+    const correction = database.prepare("SELECT * FROM visitor_corrections").get();
+    assert.equal(correction.place_id, "test-place");
+    assert.equal(correction.issue_type, "hours");
+    assert.equal(correction.status, "new");
+    assert.equal(correction.contact_email, "visitor@example.test");
+    assert.equal(database.prepare("SELECT description FROM places WHERE id=?").get("test-place").description, "Test");
+
+    const invalid = await fetch(`${baseUrl}/api/places/test-place/corrections`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ issueType: "unknown", message: "kort" }),
+    });
+    assert.equal(invalid.status, 400);
+
+    const honeypot = await fetch(`${baseUrl}/api/places/test-place/corrections`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        issueType: "other",
+        message: "Det här ser ut som en riktig text.",
+        website: "https://spam.example",
+      }),
+    });
+    assert.equal(honeypot.status, 202);
+    assert.equal(database.prepare("SELECT COUNT(*) count FROM visitor_corrections").get().count, 1);
+  });
+});
+
+test("correction reports reject unknown places and are rate limited", async () => {
+  await withServer({ correctionLimit: 1 }, async ({ baseUrl, database }) => {
+    database.prepare(`INSERT INTO places
+      (id,name,category,lat,lng,description,is_active) VALUES (?,?,?,?,?,?,1)`)
+      .run("test-place", "Testplats", "natur", 57.5, 18.5, "Test");
+    const input = {
+      issueType: "location",
+      message: "Markören ligger på fel sida av vägen.",
+    };
+    const accepted = await fetch(`${baseUrl}/api/places/test-place/corrections`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(input),
+    });
+    assert.equal(accepted.status, 202);
+    const limited = await fetch(`${baseUrl}/api/places/test-place/corrections`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(input),
+    });
+    assert.equal(limited.status, 429);
+
+    const otherClient = await fetch(`${baseUrl}/api/places/test-place/corrections`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "CF-Connecting-IP": "203.0.113.8" },
+      body: JSON.stringify(input),
+    });
+    assert.equal(otherClient.status, 202);
+  });
+
+  await withServer({}, async ({ baseUrl }) => {
+    const missing = await fetch(`${baseUrl}/api/places/missing/corrections`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        issueType: "closed",
+        message: "Platsen verkar vara permanent stängd.",
+      }),
+    });
+    assert.equal(missing.status, 404);
+  });
+});

@@ -156,6 +156,10 @@ warm restrained light and no embedded text or logos. Preserve meaningful
   disabled until GPS exists; fact filters state only that source data exists.
 - Offline state is a concise, high-priority status pill. It states that cached
   place data remains available and that map tiles/weather may be missing.
+- Each place dialog exposes a keyboard- and touch-friendly correction form.
+  It accepts a correction type, 10-1000 character message and optional email,
+  confirms manual review, and shows a truthful error when offline. Reports are
+  never queued locally and never imply that the place changed immediately.
 - The Leaflet map instance is initialized once. Marker clusters, GPS state and
   selected-place state update independently so filtering and nav changes do not
   rebuild or race the map.
@@ -201,6 +205,8 @@ interface labels.
 - Installed standalone mode preserves safe areas and all responsive breakpoints;
   offline reload restores the shell and cached catalogue without claiming live
   map tiles, weather or opening facts.
+- Correction form validates required input, succeeds into the editorial queue,
+  handles server/rate-limit/offline errors and never changes the displayed place.
 - Browser smoke covers 320, 390, 768, 820, 1024 landscape, 1280 and 1440px,
   including denied GPS and horizontal-overflow checks.
 - `src/components/gutafinn-map.test.tsx` covers one-time map initialization,
