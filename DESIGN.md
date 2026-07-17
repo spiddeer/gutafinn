@@ -131,6 +131,8 @@ warm restrained light and no embedded text or logos. Preserve meaningful
 - Opening claims require structured source hours; raw hours use a neutral state.
 - Weather and sunset come from Open-Meteo for the user position or Ljugarn fallback.
 - Save controls persist IDs in localStorage and expose `aria-pressed`.
+- Search, category, map focus and selected place have a compact shareable URL;
+  saved IDs and GPS coordinates never appear in it.
 - Surprise time/mode controls use labelled fieldsets and `aria-pressed`; rerolls
   announce the new place through a polite live region.
 - Surprise loading, denied-GPS, unavailable-data and empty-radius states always
@@ -172,6 +174,8 @@ interface labels.
 - All component colors use semantic tokens.
 - Hero copy remains readable across the full image crop.
 - Category, search, save and navigation states are keyboard accessible.
+- Reloading or opening a shared discovery URL restores its valid filters, map
+  focus and place selection; invalid URL values degrade to the default view.
 - `Överraska mig` works with GPS granted and denied, all three time choices,
   all three travel modes and five consecutive rerolls.
 - Each surprise navigation action uses the correct OpenStreetMap direction engine.

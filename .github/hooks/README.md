@@ -119,6 +119,9 @@ Skyddar mot:
 12. Vid Nginx-/headerandringar: bygg web-imagen och kor `nginx -t`. Publik CSP
     maste tillata GPS, Open-Meteo, Google Fonts och HTTPS-kartplattor; CMS har
     en separat strikt policy.
+13. Vid andring i delbart state: utoka `discovery-url.test.ts`, och verifiera
+    omladdning samt bakat-/framatnavigation. GPS och sparade ID:n far inte
+    hamna i URL:en.
 
 `Overraska mig` ska fortsatt ha ren, testbar domanlogik i `src/lib/surprise.ts`,
 begransad localStorage-hantering i `src/lib/surprise-storage.ts` och UI i
