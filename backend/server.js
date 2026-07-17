@@ -7,10 +7,13 @@ const {
   listPlaces,
   savePlace,
 } = require("./place-repository");
+const { createCorrection } = require("./correction-repository");
 
 const PORT = process.env.PORT || 8080;
 const API_KEY = process.env.API_KEY || "";
 const PUBLIC_CACHE_CONTROL = "public, max-age=300, stale-while-revalidate=3600";
+const CORRECTION_LIMIT = 5;
+const CORRECTION_WINDOW_MS = 60 * 60 * 1000;
 
 function slugify(text) {
   return text
@@ -84,10 +87,46 @@ function validatePlaceInput(database, input, { partial = false } = {}) {
   return errors;
 }
 
-function createApp(database = db, { apiKey = API_KEY } = {}) {
+function createApp(database = db, {
+  apiKey = API_KEY,
+  correctionLimit = CORRECTION_LIMIT,
+  correctionWindowMs = CORRECTION_WINDOW_MS,
+} = {}) {
   const app = express();
   app.disable("x-powered-by");
+  app.set("trust proxy", 1);
   app.use(express.json({ limit: "256kb" }));
+  const correctionAttempts = new Map();
+  const correctionRateSalt = crypto.randomBytes(32);
+  let nextCorrectionSweep = Date.now() + correctionWindowMs;
+
+  function correctionClientKey(req) {
+    const address = req.get("CF-Connecting-IP") || req.ip || "unknown";
+    return crypto.createHmac("sha256", correctionRateSalt)
+      .update(address)
+      .digest("base64url");
+  }
+
+  function allowCorrection(key) {
+    const now = Date.now();
+    if (now >= nextCorrectionSweep) {
+      for (const [storedKey, timestamps] of correctionAttempts) {
+        const active = timestamps.filter((timestamp) => timestamp > now - correctionWindowMs);
+        if (active.length) correctionAttempts.set(storedKey, active);
+        else correctionAttempts.delete(storedKey);
+      }
+      nextCorrectionSweep = now + correctionWindowMs;
+    }
+    const attempts = (correctionAttempts.get(key) || [])
+      .filter((timestamp) => timestamp > now - correctionWindowMs);
+    if (attempts.length >= correctionLimit) {
+      correctionAttempts.set(key, attempts);
+      return false;
+    }
+    attempts.push(now);
+    correctionAttempts.set(key, attempts);
+    return true;
+  }
 
   function requireApiKey(req, res, next) {
     if (!apiKey) {
@@ -120,6 +159,21 @@ function createApp(database = db, { apiKey = API_KEY } = {}) {
     if (!place) return res.status(404).json({ error: "Place not found." });
     res.set("Cache-Control", PUBLIC_CACHE_CONTROL);
     res.json(place);
+  });
+
+  app.post("/api/places/:id/corrections", (req, res) => {
+    res.set("Cache-Control", "no-store");
+    if (!allowCorrection(correctionClientKey(req))) {
+      return res.status(429).json({ error: "Too many correction reports. Try again later." });
+    }
+    const input = req.body || {};
+    if (typeof input.website === "string" && input.website.trim()) {
+      return res.status(202).json({ ok: true });
+    }
+    const result = createCorrection(database, req.params.id, input);
+    if (result.notFound) return res.status(404).json({ error: "Place not found." });
+    if (result.errors.length) return res.status(400).json({ errors: result.errors });
+    return res.status(202).json({ ok: true, id: result.id });
   });
 
   app.post("/api/places", requireApiKey, (req, res) => {

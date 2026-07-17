@@ -10,6 +10,8 @@ SQLite-databas som backend och skyddas med passkeys eller ett reservkonto.
 - Sökning, filtrering och sidindelning för stora register
 - Skapa och redigera grunddata, koordinater, adress, besöksinformation, kontaktvägar och bilder
 - Publicera, arkivera och återställ platser utan att radera källdata
+- Granska besökarnas rättelseförslag som nya, granskade, lösta eller avfärdade
+  utan att rapporten automatiskt ändrar platsdata
 - JSON-API för aktiva platser och kategorier
 - Signerade sessioner, CSRF-skydd, inloggningsbegränsning och servervalidering
 - Responsivt och tangentbordsanvändbart gränssnitt på svenska
@@ -37,6 +39,11 @@ npm start
 ```
 
 Applikationen läser miljövariabler från processen; `.env` laddas inte automatiskt. I produktion krävs `ADMIN_PASSWORD` och en `SESSION_SECRET` med minst 32 tecken. Backend är ensam ägare av domänschemat; CMS:et vägrar starta mot en databas som backend ännu inte har initierat.
+
+Backendmigration 5 skapar `visitor_corrections`; CMS:et skapar inte tabellen.
+Publika rapporter kan innehålla frivillig e-post men aldrig lagrad IP-adress.
+Redaktören kan sätta status och granskningsanteckning i `/admin/corrections`.
+Eventuella sakändringar görs separat i platsredigeringen.
 
 Passkeys är avstängda i produktion tills `PASSKEY_RP_ID` och `PASSKEY_ORIGIN` anges. `PASSKEY_RP_ID` är domännamnet utan protokoll, exempelvis `cms.example.com`. `PASSKEY_ORIGIN` är den exakta externa HTTPS-adressen, exempelvis `https://cms.example.com`.
 
@@ -70,4 +77,5 @@ Bygg containerbilden med `docker build -t gutafinn-cms .`. I den sammanslagna
 driften initierar backend domänschemat innan CMS startar. Sätt `ADMIN_PASSWORD`,
 `SESSION_SECRET` och vid behov `SIGNUP_CODE` som hemligheter. Passkeys kräver
 HTTPS utanför localhost. Produktionens `backup.sh` använder SQLite backup-API
-och verifierar snapshoten före arkivering.
+och verifierar snapshoten före arkivering. Eftersom rättelsekön ligger i samma
+databas ingår även den i backupen.

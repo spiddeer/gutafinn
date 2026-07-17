@@ -15,6 +15,7 @@ function icon(name) {
     arrow: '<path d="M19 12H5m7 7l-7-7 7-7"/>',
     external: '<path d="M14 3h7v7M10 14L21 3M21 14v6a1 1 0 01-1 1H4a1 1 0 01-1-1V4a1 1 0 011-1h6"/>',
     key: '<circle cx="8" cy="15" r="4"/><path d="M11 12l8-8m-3 3l3 3m-6 0l3 3"/>',
+    alert: '<path d="M21 15a4 4 0 01-4 4H8l-5 3V7a4 4 0 014-4h10a4 4 0 014 4z"/><path d="M12 7v4m0 4h.01"/>',
   };
   return `<svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${paths[name] || ''}</svg>`;
 }
@@ -25,6 +26,7 @@ function layout({ title, body, user = null, active = '', description = '' }) {
     <nav aria-label="Huvudmeny">
       <a class="nav-link ${active === 'dashboard' ? 'active' : ''}" href="/admin">${icon('grid')}Översikt</a>
       <a class="nav-link ${active === 'places' ? 'active' : ''}" href="/admin/places">${icon('pin')}Platser</a>
+      <a class="nav-link ${active === 'corrections' ? 'active' : ''}" href="/admin/corrections">${icon('alert')}Rättelser</a>
       <a class="nav-link nav-create" href="/admin/places/new">${icon('plus')}Ny plats</a>
     </nav>
     <div class="sidebar-foot"><span class="avatar">${escapeHtml(user[0].toUpperCase())}</span><span><strong>${escapeHtml(user)}</strong><small>CMS-användare</small></span>
@@ -85,6 +87,7 @@ export function dashboardView({ stats, recent, user }) {
     ['Publicerade', stats.active || 0, 'grid', 'Synliga i guiden'],
     ['Arkiverade', stats.archived || 0, 'archive', 'Dolda från besökare'],
     ['Kategorier', stats.categories || 0, 'map', 'Används just nu'],
+    ['Nya rättelser', stats.corrections || 0, 'alert', 'Väntar på granskning'],
   ].map(([label, value, iconName, hint]) => `<article class="stat-card"><span class="stat-icon">${icon(iconName)}</span><div><span>${escapeHtml(label)}</span><strong>${value}</strong><small>${escapeHtml(hint)}</small></div></article>`).join('');
   return layout({ title: 'Översikt', user, active: 'dashboard', body:
     `${header('Översikt', 'En snabb bild av innehållet i Gutafinn.', `<a class="button primary" href="/admin/places/new">${icon('plus')}Lägg till plats</a>`)}
@@ -123,6 +126,45 @@ export function placesView({ result, categories, filters, csrf, user, notice = '
       <label><span class="sr-only">Status</span><select name="status"><option value="all" ${filters.status === 'all' ? 'selected' : ''}>Alla statusar</option><option value="active" ${filters.status === 'active' ? 'selected' : ''}>Publicerade</option><option value="archived" ${filters.status === 'archived' ? 'selected' : ''}>Arkiverade</option></select></label>
       <button class="button secondary" type="submit">Filtrera</button>${filters.query || filters.category || filters.status !== 'all' ? '<a class="clear-link" href="/admin/places">Rensa</a>' : ''}
     </form>${placeTable(result.rows, csrf)}${pagination({ ...result, query: params })}</section>` });
+}
+
+const correctionIssueLabels = {
+  hours: 'Öppettider', contact: 'Kontaktuppgifter', location: 'Position',
+  accessibility: 'Tillgänglighet', closed: 'Permanent stängd', other: 'Annat',
+};
+const correctionStatusLabels = {
+  new: 'Ny', reviewed: 'Granskad', resolved: 'Åtgärdad', dismissed: 'Avfärdad',
+};
+
+export function correctionsView({ rows, status, csrf, user, notice = '' }) {
+  const options = [
+    ['new', 'Nya'], ['reviewed', 'Granskade'], ['resolved', 'Åtgärdade'],
+    ['dismissed', 'Avfärdade'], ['all', 'Alla'],
+  ];
+  const content = rows.length ? `<div class="correction-list">${rows.map((item) => `
+    <article class="correction-card">
+      <header><div><p class="eyebrow">${escapeHtml(correctionIssueLabels[item.issue_type] || item.issue_type)}</p>
+        <h2><a href="/admin/places/${encodeURIComponent(item.place_id)}/edit">${escapeHtml(item.place_name)}</a></h2></div>
+        <span class="correction-status status-${escapeHtml(item.status)}">${escapeHtml(correctionStatusLabels[item.status] || item.status)}</span></header>
+      <p class="correction-message">${escapeHtml(item.message)}</p>
+      <dl class="correction-meta"><div><dt>Inskickad</dt><dd>${escapeHtml(item.created_at)}</dd></div>
+        <div><dt>Kontakt</dt><dd>${item.contact_email ? `<a href="mailto:${escapeHtml(item.contact_email)}">${escapeHtml(item.contact_email)}</a>` : 'Ingen e-post lämnad'}</dd></div>
+        ${item.reviewed_by ? `<div><dt>Senast granskad av</dt><dd>${escapeHtml(item.reviewed_by)}</dd></div>` : ''}</dl>
+      <form class="correction-actions" method="post" action="/admin/corrections/${item.id}">
+        <input type="hidden" name="csrf" value="${escapeHtml(csrf)}">
+        <label>Status<select name="status">${Object.entries(correctionStatusLabels).map(([value, label]) => `<option value="${value}" ${item.status === value ? 'selected' : ''}>${label}</option>`).join('')}</select></label>
+        <label>Intern anteckning<textarea name="resolutionNote" maxlength="1000" rows="2" placeholder="Vad kontrollerades eller ändrades?">${escapeHtml(item.resolution_note || '')}</textarea></label>
+        <button class="button primary" type="submit">Spara granskning</button>
+      </form>
+    </article>`).join('')}</div>` : `<div class="empty"><span>${icon('alert')}</span><h2>Inga rättelser i den här kön</h2><p>Välj en annan status eller återkom senare.</p></div>`;
+
+  return layout({ title: 'Rättelser', user, active: 'corrections', body:
+    `${header('Rättelser', 'Besökarnas förslag ändrar aldrig platsdata automatiskt.')}
+    ${notice ? `<div class="alert success" role="status">${escapeHtml(notice)}</div>` : ''}
+    <section class="panel"><form class="filters" method="get" action="/admin/corrections">
+      <label><span class="sr-only">Status</span><select name="status">${options.map(([value, label]) => `<option value="${value}" ${status === value ? 'selected' : ''}>${label}</option>`).join('')}</select></label>
+      <button class="button secondary" type="submit">Filtrera</button>
+    </form>${content}</section>` });
 }
 
 function errorFor(errors, field) {

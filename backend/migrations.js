@@ -146,6 +146,35 @@ const MIGRATIONS = [
       `);
     },
   },
+  {
+    version: 5,
+    name: "add_visitor_corrections",
+    up(db) {
+      db.exec(`
+        CREATE TABLE visitor_corrections (
+          id              INTEGER PRIMARY KEY AUTOINCREMENT,
+          place_id        TEXT NOT NULL REFERENCES places(id) ON DELETE CASCADE,
+          issue_type      TEXT NOT NULL CHECK (issue_type IN (
+            'hours', 'contact', 'location', 'accessibility', 'closed', 'other'
+          )),
+          message         TEXT NOT NULL CHECK (length(message) BETWEEN 10 AND 1000),
+          contact_email   TEXT,
+          status          TEXT NOT NULL DEFAULT 'new' CHECK (status IN (
+            'new', 'reviewed', 'resolved', 'dismissed'
+          )),
+          resolution_note TEXT,
+          created_at      TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          reviewed_at     TEXT,
+          reviewed_by     TEXT
+        );
+
+        CREATE INDEX idx_visitor_corrections_status_created
+          ON visitor_corrections(status, created_at DESC);
+        CREATE INDEX idx_visitor_corrections_place
+          ON visitor_corrections(place_id, created_at DESC);
+      `);
+    },
+  },
 ];
 
 function runMigrations(db) {

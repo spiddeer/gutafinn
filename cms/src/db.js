@@ -10,6 +10,7 @@ const PUBLIC_CATEGORY_IDS = [
 const PUBLIC_CATEGORY_SQL = PUBLIC_CATEGORY_IDS.map((category) => `'${category}'`).join(', ');
 const REQUIRED_DOMAIN_TABLES = [
   'categories', 'places', 'place_details', 'place_contacts', 'place_images', 'place_categories',
+  'visitor_corrections',
 ];
 
 function assertDomainSchema(db) {
@@ -92,7 +93,31 @@ export function openDatabase(databasePath) {
     return db.prepare(`SELECT COUNT(*) total,
       SUM(CASE WHEN is_active = 1 THEN 1 ELSE 0 END) active,
       SUM(CASE WHEN is_active = 0 THEN 1 ELSE 0 END) archived,
-      COUNT(DISTINCT category) categories FROM places`).get();
+      COUNT(DISTINCT category) categories,
+      (SELECT COUNT(*) FROM visitor_corrections WHERE status='new') corrections
+      FROM places`).get();
+  }
+
+  function listCorrections({ status = 'new' } = {}) {
+    const allowedStatus = ['new', 'reviewed', 'resolved', 'dismissed'].includes(status) ? status : 'new';
+    const where = status === 'all' ? '' : 'WHERE vc.status = :status';
+    return db.prepare(`SELECT vc.*, p.name place_name, p.is_active place_active
+      FROM visitor_corrections vc JOIN places p ON p.id=vc.place_id
+      ${where}
+      ORDER BY CASE vc.status WHEN 'new' THEN 0 WHEN 'reviewed' THEN 1 ELSE 2 END,
+        vc.created_at DESC, vc.id DESC LIMIT 100`)
+      .all(status === 'all' ? {} : { status: allowedStatus });
+  }
+
+  function updateCorrection(id, { status, resolutionNote, reviewedBy }) {
+    if (!['new', 'reviewed', 'resolved', 'dismissed'].includes(status)) return false;
+    const note = clean(resolutionNote);
+    const reviewer = clean(reviewedBy);
+    return db.prepare(`UPDATE visitor_corrections
+      SET status=?, resolution_note=?,
+        reviewed_at=CASE WHEN ?='new' THEN NULL ELSE CURRENT_TIMESTAMP END,
+        reviewed_by=CASE WHEN ?='new' THEN NULL ELSE ? END
+      WHERE id=?`).run(status, note, status, status, reviewer, Number(id)).changes > 0;
   }
 
   function listPlaces({ query = '', category = '', status = 'all', page = 1 } = {}) {
@@ -342,6 +367,7 @@ export function openDatabase(databasePath) {
 
   return {
     db, categories, stats, listPlaces, getPlace, createPlace, editPlace, setActive, publicPlaces,
+    listCorrections, updateCorrection,
     getCmsUserByUsername, getCmsUserById, listPasskeysForUser, getPasskeyCredential,
     createWebAuthnChallenge, getWebAuthnChallenge, registerCmsUser, finishPasskeyAuthentication,
     close: () => db.close(),

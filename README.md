@@ -8,8 +8,9 @@ Proxmox-drift.
 
 Varje push till `main` och varje pull request verifieras av GitHub Actions med frontendtest och
 bygge, backend- och CMS-tester, tom databasstart, Compose-validering samt alla
-tre Dockerbyggen. Den driftsatta Nginx-konfigurationen syntaxkontrolleras ocksa
-mot den byggda webbimagen.
+tre Dockerbyggen. Backend- och CMS-images startas dessutom mot en gemensam tom
+SQLite-volym. Den driftsatta Nginx-konfigurationen syntaxkontrolleras ocksa mot
+den byggda webbimagen.
 
 Dokumentationen ar avstamd mot produktionssetupen den 17 juli 2026. Aktuell
 driftsatt Git-SHA verifieras med kommandot i Proxmox-runbooken.
@@ -61,6 +62,8 @@ Produkten kombinerar:
 - Praktiska filter for GPS-avstand och om oppettider, kontakt eller
   tillganglighetsinformation finns i kallan
 - Installerbar PWA med offline-appskal och senast lyckat hamtade platsdata
+- Besokare kan foresla platsrattelser som granskas manuellt i CMS utan att
+  platsregistret andras automatiskt
 - Fem genererade, optimerade WebP-bilder i `src/assets/`
 - shadcn/ui-komponenter, Lucide-ikoner och semantiska OKLCH-tokens
 - Tillgangliga fokus-, save- och navigationsstates samt safe-area-stod
@@ -214,6 +217,8 @@ network-first. Vid natfel anvands senaste lyckade API-svar. En synlig
 offline-status forklarar att kartplattor och livevader ar externa och darfor kan
 saknas utan nat. Gutafinn service-worker-cachar inte GPS, externa kartplattor,
 Open-Meteo eller andra origin-resurser.
+Rattelseformular ar en onlinefunktion: rapporter koas inte i browsern och ett
+forsok utan nat visar ett tydligt fel i stallet for att lova senare leverans.
 
 ## API
 
@@ -233,6 +238,17 @@ Open-Meteo eller andra origin-resurser.
 
 - Method: GET
 - Path: /api/places/:id
+
+### Foresla en rattelse
+
+- Method: POST
+- Path: /api/places/:id/corrections
+- Body: `issueType` (`hours`, `contact`, `location`, `accessibility`, `closed`
+  eller `other`), `message` (10-1000 tecken) och frivillig `email`.
+- Svaret `202` betyder att rapporten ligger i manuell granskningsko; platsdata
+  andras aldrig automatiskt.
+- Hojst fem forsok per klient-IP och timme tillats som standard. IP-adressen
+  anvands bara i processminnet for begransningen och lagras inte i databasen.
 
 ### Skapa plats
 
@@ -297,6 +313,9 @@ reproducerbarhet men ar inte den frontend som Compose eller Vite serverar.
 
 - Backend ar ensam agare av domanschemat och kor migreringar automatiskt vid
   start. CMS startar forst efter gron backend-health och vagrar en oinitierad DB.
+- Migrering 5 skapar `visitor_corrections`. CMS visar koade rapporter med
+  statusarna `new`, `reviewed`, `resolved` och `dismissed`, granskaridentitet
+  samt frivillig granskningsanteckning.
 - `npm run seed` anvander `UPSERT` och kan koras flera ganger.
 - Seed uppdaterar OpenStreetMaps karndata och fyller adress, kontaktuppgifter och
   oppettider nar de finns i kallan. Manuellt berikade falt skrivs inte tomma.
@@ -427,6 +446,9 @@ Scriptet gor:
 3. visar containerstatus
 
 ## Backup
+
+SQLite-backupen omfattar hela `places.db`, inklusive rattelsekon och dess
+granskningsstatus.
 
 Manuell backup:
 

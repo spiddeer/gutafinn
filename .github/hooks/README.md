@@ -133,6 +133,10 @@ Skyddar mot:
 17. Vid PWA-andringar: root-builden ska emittera `sw.js`, manifest och bada
     ikoner. Kontrollera service-worker-syntax, Nginx MIME/cache och att offline-
     fallback endast omfattar appskal samt publika API-svar.
+18. Vid andring i rattelsekon: kor rootens tester/build samt backend- och
+    CMS-tester. Verifiera 10-1000 tecken, frivillig e-post, honeypot, fem
+    forsok/IP/timme utan lagrad IP, online-only-formular och att CMS-status aldrig
+    uppdaterar platsdata automatiskt.
 
 `Overraska mig` ska fortsatt ha ren, testbar domanlogik i `src/lib/surprise.ts`,
 begransad localStorage-hantering i `src/lib/surprise-storage.ts` och UI i
@@ -155,6 +159,8 @@ npm test
 
 Testsviten omfattar API, databas/migreringar och importlogik. Hookarna kompletterar
 testerna med snabb feedback under frontendredigering men ersatter dem inte.
+CI startar dessutom backend- och CMS-images mot en gemensam tom SQLite-volym sa
+att saknade runtimefiler och felaktiga volymrattigheter upptacks fore merge.
 
 ## Vanliga felbilder
 

@@ -53,6 +53,7 @@ test("migrations create the rich schema and default categories", () => {
     "place_images",
     "place_sources",
     "import_runs",
+    "visitor_corrections",
   ]) {
     assert.ok(tables.has(table), `${table} should exist`);
   }
@@ -61,7 +62,7 @@ test("migrations create the rich schema and default categories", () => {
     listCategories(database).map((category) => category.id),
     ["mat", "sevardhet", "strand", "smultronstallen", "natur", "aktivitet", "familj", "shopping"]
   );
-  assert.equal(database.prepare("SELECT COUNT(*) count FROM schema_migrations").get().count, 4);
+  assert.equal(database.prepare("SELECT COUNT(*) count FROM schema_migrations").get().count, 5);
   database.close();
 });
 
