@@ -104,6 +104,23 @@ test("the API exposes only published editorial collections with active places", 
   });
 });
 
+test("the API serves immutable validated media assets", async () => {
+  await withServer({}, async ({ baseUrl, database }) => {
+    const id = "0123456789abcdef0123456789abcdef";
+    const bytes = Buffer.from([0xff, 0xd8, 0xff, 0xdb, 0x00, 0x43]);
+    database.prepare(`INSERT INTO media_assets
+      (id,filename,mime_type,bytes,size_bytes,uploaded_by) VALUES (?,?,?,?,?,?)`)
+      .run(id, "test.jpg", "image/jpeg", bytes, bytes.length, "editor");
+
+    const response = await fetch(`${baseUrl}/api/media/${id}`);
+    assert.equal(response.status, 200);
+    assert.equal(response.headers.get("content-type"), "image/jpeg");
+    assert.match(response.headers.get("cache-control"), /immutable/);
+    assert.deepEqual(Buffer.from(await response.arrayBuffer()), bytes);
+    assert.equal((await fetch(`${baseUrl}/api/media/unknown`)).status, 404);
+  });
+});
+
 test("place creation rejects invalid and already used inactive IDs", async () => {
   await withServer({ apiKey: "test-key" }, async ({ baseUrl, database }) => {
     const headers = { "Content-Type": "application/json", "X-API-Key": "test-key" };

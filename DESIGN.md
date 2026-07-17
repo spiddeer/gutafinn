@@ -164,6 +164,11 @@ warm restrained light and no embedded text or logos. Preserve meaningful
   It accepts a correction type, 10-1000 character message and optional email,
   confirms manual review, and shows a truthful error when offline. Reports are
   never queued locally and never imply that the place changed immediately.
+- The CMS media library uses responsive cards with useful filename, size,
+  uploader and usage state. Upload controls have labelled file input, a polite
+  live status and clear errors. Place editing inserts the stable media URL and
+  moves focus to descriptive alt text; destructive deletion is only offered
+  for unused images and requires confirmation.
 - The Leaflet map instance is initialized once. Marker clusters, GPS state and
   selected-place state update independently so filtering and nav changes do not
   rebuild or race the map.

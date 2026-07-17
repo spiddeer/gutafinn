@@ -11,7 +11,7 @@ import {
 } from './security.js';
 import {
   collectionFormView, collectionsView, correctionsView, dashboardView, errorView, loginView,
-  notFoundView, placeFormView, placesView, signupView,
+  mediaView, notFoundView, placeFormView, placesView, signupView,
 } from './views.js';
 
 const assetsDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public');
@@ -26,12 +26,12 @@ function redirect(response, location, headers = {}) {
   response.end();
 }
 
-async function readRawBody(request) {
+async function readRawBody(request, limit = 128 * 1024) {
   const chunks = [];
   let size = 0;
   for await (const chunk of request) {
     size += chunk.length;
-    if (size > 128 * 1024) throw Object.assign(new Error('Body too large'), { status: 413 });
+    if (size > limit) throw Object.assign(new Error('Body too large'), { status: 413 });
     chunks.push(chunk);
   }
   return Buffer.concat(chunks).toString('utf8');
@@ -41,9 +41,10 @@ async function readBody(request) {
   return new URLSearchParams(await readRawBody(request));
 }
 
-async function readJson(request) {
+async function readJson(request, limit = 128 * 1024) {
+  const raw = await readRawBody(request, limit);
   try {
-    return JSON.parse(await readRawBody(request));
+    return JSON.parse(raw);
   } catch {
     throw new PasskeyError('Begäran innehåller ogiltig JSON.');
   }
@@ -109,6 +110,10 @@ function isValidCsrf(body, session) {
   return Boolean(session && body.get('csrf') && body.get('csrf') === session.csrf);
 }
 
+function isValidJsonCsrf(input, session) {
+  return Boolean(session && input?.csrf && input.csrf === session.csrf);
+}
+
 function notice(code) {
   return ({
     created: 'Platsen skapades och är nu sparad.', updated: 'Ändringarna sparades.',
@@ -116,6 +121,7 @@ function notice(code) {
     correction: 'Rättelsen uppdaterades.', collectionCreated: 'Samlingen skapades.',
     collectionUpdated: 'Samlingen sparades.', collectionPublished: 'Samlingen publicerades.',
     collectionDraft: 'Samlingen avpublicerades.',
+    mediaUploaded: 'Bilden laddades upp.', mediaDeleted: 'Bilden raderades.',
   })[code] || '';
 }
 
@@ -164,6 +170,19 @@ export function createApp(overrides = {}, dependencies = {}) {
       if (url.pathname === '/api/places' && method === 'GET') {
         const rows = store.publicPlaces({ category: url.searchParams.get('category') || '', query: url.searchParams.get('q') || '' });
         return send(response, 200, JSON.stringify(rows), 'application/json; charset=utf-8', { 'Cache-Control': 'public, max-age=60' });
+      }
+      const mediaApiMatch = url.pathname.match(/^\/api\/media\/([a-f0-9]{32})$/);
+      if (mediaApiMatch && method === 'GET') {
+        const asset = store.getMediaAsset(mediaApiMatch[1]);
+        if (!asset) return sendJson(response, 404, { error: 'Media not found.' });
+        response.writeHead(200, {
+          'Content-Type': asset.mime_type,
+          'Content-Length': asset.size_bytes,
+          'Cache-Control': 'public, max-age=31536000, immutable',
+          'X-Content-Type-Options': 'nosniff',
+        });
+        response.end(asset.bytes);
+        return;
       }
       if (url.pathname === '/signup' && method === 'GET') {
         if (user) return redirect(response, '/admin');
@@ -224,6 +243,33 @@ export function createApp(overrides = {}, dependencies = {}) {
 
       if (url.pathname === '/admin' && method === 'GET') {
         return send(response, 200, dashboardView({ stats: store.stats(), recent: store.listPlaces({ page: 1 }), user }));
+      }
+      if (url.pathname === '/admin/media' && method === 'GET') {
+        return send(response, 200, mediaView({
+          assets: store.listMediaAssets(), csrf: session.csrf, user,
+          notice: notice(url.searchParams.get('notice')),
+        }));
+      }
+      if (url.pathname === '/admin/media' && method === 'POST') {
+        const input = await readJson(request, 3 * 1024 * 1024);
+        if (!isValidJsonCsrf(input, session)) return sendJson(response, 403, { error: 'Ogiltig säkerhetstoken.' });
+        const result = store.createMediaAsset({
+          filename: input.filename, mimeType: input.mimeType, data: input.data, uploadedBy: user,
+        });
+        if (Object.keys(result.errors).length) return sendJson(response, 422, { error: result.errors.file });
+        return sendJson(response, 201, result.asset);
+      }
+      const mediaDeleteMatch = url.pathname.match(/^\/admin\/media\/([a-f0-9]{32})\/delete$/);
+      if (mediaDeleteMatch && method === 'POST') {
+        const body = await readBody(request);
+        if (!isValidCsrf(body, session)) return send(response, 403, 'Ogiltig säkerhetstoken.', 'text/plain; charset=utf-8');
+        const result = store.deleteMediaAsset(mediaDeleteMatch[1]);
+        if (result === null) return send(response, 404, notFoundView({ user }));
+        if (result === false) return send(response, 409, mediaView({
+          assets: store.listMediaAssets(), csrf: session.csrf, user,
+          error: 'Bilden används av en eller flera platser och kan inte raderas.',
+        }));
+        return redirect(response, '/admin/media?notice=mediaDeleted');
       }
       if (url.pathname === '/admin/places' && method === 'GET') {
         const filters = {

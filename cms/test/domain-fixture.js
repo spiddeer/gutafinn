@@ -32,6 +32,16 @@ export function initializeDomainDatabase(databasePath) {
       url TEXT NOT NULL, alt_text TEXT, source_url TEXT,
       sort_order INTEGER NOT NULL DEFAULT 0, UNIQUE (place_id, url)
     );
+    CREATE TABLE media_assets (
+      id TEXT PRIMARY KEY,
+      filename TEXT NOT NULL,
+      mime_type TEXT NOT NULL CHECK (mime_type IN ('image/jpeg', 'image/png', 'image/webp')),
+      bytes BLOB NOT NULL,
+      size_bytes INTEGER NOT NULL CHECK (size_bytes > 0 AND size_bytes <= 2097152),
+      uploaded_by TEXT,
+      created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+    CREATE INDEX idx_media_assets_created ON media_assets(created_at DESC, id);
     CREATE TABLE place_categories (
       place_id TEXT NOT NULL REFERENCES places(id) ON DELETE CASCADE,
       category_id TEXT NOT NULL REFERENCES categories(id) ON DELETE RESTRICT,

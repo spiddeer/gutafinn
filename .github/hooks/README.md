@@ -140,6 +140,10 @@ Skyddar mot:
 19. Vid andring i redaktionella samlingar: verifiera migration 6, CMS-validering,
     minst tva aktiva publika platser, ordnad `placeIds`, `samling=`-URL och
     network-first-cache for `/api/collections`.
+20. Vid andring i mediabiblioteket: verifiera migration 7, format och
+    filsignatur for JPEG/PNG/WebP, 2 MiB-grans, CSRF, `/api/media/:id`-cache,
+    CMS-galleri samt att refererade bilder inte kan raderas. Kor backend- och
+    CMS-tester och prova uppladdning genom den sammanslagna Nginx-stacken.
 
 `Overraska mig` ska fortsatt ha ren, testbar domanlogik i `src/lib/surprise.ts`,
 begransad localStorage-hantering i `src/lib/surprise-storage.ts` och UI i

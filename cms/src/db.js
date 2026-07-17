@@ -10,8 +10,17 @@ const PUBLIC_CATEGORY_IDS = [
 const PUBLIC_CATEGORY_SQL = PUBLIC_CATEGORY_IDS.map((category) => `'${category}'`).join(', ');
 const REQUIRED_DOMAIN_TABLES = [
   'categories', 'places', 'place_details', 'place_contacts', 'place_images', 'place_categories',
-  'visitor_corrections', 'collections', 'collection_places',
+  'visitor_corrections', 'collections', 'collection_places', 'media_assets',
 ];
+const MAX_MEDIA_BYTES = 2 * 1024 * 1024;
+const MEDIA_SIGNATURES = {
+  'image/jpeg': (bytes) => bytes.length >= 3 && bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff,
+  'image/png': (bytes) => bytes.length >= 8
+    && bytes.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])),
+  'image/webp': (bytes) => bytes.length >= 12
+    && bytes.subarray(0, 4).toString('ascii') === 'RIFF'
+    && bytes.subarray(8, 12).toString('ascii') === 'WEBP',
+};
 
 function assertDomainSchema(db) {
   const tables = new Set(db.prepare("SELECT name FROM sqlite_master WHERE type='table'").all()
@@ -71,7 +80,11 @@ function validate(input, categories) {
     if (contact.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact.value)) errors.contacts = 'Kontrollera e-postadresserna.';
     if (contact.type === 'website' && !/^https?:\/\//i.test(contact.value)) errors.contacts = 'Webbadresser måste börja med http:// eller https://.';
   }
-  for (const image of images) if (!/^https?:\/\//i.test(image.url)) errors.images = 'Bildadresser måste börja med http:// eller https://.';
+  for (const image of images) {
+    if (!/^https?:\/\//i.test(image.url) && !/^\/api\/media\/[a-f0-9]{32}$/.test(image.url)) {
+      errors.images = 'Välj en uppladdad bild eller ange en webbadress som börjar med http:// eller https://.';
+    }
+  }
   return { errors, values: { ...input, name, category, lat, lng, priceLevel }, contacts, images };
 }
 
@@ -97,6 +110,60 @@ export function openDatabase(databasePath) {
       (SELECT COUNT(*) FROM visitor_corrections WHERE status='new') corrections,
       (SELECT COUNT(*) FROM collections WHERE is_published=1) collections
       FROM places`).get();
+  }
+
+  function createMediaAsset({ filename, mimeType, data, uploadedBy }) {
+    const errors = {};
+    const safeFilename = clean(filename);
+    const safeMimeType = clean(mimeType)?.toLowerCase();
+    const safeUploader = clean(uploadedBy);
+    if (!safeFilename || safeFilename.length > 255) errors.file = 'Välj en bild med ett giltigt filnamn.';
+    if (!MEDIA_SIGNATURES[safeMimeType]) errors.file = 'Bilden måste vara JPEG, PNG eller WebP.';
+    if (typeof data !== 'string' || !data || !/^[A-Za-z0-9+/]*={0,2}$/.test(data)) {
+      errors.file = 'Bildfilen kunde inte läsas.';
+    }
+    const bytes = errors.file ? Buffer.alloc(0) : Buffer.from(data, 'base64');
+    if (!errors.file && (!bytes.length || bytes.length > MAX_MEDIA_BYTES)) {
+      errors.file = bytes.length > MAX_MEDIA_BYTES
+        ? 'Bilden får vara högst 2 MiB.'
+        : 'Bildfilen är tom.';
+    }
+    if (!errors.file && !MEDIA_SIGNATURES[safeMimeType](bytes)) {
+      errors.file = 'Bildens innehåll stämmer inte med filformatet.';
+    }
+    if (errors.file) return { errors };
+    const id = crypto.randomBytes(16).toString('hex');
+    db.prepare(`INSERT INTO media_assets
+      (id,filename,mime_type,bytes,size_bytes,uploaded_by) VALUES (?,?,?,?,?,?)`)
+      .run(id, safeFilename, safeMimeType, bytes, bytes.length, safeUploader);
+    return {
+      errors,
+      asset: { id, filename: safeFilename, mime_type: safeMimeType, size_bytes: bytes.length,
+        uploaded_by: safeUploader, url: `/api/media/${id}` },
+    };
+  }
+
+  function listMediaAssets() {
+    return db.prepare(`SELECT m.id, m.filename, m.mime_type, m.size_bytes, m.uploaded_by, m.created_at,
+      COUNT(pi.id) usage_count
+      FROM media_assets m LEFT JOIN place_images pi ON pi.url='/api/media/' || m.id
+      GROUP BY m.id ORDER BY m.created_at DESC, m.id DESC`).all()
+      .map((asset) => ({ ...asset, url: `/api/media/${asset.id}` }));
+  }
+
+  function getMediaAsset(id) {
+    if (!/^[a-f0-9]{32}$/.test(String(id || ''))) return null;
+    const asset = db.prepare('SELECT * FROM media_assets WHERE id=?').get(id);
+    return asset ? { ...asset, url: `/api/media/${asset.id}` } : null;
+  }
+
+  function deleteMediaAsset(id) {
+    if (!/^[a-f0-9]{32}$/.test(String(id || ''))) return null;
+    const deleted = db.prepare(`DELETE FROM media_assets WHERE id=? AND NOT EXISTS (
+      SELECT 1 FROM place_images WHERE url='/api/media/' || ?
+    )`).run(id, id);
+    if (deleted.changes) return true;
+    return db.prepare('SELECT 1 FROM media_assets WHERE id=?').get(id) ? false : null;
   }
 
   function collectionPlaces() {
@@ -460,6 +527,7 @@ export function openDatabase(databasePath) {
     db, categories, stats, listPlaces, getPlace, createPlace, editPlace, setActive, publicPlaces,
     collectionPlaces, listCollections, getCollection, saveCollection, setCollectionPublished,
     listCorrections, updateCorrection,
+    createMediaAsset, listMediaAssets, getMediaAsset, deleteMediaAsset,
     getCmsUserByUsername, getCmsUserById, listPasskeysForUser, getPasskeyCredential,
     createWebAuthnChallenge, getWebAuthnChallenge, registerCmsUser, finishPasskeyAuthentication,
     close: () => db.close(),

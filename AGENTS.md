@@ -114,6 +114,9 @@ Detta dokument ar den primara kontexten for AI-agenter som jobbar i repot.
 - `cms/src/`: Passkey-/reservkontoskyddad platsadministration mot samma SQLite.
 - Rattelsekon i CMS flyttar rapporter mellan `new`, `reviewed`, `resolved` och
   `dismissed`; den skriver aldrig automatiskt till platsregistret.
+- Mediabiblioteket lagrar validerade JPEG-, PNG- och WebP-bilder som BLOB via
+  backendmigration 7. Maxstorleken ar 2 MiB, publik URL ar `/api/media/:id` och
+  CMS far bara radera bilder som inte refereras av `place_images`.
 - `cms/test/`: Auth-, WebAuthn-, validerings- och CRUD-regressionstester.
 - Backend ager domanschemat och migreringarna. CMS far aldrig initiera eller
   andra domanschemat och ska vagra start mot en oinitierad databas.
@@ -207,7 +210,8 @@ Publika kategorier ar `mat`, `sevardhet`, `strand`, `smultronstallen`, `natur`,
 ska ha namn, beskrivning, koordinater och kalla; informationspanelen visar
 dessutom all tillganglig adress, kontakt, oppettid och tillganglighet.
 
-API:t ska fortsatt exponera `/api/categories`, `/api/places` och `/api/collections`. Den aktiva
+API:t ska fortsatt exponera `/api/categories`, `/api/places`, `/api/collections`
+och `/api/media/:id`. Den aktiva
 Gutafinn-frontenden anvander `/api/places` som enda platskalla. `public/`-
 fallbacken bevaras for importens reproducerbarhet men ar inte aktiv runtime-frontend.
 
@@ -318,6 +322,8 @@ aterstallbart kartfokus, bevarade filter och synlig OpenStreetMap-attribution.
     online-only-flodet, rate limit, integritet och manuell granskning.
 14. Vid samlingsandringar: testa publiceringsgrans, 2-20 aktiva platser,
     redaktionell ordning, delbar URL, offlinecache och CMS-validering.
+15. Vid mediaandringar: verifiera migration 7, JPEG/PNG/WebP-signaturer,
+    2 MiB-grans, CSRF, immutable publik lasning och att anvanda bilder inte kan raderas.
 13. Vid Nginx-/headerandringar: bygg web-imagen, kor `nginx -t` och kontrollera
     GPS, Open-Meteo, Google Fonts, kartplattor och bada hostnamnens CSP.
 14. Vid kartomradesandringar: testa bounds-filtret och callbacken utan att flytta

@@ -44,7 +44,7 @@ anvander `UPSERT`, sa befintlig berikning bevaras nar OSM-snapshoten importeras 
 Tidigare OSM-poster som saknas i den nya snapshoten markeras inaktiva men ligger
 kvar i SQLite for historik och eventuell manuell berikning.
 
-Backend ar ensam agare av domanschemat. Sex migreringar ar aktiva. Migrering 4
+Backend ar ensam agare av domanschemat. Sju migreringar ar aktiva. Migrering 4
 kallmarker importerade
 kategorikopplingar, sa nya OSM-snapshots kan synka just de kopplingarna utan att
 ta bort manuellt tillagda kategorier. Publika API-anrop visar bara
@@ -56,6 +56,9 @@ andra platsdata automatiskt.
 Migrering 6 skapar redaktionella samlingar och deras ordnade platslankar.
 `/api/collections` returnerar endast publicerade samlingar med minst tva aktiva
 platser; service workern cachelagrar samma publika svar network-first.
+Migrering 7 skapar CMS-mediabiblioteket. JPEG-, PNG- och WebP-filer lagras som
+BLOB i samma SQLite-databas, begransas till 2 MiB och hamtas via immutable
+`/api/media/:id`. De foljer darfor med i samma backup- och restoreflode.
 
 ## Kataloger i CT 201
 
@@ -166,8 +169,8 @@ databasen ligger utanfor Git och ska inte ersattas med `seed-data.json`.
 Backupscriptet anvander SQLite online-backup inuti backend-containern, kor
 `PRAGMA quick_check` pa snapshoten och publicerar arkivet atomart forst nar
 verifieringen ar godkand. Arkivet innehaller en aterlasningsbar `places.db`.
-Samma snapshot omfattar `visitor_corrections`, sa aven den manuella
-rattelsekon och dess granskningsstatus foljer med i backupen.
+Samma snapshot omfattar `visitor_corrections` och `media_assets`, sa bade den
+manuella rattelsekon, granskningsstatus och uppladdade bilder foljer med i backupen.
 
 ### Manuell backup
 
