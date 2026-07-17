@@ -65,12 +65,16 @@ Detta dokument ar den primara kontexten for AI-agenter som jobbar i repot.
 - `src/components/gutafinn-map.test.tsx`: jsdom-regressionstester for engangsinitiering,
   separata GPS-/klusteruppdateringar, val och markorklick.
 - `src/components/surprise-adventure.tsx`: tillgangligt helskarmsflode for tid, fardsatt, GPS-states och aventyrskort.
+- `src/components/day-planner.tsx`: intern dagsplan fran sparade platser med
+  fardsatt, etapper och sanningsenliga uppskattningar.
 - `src/lib/places.ts`: API-typer, kategorimappning, avstand, oppettider och filtrering.
 - `src/lib/surprise.ts`: ren radie-/urvalslogik, faktamotiveringar, restidsestimat och OSM-URL:er.
 - `src/lib/surprise-storage.ts`: validerad localStorage-state med max 20 historikposter.
 - `src/lib/weather.ts`: livevader och solnedgang fran Open-Meteo.
 - `src/lib/discovery-url.ts`: validerad parse/serialisering av delbar sokning,
   kategori, kartvy och vald plats.
+- `src/lib/day-planner.ts`: deterministisk narsta-stopp-ordning, max atta stopp
+  och beraknad stracka/restid.
 - `src/lib/places.test.ts`: frontendtester for datamappning och sanningsenliga states.
 - `src/styles.css`: Tailwind v4, Leaflet/markercluster-CSS, `@theme inline` och semantiska OKLCH-tokens.
 - `src/components/ui/`: shadcn/ui-komponenter i `new-york`-stil.
@@ -134,6 +138,11 @@ URL-state far endast innehalla sokfras, publik kategori, `vy=karta` och ett
 validerat plats-id. GPS-koordinater och innehållet i sparlistan far aldrig
 serialiseras. Okanda URL-varden ska falla tillbaka till `Allt`/hemmavy, och
 browserhistorik ska kunna aterstalla state utan full sidladdning.
+
+Dagsplaneraren ska alltid utga fran den beständiga sparordningen, men aldrig
+lagra en plan eller GPS. Med GPS valjs narmaste forsta stopp; utan GPS blir den
+forst sparade platsen start. Visa hogst atta stopp, kalla avstand/restid for
+uppskattningar och behall gang/cykel/bil kopplade till ratt OSM-motor.
 Leaflet-kontroller, markorer och attribution maste vara tangentbords-/touchbara,
 och OpenStreetMap-krediteringen ska vara permanent lasbar pa alla viewportstorlekar.
 

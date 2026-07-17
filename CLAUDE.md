@@ -22,6 +22,8 @@ Gutafinn backend and deployment stack.
   persistently readable OpenStreetMap attribution
 - Discovery: `Overraska mig` is an internal GPS-required micro-adventure flow
   backed by pure selection logic and bounded browser-only history
+- Planning: `Planera min dag` uses `src/lib/day-planner.ts` to order at most
+  eight saved places; plans and GPS are never persisted
 - Deployment: Docker Compose in Proxmox LXC CT 201 behind Cloudflare Tunnel in CT 200
 - Production: `https://gutafinn.tobtech.se`
 - Compatibility URL: `https://gotland.tobtech.se` permanently redirects to the
@@ -50,6 +52,8 @@ Gutafinn backend and deployment stack.
 - Surprise ranking is limited to distance, product-category diversity,
   verification date and recent local history; keep the 10 km cap and factual copy.
 - Walking, bicycle and car actions must keep their matching OpenStreetMap routing engines.
+- Day-plan distances are straight-line estimates. Preserve save order as the
+  no-GPS start and keep each actual route as a separate OpenStreetMap leg.
 - `public/` is the preserved legacy Leaflet frontend, excluded from Vite output
   and no longer mounted by Compose.
 - Preserve the public/admin security-header split. Public CSP must keep GPS,

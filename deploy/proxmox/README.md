@@ -217,6 +217,8 @@ Oppna `https://gutafinn.tobtech.se` i mobil och desktop och verifiera:
    tillgangliga adress-, kontakt-, oppettids- och tillganglighetsuppgifter.
 10. En lank med `?q=raukar&kategori=sevardheter&vy=karta` aterstaller sokning,
     kategori och kartfokus; `plats=<id>` valjer en giltig plats.
+11. Fran `Sparat`, verifiera dagsplan med GPS tillaten/nekad, alla tre
+    fardsatten, etapp-lankar och fler an atta sparade platser.
 
 ### Verifiera release och databas i CT 201
 

@@ -122,6 +122,9 @@ Skyddar mot:
 13. Vid andring i delbart state: utoka `discovery-url.test.ts`, och verifiera
     omladdning samt bakat-/framatnavigation. GPS och sparade ID:n far inte
     hamna i URL:en.
+14. Vid andring i dagsplanen: utoka `day-planner.test.ts` och verifiera noll,
+    en och flera sparade platser, GPS tillaten/nekad, atta-stoppsgransen och
+    OSM-motorerna for gang, cykel samt bil.
 
 `Overraska mig` ska fortsatt ha ren, testbar domanlogik i `src/lib/surprise.ts`,
 begransad localStorage-hantering i `src/lib/surprise-storage.ts` och UI i
