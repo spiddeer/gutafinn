@@ -215,6 +215,8 @@ Oppna `https://gutafinn.tobtech.se` i mobil och desktop och verifiera:
 8. Listval oppnar ratt popup och markorklick lyfter ratt kort utan kart-reinitiering.
 9. Varje platskort oppnar informationspanelen och visar kalla samt alla
    tillgangliga adress-, kontakt-, oppettids- och tillganglighetsuppgifter.
+10. En lank med `?q=raukar&kategori=sevardheter&vy=karta` aterstaller sokning,
+    kategori och kartfokus; `plats=<id>` valjer en giltig plats.
 
 ### Verifiera release och databas i CT 201
 

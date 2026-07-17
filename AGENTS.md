@@ -69,6 +69,8 @@ Detta dokument ar den primara kontexten for AI-agenter som jobbar i repot.
 - `src/lib/surprise.ts`: ren radie-/urvalslogik, faktamotiveringar, restidsestimat och OSM-URL:er.
 - `src/lib/surprise-storage.ts`: validerad localStorage-state med max 20 historikposter.
 - `src/lib/weather.ts`: livevader och solnedgang fran Open-Meteo.
+- `src/lib/discovery-url.ts`: validerad parse/serialisering av delbar sokning,
+  kategori, kartvy och vald plats.
 - `src/lib/places.test.ts`: frontendtester for datamappning och sanningsenliga states.
 - `src/styles.css`: Tailwind v4, Leaflet/markercluster-CSS, `@theme inline` och semantiska OKLCH-tokens.
 - `src/components/ui/`: shadcn/ui-komponenter i `new-york`-stil.
@@ -127,6 +129,11 @@ sokning, kategori eller sparvy. Listval och markorklick ska synka
 `selectedPlaceId` at bada hall. Bygg aldrig om Leaflet-instansen eller alla
 oforandrade markorer for filter, GPS eller val; initiering, markordiff,
 GPS och selection ska forbli separata.
+
+URL-state far endast innehalla sokfras, publik kategori, `vy=karta` och ett
+validerat plats-id. GPS-koordinater och innehållet i sparlistan far aldrig
+serialiseras. Okanda URL-varden ska falla tillbaka till `Allt`/hemmavy, och
+browserhistorik ska kunna aterstalla state utan full sidladdning.
 Leaflet-kontroller, markorer och attribution maste vara tangentbords-/touchbara,
 och OpenStreetMap-krediteringen ska vara permanent lasbar pa alla viewportstorlekar.
 

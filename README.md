@@ -53,6 +53,7 @@ Produkten kombinerar:
 - OpenStreetMap-plattor, markercluster och permanent synlig attribution
 - Verkligt GPS-avstand, uppskattad gangtid och livevader/solnedgang
 - Beständig sparlista i localStorage
+- Delbara lankar som aterstaller sokning, kategori, kartfokus och vald plats
 - Fem genererade, optimerade WebP-bilder i `src/assets/`
 - shadcn/ui-komponenter, Lucide-ikoner och semantiska OKLCH-tokens
 - Tillgangliga fokus-, save- och navigationsstates samt safe-area-stod
@@ -160,6 +161,14 @@ Val och historik ligger endast i browserns localStorage:
 Historiklistorna valideras vid lasning och begransas till 20 poster. GPS-position
 lagras inte. `Ta mig dit` oppnar OpenStreetMap med gang-, cykel- eller bilmotor
 enligt valt fardsatt.
+
+## Delbara upptacktslankar
+
+Sokning, publik kategori, kartfokus och vald plats speglas i adressfaltet med
+`q`, `kategori`, `vy=karta` och `plats`. URL-varden valideras och okanda
+kategorier eller ogiltiga plats-id:n ignoreras. Browserns bakat-/framatknappar
+aterstaller lankens state. Sparade plats-id:n och GPS-koordinater ingar aldrig i
+URL:en.
 
 ## API
 

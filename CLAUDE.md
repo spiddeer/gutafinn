@@ -43,6 +43,8 @@ Gutafinn backend and deployment stack.
 - Preserve the 320px mobile, 768/820px portrait-tablet and 1024-1440px split
   contracts, Swedish copy, 44px targets, focus states and safe areas.
 - Saved place IDs persist in localStorage under `gutafinn_saved_places`.
+- Shareable discovery state is owned by `src/lib/discovery-url.ts` and may only
+  include query, public category, map focus and a validated place ID.
 - Surprise preferences/history use the four `gutafinn_surprise_*` keys, keep at
   most 20 IDs/categories and never persist GPS coordinates.
 - Surprise ranking is limited to distance, product-category diversity,

@@ -46,6 +46,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { GutafinnMap } from "@/components/gutafinn-map"
 import { SurpriseAdventure } from "@/components/surprise-adventure"
+import { buildDiscoverySearch, parseDiscoverySearch } from "@/lib/discovery-url"
 import {
   countWithinRadius,
   filterPlaces,
@@ -151,18 +152,22 @@ function getPlaceImage(place: ApiPlace) {
 }
 
 function GutafinnPage() {
+  const initialUrlState = useMemo(
+    () => parseDiscoverySearch(typeof window === "undefined" ? "" : window.location.search),
+    [],
+  )
   const [places, setPlaces] = useState<ApiPlace[]>([])
   const [apiState, setApiState] = useState<"loading" | "ready" | "error">("loading")
-  const [category, setCategory] = useState<Category>("Allt")
-  const [query, setQuery] = useState("")
+  const [category, setCategory] = useState<Category>(initialUrlState.category)
+  const [query, setQuery] = useState(initialUrlState.query)
   const [saved, setSaved] = useState<Set<string>>(loadSavedIds)
-  const [activeNav, setActiveNav] = useState("Hem")
+  const [activeNav, setActiveNav] = useState(initialUrlState.mapView ? "Karta" : "Hem")
   const [feedMode, setFeedMode] = useState("Hem")
   const [position, setPosition] = useState<Coordinates | null>(null)
   const [locationState, setLocationState] = useState<"idle" | "loading" | "ready" | "unavailable">("idle")
   const [routeTarget, setRouteTarget] = useState<string | null>(null)
   const [showSurprise, setShowSurprise] = useState(false)
-  const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null)
+  const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(initialUrlState.selectedPlaceId)
   const [detailsPlaceId, setDetailsPlaceId] = useState<string | null>(null)
   const requestedLocation = useRef(false)
   const placeRequestId = useRef(0)
@@ -216,6 +221,34 @@ function GutafinnPage() {
     saveSavedIds(saved)
   }, [saved])
 
+  useEffect(() => {
+    const applyUrlState = () => {
+      const next = parseDiscoverySearch(window.location.search)
+      setQuery(next.query)
+      setCategory(next.category)
+      setSelectedPlaceId(next.selectedPlaceId)
+      setActiveNav(next.mapView ? "Karta" : "Hem")
+      setFeedMode("Hem")
+      setShowSurprise(false)
+    }
+
+    window.addEventListener("popstate", applyUrlState)
+    return () => window.removeEventListener("popstate", applyUrlState)
+  }, [])
+
+  useEffect(() => {
+    const search = buildDiscoverySearch({
+      query,
+      category,
+      mapView: activeNav === "Karta",
+      selectedPlaceId,
+    })
+    const nextUrl = `${window.location.pathname}${search}${window.location.hash}`
+    if (`${window.location.pathname}${window.location.search}${window.location.hash}` !== nextUrl) {
+      window.history.replaceState(window.history.state, "", nextUrl)
+    }
+  }, [activeNav, category, query, selectedPlaceId])
+
   const visiblePlaces = useMemo(
     () =>
       filterPlaces(
@@ -250,10 +283,10 @@ function GutafinnPage() {
       : baseListPlaces
 
   useEffect(() => {
-    if (selectedPlaceId && !visiblePlaces.some((place) => place.id === selectedPlaceId)) {
+    if (apiState === "ready" && selectedPlaceId && !visiblePlaces.some((place) => place.id === selectedPlaceId)) {
       setSelectedPlaceId(null)
     }
-  }, [selectedPlaceId, visiblePlaces])
+  }, [apiState, selectedPlaceId, visiblePlaces])
 
   useEffect(() => {
     if (detailsPlaceId && !visiblePlaces.some((place) => place.id === detailsPlaceId)) {
