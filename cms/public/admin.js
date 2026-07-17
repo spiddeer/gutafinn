@@ -39,6 +39,120 @@ latitude?.addEventListener('input', updateMapLink);
 longitude?.addEventListener('input', updateMapLink);
 updateMapLink();
 
+function blobToBase64(blob) {
+  return blob.arrayBuffer().then((buffer) => {
+    const bytes = new Uint8Array(buffer);
+    let binary = '';
+    const chunkSize = 16 * 1024;
+    for (let offset = 0; offset < bytes.length; offset += chunkSize) {
+      binary += String.fromCharCode(...bytes.subarray(offset, offset + chunkSize));
+    }
+    return btoa(binary);
+  });
+}
+
+async function optimizedImage(file) {
+  if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+    throw new Error('Välj en bild i JPEG-, PNG- eller WebP-format.');
+  }
+  let bitmap;
+  try {
+    bitmap = await createImageBitmap(file);
+  } catch {
+    if (file.size <= 2 * 1024 * 1024) return { blob: file, filename: file.name, mimeType: file.type };
+    throw new Error('Bilden kunde inte öppnas eller optimeras.');
+  }
+  const scale = Math.min(1, 1600 / Math.max(bitmap.width, bitmap.height));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+  canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+  canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  bitmap.close?.();
+  let blob = null;
+  for (const quality of [0.86, 0.76, 0.66]) {
+    blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/webp', quality));
+    if (blob && blob.size <= 2 * 1024 * 1024) break;
+  }
+  if (!blob) {
+    if (file.size <= 2 * 1024 * 1024) return { blob: file, filename: file.name, mimeType: file.type };
+    throw new Error('Webbläsaren kunde inte optimera bilden.');
+  }
+  if (blob.size > 2 * 1024 * 1024) throw new Error('Bilden är fortfarande större än 2 MiB efter optimering.');
+  return { blob, filename: file.name.replace(/\.[^.]+$/, '') + '.webp', mimeType: 'image/webp' };
+}
+
+function addUploadedImage(url) {
+  const repeater = document.querySelector('[data-repeater="image"]');
+  if (!repeater) return false;
+  const rows = repeater.querySelector('[data-rows]');
+  let row = [...rows.querySelectorAll('.image-row')].find((candidate) => !candidate.querySelector('[name="imageUrl[]"]').value);
+  if (!row) {
+    row = rows.querySelector('.image-row').cloneNode(true);
+    row.querySelectorAll('input').forEach((input) => { input.value = ''; });
+    rows.append(row);
+  }
+  row.querySelector('[name="imageUrl[]"]').value = url;
+  row.querySelector('[name="imageAlt[]"]').focus();
+  return true;
+}
+
+document.querySelectorAll('[data-media-upload]').forEach((upload) => {
+  const fileInput = upload.querySelector('[data-media-file]');
+  const button = upload.querySelector('[data-upload-media]');
+  const status = upload.querySelector('[data-media-status]');
+  fileInput.addEventListener('change', () => { button.disabled = !fileInput.files?.length; });
+  button.addEventListener('click', async () => {
+    const file = fileInput.files?.[0];
+    if (!file) return;
+    button.disabled = true;
+    status.textContent = 'Optimerar och laddar upp bilden…';
+    try {
+      const optimized = await optimizedImage(file);
+      const response = await fetch('/admin/media', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          csrf: upload.dataset.csrf,
+          filename: optimized.filename,
+          mimeType: optimized.mimeType,
+          data: await blobToBase64(optimized.blob),
+        }),
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || 'Bilden kunde inte laddas upp.');
+      if (upload.hasAttribute('data-refresh-after-upload')) {
+        window.location.assign('/admin/media?notice=mediaUploaded');
+        return;
+      }
+      addUploadedImage(result.url);
+      fileInput.value = '';
+      status.textContent = 'Bilden är uppladdad. Lägg till en beskrivning och spara platsen.';
+    } catch (error) {
+      status.textContent = error.message || 'Bilden kunde inte laddas upp.';
+      button.disabled = false;
+    }
+  });
+});
+
+document.querySelectorAll('[data-copy-media]').forEach((button) => {
+  button.addEventListener('click', async () => {
+    const original = button.textContent;
+    try {
+      await navigator.clipboard.writeText(button.dataset.copyMedia);
+      button.textContent = 'Kopierad';
+    } catch {
+      button.textContent = 'Kunde inte kopiera';
+    }
+    setTimeout(() => { button.textContent = original; }, 1800);
+  });
+});
+
+document.querySelectorAll('form[data-confirm]').forEach((form) => {
+  form.addEventListener('submit', (event) => {
+    if (!window.confirm(form.dataset.confirm)) event.preventDefault();
+  });
+});
+
 function decodeBase64Url(value) {
   const base64 = value.replace(/-/g, '+').replace(/_/g, '/');
   const padded = base64 + '='.repeat((4 - (base64.length % 4)) % 4);

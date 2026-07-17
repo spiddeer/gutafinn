@@ -13,6 +13,8 @@ SQLite-databas som backend och skyddas med passkeys eller ett reservkonto.
 - Granska besökarnas rättelseförslag som nya, granskade, lösta eller avfärdade
   utan att rapporten automatiskt ändrar platsdata
 - Skapa, ordna, publicera och avpublicera redaktionella samlingar med 2–20 platser
+- Ladda upp JPEG-, PNG- och WebP-bilder till ett gemensamt mediabibliotek,
+  se användning och radera enbart bilder som inte används av någon plats
 - JSON-API för aktiva platser och kategorier
 - Signerade sessioner, CSRF-skydd, inloggningsbegränsning och servervalidering
 - Responsivt och tangentbordsanvändbart gränssnitt på svenska
@@ -51,6 +53,12 @@ använder befintliga plats-ID:n i vald ordning och kräver 2–20 unika platser.
 Endast publicerade samlingar med minst två fortfarande aktiva platser exponeras
 av det publika API:t.
 
+Backendmigration 7 skapar `media_assets`. CMS:et optimerar bilder i browsern
+till högst cirka 1 600 px, validerar MIME-typ och filsignatur på servern och
+accepterar högst 2 MiB. Filerna lagras som BLOB i SQLite och får en stabil publik
+adress under `/api/media/<32 hextecken>`. En bild som refereras av `place_images`
+kan inte raderas från mediabiblioteket.
+
 Passkeys är avstängda i produktion tills `PASSKEY_RP_ID` och `PASSKEY_ORIGIN` anges. `PASSKEY_RP_ID` är domännamnet utan protokoll, exempelvis `cms.example.com`. `PASSKEY_ORIGIN` är den exakta externa HTTPS-adressen, exempelvis `https://cms.example.com`.
 
 Sätt dessutom `SIGNUP_CODE` när nya användare ska kunna registrera sig. Koden fungerar som en inbjudningskod och ska hanteras som en hemlighet. När registreringen ska stängas tar du bort `SIGNUP_CODE`, men behåller RP ID och origin så att befintliga passkeys fortsätter fungera.
@@ -59,6 +67,7 @@ Sätt dessutom `SIGNUP_CODE` när nya användare ska kunna registrera sig. Koden
 
 - `GET /api/places` – alla publicerade platser; filtrera med `?category=strand` eller `?q=Visby`
 - `GET /api/categories` – kategorier i visningsordning
+- `GET /api/media/:id` – uppladdad JPEG-, PNG- eller WebP-bild med immutable cache
 - `GET /healthz` – enkel hälsokontroll
 
 ## Test
@@ -83,5 +92,5 @@ Bygg containerbilden med `docker build -t gutafinn-cms .`. I den sammanslagna
 driften initierar backend domänschemat innan CMS startar. Sätt `ADMIN_PASSWORD`,
 `SESSION_SECRET` och vid behov `SIGNUP_CODE` som hemligheter. Passkeys kräver
 HTTPS utanför localhost. Produktionens `backup.sh` använder SQLite backup-API
-och verifierar snapshoten före arkivering. Eftersom rättelsekön ligger i samma
-databas ingår även den i backupen.
+och verifierar snapshoten före arkivering. Eftersom rättelsekön och
+mediabiblioteket ligger i samma databas ingår båda i backupen.

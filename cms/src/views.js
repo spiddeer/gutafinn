@@ -17,6 +17,7 @@ function icon(name) {
     key: '<circle cx="8" cy="15" r="4"/><path d="M11 12l8-8m-3 3l3 3m-6 0l3 3"/>',
     alert: '<path d="M21 15a4 4 0 01-4 4H8l-5 3V7a4 4 0 014-4h10a4 4 0 014 4z"/><path d="M12 7v4m0 4h.01"/>',
     collection: '<path d="M4 5h16v4H4zM4 11h16v8H4z"/><path d="M8 15h8"/>',
+    image: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9" r="1.5"/><path d="M21 15l-5-5L5 20"/>',
   };
   return `<svg class="icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${paths[name] || ''}</svg>`;
 }
@@ -27,6 +28,7 @@ function layout({ title, body, user = null, active = '', description = '' }) {
     <nav aria-label="Huvudmeny">
       <a class="nav-link ${active === 'dashboard' ? 'active' : ''}" href="/admin">${icon('grid')}Översikt</a>
       <a class="nav-link ${active === 'places' ? 'active' : ''}" href="/admin/places">${icon('pin')}Platser</a>
+      <a class="nav-link ${active === 'media' ? 'active' : ''}" href="/admin/media">${icon('image')}Bilder</a>
       <a class="nav-link ${active === 'collections' ? 'active' : ''}" href="/admin/collections">${icon('collection')}Samlingar</a>
       <a class="nav-link ${active === 'corrections' ? 'active' : ''}" href="/admin/corrections">${icon('alert')}Rättelser</a>
       <a class="nav-link nav-create" href="/admin/places/new">${icon('plus')}Ny plats</a>
@@ -224,7 +226,38 @@ function repeaters(values, type, labels) {
 
 function imageRows(images) {
   const values = images?.length ? images : [{ url: '', altText: '' }];
-  return `<div class="repeater image-repeater" data-repeater="image"><div class="repeater-head"><span>Bilder</span><button class="text-button" type="button" data-add-row="image">+ Lägg till bild</button></div><div data-rows>${values.map((image) => `<div class="repeat-row image-row"><input type="url" name="imageUrl[]" value="${escapeHtml(image.url)}" placeholder="https://…"><input name="imageAlt[]" value="${escapeHtml(image.altText)}" placeholder="Beskriv bilden"><button class="icon-button remove-row" type="button" aria-label="Ta bort bild">×</button></div>`).join('')}</div></div>`;
+  return `<div class="repeater image-repeater" data-repeater="image"><div class="repeater-head"><span>Bilder</span><button class="text-button" type="button" data-add-row="image">+ Lägg till bildadress</button></div><div data-rows>${values.map((image) => `<div class="repeat-row image-row"><input name="imageUrl[]" value="${escapeHtml(image.url)}" placeholder="https://… eller /api/media/…" inputmode="url"><input name="imageAlt[]" value="${escapeHtml(image.altText)}" placeholder="Beskriv bilden"><button class="icon-button remove-row" type="button" aria-label="Ta bort bild">×</button></div>`).join('')}</div></div>`;
+}
+
+function mediaUpload(csrf, refreshAfterUpload = false) {
+  return `<div class="media-upload" data-media-upload data-csrf="${escapeHtml(csrf)}" ${refreshAfterUpload ? 'data-refresh-after-upload' : ''}>
+    <label class="field"><span>Välj bild</span><input type="file" accept="image/jpeg,image/png,image/webp" data-media-file><small>JPEG, PNG eller WebP. Bilden optimeras till högst 1 600 px och får vara högst 2 MiB.</small></label>
+    <button class="button secondary" type="button" data-upload-media disabled>${icon('image')}Ladda upp bild</button>
+    <p class="media-upload-status" data-media-status role="status" aria-live="polite"></p>
+  </div>`;
+}
+
+function formatBytes(value) {
+  if (value < 1024) return `${value} B`;
+  if (value < 1024 * 1024) return `${Math.round(value / 1024)} KiB`;
+  return `${(value / (1024 * 1024)).toFixed(1).replace('.', ',')} MiB`;
+}
+
+export function mediaView({ assets, csrf, user, notice = '', error = '' }) {
+  const library = assets.length ? `<div class="media-grid">${assets.map((asset) => `<article class="media-card">
+    <img src="${escapeHtml(asset.url)}" alt="" loading="lazy">
+    <div class="media-card-body"><h2 title="${escapeHtml(asset.filename)}">${escapeHtml(asset.filename)}</h2>
+      <dl><div><dt>Storlek</dt><dd>${formatBytes(asset.size_bytes)}</dd></div><div><dt>Användning</dt><dd>${asset.usage_count ? `${asset.usage_count} plats${asset.usage_count === 1 ? '' : 'er'}` : 'Oanvänd'}</dd></div></dl>
+      <p>Uppladdad av ${escapeHtml(asset.uploaded_by || 'okänd')}<br><time>${escapeHtml(asset.created_at)}</time></p>
+      <div class="media-card-actions"><button class="button ghost" type="button" data-copy-media="${escapeHtml(asset.url)}">Kopiera adress</button>
+      ${asset.usage_count ? '<span class="media-in-use">Används</span>' : `<form method="post" action="/admin/media/${asset.id}/delete" data-confirm="Radera bilden permanent?"><input type="hidden" name="csrf" value="${escapeHtml(csrf)}"><button class="button danger" type="submit">Radera</button></form>`}</div>
+    </div></article>`).join('')}</div>` : `<div class="empty"><span>${icon('image')}</span><h2>Inga uppladdade bilder</h2><p>Ladda upp den första bilden för att använda den på en plats.</p></div>`;
+  return layout({ title: 'Bilder', user, active: 'media', body:
+    `${header('Bilder', 'Ett gemensamt mediabibliotek för platsernas egna bilder.')}
+    ${notice ? `<div class="alert success" role="status">${escapeHtml(notice)}</div>` : ''}
+    ${error ? `<div class="alert error" role="alert">${escapeHtml(error)}</div>` : ''}
+    <section class="panel media-upload-panel"><h2>Ladda upp bild</h2>${mediaUpload(csrf, true)}</section>
+    <section class="panel media-library-panel">${library}</section>` });
 }
 
 export function placeFormView({ place = {}, categories, errors = {}, csrf, user, isNew = false }) {
@@ -253,7 +286,7 @@ export function placeFormView({ place = {}, categories, errors = {}, csrf, user,
           <label class="field"><span>Notering om öppettider</span><textarea name="openingHoursNote" rows="3">${escapeHtml(place.opening_hours_note || place.openingHoursNote)}</textarea></label>
         </section>
         <section class="form-section"><div class="section-heading"><span>4</span><div><h2>Kontakt och media</h2><p>Länkar som hjälper besökaren vidare.</p></div></div>
-          ${errorFor(errors, 'contacts')}${repeaters(contacts.website, 'website', { title: 'Webbplatser', inputType: 'url', placeholder: 'https://…' })}${repeaters(contacts.phone, 'phone', { title: 'Telefonnummer', inputType: 'tel', placeholder: '+46…' })}${repeaters(contacts.email, 'email', { title: 'E-postadresser', inputType: 'email', placeholder: 'namn@exempel.se' })}${errorFor(errors, 'images')}${imageRows(place.images)}
+          ${errorFor(errors, 'contacts')}${repeaters(contacts.website, 'website', { title: 'Webbplatser', inputType: 'url', placeholder: 'https://…' })}${repeaters(contacts.phone, 'phone', { title: 'Telefonnummer', inputType: 'tel', placeholder: '+46…' })}${repeaters(contacts.email, 'email', { title: 'E-postadresser', inputType: 'email', placeholder: 'namn@exempel.se' })}${errorFor(errors, 'images')}<h3 class="subheading">Ladda upp ny bild</h3>${mediaUpload(csrf)}${imageRows(place.images)}
         </section>
       </div>
       <aside class="form-aside"><div class="publish-card"><h2>Publicering</h2><label class="toggle"><input type="checkbox" name="isActive" value="1" ${place.is_active === 0 || place.isActive === false ? '' : 'checked'}><span aria-hidden="true"></span><span><strong>Publicerad</strong><small>Synlig för besökare</small></span></label>

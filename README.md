@@ -32,6 +32,8 @@ Produkten kombinerar:
 - Backend-API for lasning/skapande av platser
 - Driftbar setup i Proxmox med Docker Compose, backup och Cloudflare-routing
 - Passkey-skyddat CMS for redigering, arkivering och aterstallning av platser
+- CMS-mediabibliotek med optimerad JPEG/PNG/WebP-uppladdning, anvandningsstatus
+  och skyddad radering
 
 ## Huvudfunktioner
 
@@ -117,6 +119,7 @@ deploy/
 backend/
   db.js
   import-osm.js
+  media-repository.js
   migrations.js
   place-repository.js
   server.js
@@ -249,6 +252,12 @@ forsok utan nat visar ett tydligt fel i stallet for att lova senare leverans.
 - Method: GET
 - Path: /api/places/:id
 
+### Hamta en uppladdad bild
+
+- Method: GET
+- Path: /api/media/:id
+- Returnerar JPEG, PNG eller WebP med immutable cache. Bild-ID:t ar 32 hextecken.
+
 ### Foresla en rattelse
 
 - Method: POST
@@ -328,6 +337,10 @@ reproducerbarhet men ar inte den frontend som Compose eller Vite serverar.
   samt frivillig granskningsanteckning.
 - Migrering 6 skapar `collections` och `collection_places`. Backend ager schemat;
   CMS skapar, ordnar och publicerar samlingarna utan att duplicera platsdata.
+- Migrering 7 skapar `media_assets`. Bilder lagras som BLOB i samma SQLite-
+  databas, far vara hogst 2 MiB och exponeras via stabila `/api/media/:id`-URL:er.
+  CMS kontrollerar bade MIME-typ och filsignatur innan lagring; backupen omfattar
+  automatiskt bildbiblioteket.
 - `npm run seed` anvander `UPSERT` och kan koras flera ganger.
 - Seed uppdaterar OpenStreetMaps karndata och fyller adress, kontaktuppgifter och
   oppettider nar de finns i kallan. Manuellt berikade falt skrivs inte tomma.

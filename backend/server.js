@@ -9,6 +9,7 @@ const {
 } = require("./place-repository");
 const { createCorrection } = require("./correction-repository");
 const { listPublishedCollections } = require("./collection-repository");
+const { getMediaAsset } = require("./media-repository");
 
 const PORT = process.env.PORT || 8080;
 const API_KEY = process.env.API_KEY || "";
@@ -158,6 +159,18 @@ function createApp(database = db, {
   app.get("/api/collections", (req, res) => {
     res.set("Cache-Control", PUBLIC_CACHE_CONTROL);
     res.json(listPublishedCollections(database));
+  });
+
+  app.get("/api/media/:id", (req, res) => {
+    const asset = getMediaAsset(database, req.params.id);
+    if (!asset) return res.status(404).json({ error: "Media not found." });
+    res.set({
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "Content-Type": asset.mime_type,
+      "Content-Length": String(asset.size_bytes),
+      "X-Content-Type-Options": "nosniff",
+    });
+    return res.send(asset.bytes);
   });
 
   app.get("/api/places/:id", (req, res) => {

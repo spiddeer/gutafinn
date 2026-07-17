@@ -27,6 +27,8 @@ Gutafinn backend and deployment stack.
   eight saved places; plans and GPS are never persisted
 - Editorial collections: backend migration 6 owns ordered collection links;
   CMS publishes them and the frontend restores a valid `samling=` URL
+- CMS media: backend migration 7 owns JPEG/PNG/WebP BLOBs (max 2 MiB), public
+  immutable reads use `/api/media/:id`, and CMS deletion is limited to unused assets
 - Deployment: Docker Compose in Proxmox LXC CT 201 behind Cloudflare Tunnel in CT 200
 - Production: `https://gutafinn.tobtech.se`
 - Compatibility URL: `https://gotland.tobtech.se` permanently redirects to the
@@ -78,6 +80,7 @@ Gutafinn backend and deployment stack.
 - Preserve the public/admin security-header split. Public CSP must keep GPS,
   Open-Meteo, Google Fonts and HTTPS map tiles functional.
 - Preserve API, SQLite migrations, OSM source tracking and manually enriched data.
+- Preserve media signature validation, the 2 MiB limit and stable 32-hex media URLs.
 - Never commit runtime data from `deploy/proxmox/data/` or `backups/`.
 - Run root `npm test` plus `npm run build`; map lifecycle behavior belongs in
   `src/components/gutafinn-map.test.tsx`. Run `npm test` in `backend/` for

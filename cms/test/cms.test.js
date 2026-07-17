@@ -135,6 +135,50 @@ test('CMS refuses to own an uninitialized domain database', () => {
   }
 });
 
+test('media store validates files, reports usage, and only deletes unused images', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'gutafinn-media-store-'));
+  const databasePath = path.join(directory, 'places.db');
+  initializeDomainDatabase(databasePath);
+  const store = openDatabase(databasePath);
+  try {
+    const png = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 1, 2, 3]);
+    const created = store.createMediaAsset({
+      filename: 'hamnen.png', mimeType: 'image/png', data: png.toString('base64'), uploadedBy: 'editor',
+    });
+    assert.deepEqual(created.errors, {});
+    assert.match(created.asset.id, /^[a-f0-9]{32}$/);
+    assert.deepEqual(Buffer.from(store.getMediaAsset(created.asset.id).bytes), png);
+    assert.equal(store.listMediaAssets()[0].usage_count, 0);
+
+    const place = store.createPlace({
+      name: 'Mediaplats', category: 'sevardhet', lat: 57.6, lng: 18.3, isActive: true,
+      contacts: {}, images: [{ url: created.asset.url, altText: 'Hamnen i kvällsljus' }],
+    });
+    assert.deepEqual(place.errors, {});
+    assert.equal(store.listMediaAssets()[0].usage_count, 1);
+    assert.equal(store.deleteMediaAsset(created.asset.id), false);
+
+    store.editPlace(place.id, {
+      name: 'Mediaplats', category: 'sevardhet', lat: 57.6, lng: 18.3, isActive: true,
+      contacts: {}, images: [],
+    });
+    assert.equal(store.deleteMediaAsset(created.asset.id), true);
+    assert.equal(store.getMediaAsset(created.asset.id), null);
+
+    assert.ok(store.createMediaAsset({
+      filename: 'falsk.png', mimeType: 'image/png', data: Buffer.from('not png').toString('base64'), uploadedBy: 'editor',
+    }).errors.file);
+    assert.ok(store.createMediaAsset({
+      filename: 'stor.jpg', mimeType: 'image/jpeg',
+      data: Buffer.concat([Buffer.from([0xff, 0xd8, 0xff]), Buffer.alloc(2 * 1024 * 1024)]).toString('base64'),
+      uploadedBy: 'editor',
+    }).errors.file);
+  } finally {
+    store.close();
+    fs.rmSync(directory, { recursive: true, force: true });
+  }
+});
+
 test('CMS hides legacy utility categories and places from public choices', () => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'gutafinn-public-categories-'));
   const databasePath = path.join(directory, 'places.db');
@@ -212,6 +256,75 @@ test('admin routes require authentication and reject bad credentials', async () 
   });
   assert.equal(loginResponse.status, 401);
   assert.match(await loginResponse.text(), /Fel användarnamn eller lösenord/);
+});
+
+test('authenticated media library uploads, serves, lists, and safely deletes images', async () => {
+  const cookie = await login();
+  const token = await csrf(cookie);
+  const png = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 1, 2, 3]);
+  const upload = await fetch(`${baseUrl}/admin/media`, {
+    method: 'POST', headers: { cookie, 'content-type': 'application/json' },
+    body: JSON.stringify({ csrf: token, filename: 'test.png', mimeType: 'image/png', data: png.toString('base64') }),
+  });
+  assert.equal(upload.status, 201);
+  const asset = await upload.json();
+  assert.match(asset.id, /^[a-f0-9]{32}$/);
+  assert.equal(asset.url, `/api/media/${asset.id}`);
+
+  const publicImage = await fetch(`${baseUrl}${asset.url}`);
+  assert.equal(publicImage.status, 200);
+  assert.equal(publicImage.headers.get('content-type'), 'image/png');
+  assert.match(publicImage.headers.get('cache-control'), /immutable/);
+  assert.deepEqual(Buffer.from(await publicImage.arrayBuffer()), png);
+
+  const gallery = await fetch(`${baseUrl}/admin/media`, { headers: { cookie } });
+  assert.equal(gallery.status, 200);
+  assert.match(await gallery.text(), /test\.png/);
+
+  const place = app.store.createPlace({
+    name: 'Bildplats', category: 'natur', lat: 57.7, lng: 18.4, isActive: true,
+    contacts: {}, images: [{ url: asset.url, altText: 'Testbild' }],
+  });
+  assert.deepEqual(place.errors, {});
+  let deleted = await fetch(`${baseUrl}/admin/media/${asset.id}/delete`, {
+    method: 'POST', redirect: 'manual', headers: { cookie, 'content-type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ csrf: token }),
+  });
+  assert.equal(deleted.status, 409);
+
+  app.store.editPlace(place.id, {
+    name: 'Bildplats', category: 'natur', lat: 57.7, lng: 18.4, isActive: true, contacts: {}, images: [],
+  });
+  deleted = await fetch(`${baseUrl}/admin/media/${asset.id}/delete`, {
+    method: 'POST', redirect: 'manual', headers: { cookie, 'content-type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({ csrf: token }),
+  });
+  assert.equal(deleted.status, 303);
+  assert.equal((await fetch(`${baseUrl}${asset.url}`)).status, 404);
+  app.store.db.prepare('DELETE FROM places WHERE id=?').run(place.id);
+
+  const invalid = await fetch(`${baseUrl}/admin/media`, {
+    method: 'POST', headers: { cookie, 'content-type': 'application/json' },
+    body: JSON.stringify({ csrf: token, filename: 'falsk.png', mimeType: 'image/png', data: Buffer.from('fel').toString('base64') }),
+  });
+  assert.equal(invalid.status, 422);
+  assert.match((await invalid.json()).error, /stämmer inte/);
+
+  const oversized = await fetch(`${baseUrl}/admin/media`, {
+    method: 'POST', headers: { cookie, 'content-type': 'application/json' },
+    body: JSON.stringify({
+      csrf: token, filename: 'stor.jpg', mimeType: 'image/jpeg',
+      data: Buffer.concat([Buffer.from([0xff, 0xd8, 0xff]), Buffer.alloc(2 * 1024 * 1024)]).toString('base64'),
+    }),
+  });
+  assert.equal(oversized.status, 422);
+  assert.match((await oversized.json()).error, /högst 2 MiB/);
+
+  const badCsrf = await fetch(`${baseUrl}/admin/media`, {
+    method: 'POST', headers: { cookie, 'content-type': 'application/json' },
+    body: JSON.stringify({ csrf: 'wrong', filename: 'test.png', mimeType: 'image/png', data: png.toString('base64') }),
+  });
+  assert.equal(badCsrf.status, 403);
 });
 
 test('admin can review visitor corrections without changing place data', async () => {
