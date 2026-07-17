@@ -576,7 +576,7 @@ function GutafinnPage() {
                       </span>
                     </div>
 
-                    <div className="gutafinn-place-grid space-y-3">
+                    <div className="gutafinn-place-grid grid grid-cols-1 gap-3">
                       {listPlaces.map((place) => (
                         <CompactPlace
                           key={place.id}
@@ -1219,7 +1219,7 @@ function CompactPlace({
       </button>
       <button type="button" className="min-w-0 flex-1 text-left outline-none focus-visible:ring-[3px] focus-visible:ring-ring/40" onClick={onShowDetails}>
         <p className="text-[0.65rem] font-bold uppercase tracking-[0.13em] text-sea">{place.tag}</p>
-        <h3 className="mt-1 truncate font-display text-lg leading-tight font-semibold text-sea-deep">{place.name}</h3>
+        <h3 className="mt-1 break-words font-display text-lg leading-tight font-semibold text-sea-deep">{place.name}</h3>
         <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold text-muted-foreground">
           {place.distanceLabel ? <span>{place.distanceLabel}</span> : <span>{place.kind}</span>}
           <span className={cn(place.opening.kind === "open" && "text-meadow")}>{place.opening.label}</span>
