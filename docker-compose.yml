@@ -17,8 +17,10 @@ services:
     container_name: gutafinn_web
     restart: unless-stopped
     depends_on:
-      - backend
-      - cms
+      backend:
+        condition: service_healthy
+      cms:
+        condition: service_healthy
     ports:
       - "3003:80"
     volumes:
@@ -28,6 +30,9 @@ services:
     build: ./cms
     container_name: gutafinn_cms
     restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
     environment:
       - DATABASE_PATH=/data/places.db
       - PORT=3000

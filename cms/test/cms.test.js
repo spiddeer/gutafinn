@@ -7,6 +7,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { getConfig } from '../src/config.js';
 import { openDatabase } from '../src/db.js';
 import { createApp } from '../src/server.js';
+import { initializeDomainDatabase } from './domain-fixture.js';
 
 let app;
 let baseUrl;
@@ -79,6 +80,7 @@ const fakeWebAuthn = {
 
 before(async () => {
   temporaryDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'gotlandsguiden-cms-'));
+  initializeDomainDatabase(path.join(temporaryDirectory, 'places.db'));
   app = createApp({
     NODE_ENV: 'test', ADMIN_USERNAME: 'editor', ADMIN_PASSWORD: 'a-secure-test-password',
     SESSION_SECRET: 'test-secret-with-at-least-thirty-two-characters',
@@ -117,8 +119,42 @@ test('health check and public categories are available', async () => {
   const health = await fetch(`${baseUrl}/healthz`);
   assert.deepEqual(await health.json(), { ok: true });
   const categories = await (await fetch(`${baseUrl}/api/categories`)).json();
-  assert.equal(categories.length, 10);
-  assert.equal(categories[0].id, 'strand');
+  assert.equal(categories.length, 8);
+  assert.equal(categories[0].id, 'mat');
+});
+
+test('CMS refuses to own an uninitialized domain database', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'gutafinn-uninitialized-cms-'));
+  try {
+    assert.throws(
+      () => openDatabase(path.join(directory, 'places.db')),
+      /domain database is not initialized/,
+    );
+  } finally {
+    fs.rmSync(directory, { recursive: true, force: true });
+  }
+});
+
+test('CMS hides legacy utility categories and places from public choices', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'gutafinn-public-categories-'));
+  const databasePath = path.join(directory, 'places.db');
+  initializeDomainDatabase(databasePath);
+  const store = openDatabase(databasePath);
+  try {
+    store.db.prepare(`INSERT INTO categories (id,label,color,emoji,sort_order)
+      VALUES ('service','Service','#607d8b','ℹ️',100)`).run();
+    store.db.prepare(`INSERT INTO places (id,name,category,lat,lng,description,is_active)
+      VALUES ('utility','Serviceplats','service',57.6,18.3,'Test',1)`).run();
+    store.db.prepare(`INSERT INTO place_categories (place_id,category_id,is_primary)
+      VALUES ('utility','service',1)`).run();
+
+    assert.equal(store.categories().length, 8);
+    assert.equal(store.categories().some((category) => category.id === 'service'), false);
+    assert.equal(store.publicPlaces().length, 0);
+  } finally {
+    store.close();
+    fs.rmSync(directory, { recursive: true, force: true });
+  }
 });
 
 test('production passkey enrollment requires an explicit RP ID and HTTPS origin', () => {
@@ -380,6 +416,7 @@ test('mutations require a valid CSRF token', async () => {
 test('public place queries are not limited by the admin page size', () => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'gotlandsguiden-public-api-'));
   const databasePath = path.join(directory, 'places.db');
+  initializeDomainDatabase(databasePath);
   const store = openDatabase(databasePath);
   try {
     for (let index = 1; index <= 35; index += 1) {
@@ -407,21 +444,31 @@ test('public place queries are not limited by the admin page size', () => {
 
 test('editing imported items preserves category provenance and one primary category', () => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'gotlandsguiden-category-edit-'));
-  const store = openDatabase(path.join(directory, 'places.db'));
+  const databasePath = path.join(directory, 'places.db');
+  initializeDomainDatabase(databasePath);
+  const store = openDatabase(databasePath);
   try {
     const created = store.createPlace({
       name: 'Importerad plats', category: 'strand', lat: 57.6, lng: 18.3,
-      isActive: true, contacts: {}, images: [],
+      isActive: true,
+      contacts: { website: ['https://example.com/importerad'] },
+      images: [{ url: 'https://example.com/importerad.jpg', altText: 'Importerad plats' }],
     });
     assert.equal(Object.keys(created.errors).length, 0);
     store.db.prepare('UPDATE place_categories SET source_type=? WHERE place_id=?')
       .run('OpenStreetMap', created.id);
     store.db.prepare(`INSERT INTO place_categories (place_id,category_id,is_primary,source_type)
       VALUES (?,?,0,?)`).run(created.id, 'natur', 'OpenStreetMap');
+    store.db.prepare('UPDATE place_contacts SET label=? WHERE place_id=?')
+      .run('Officiell webbplats', created.id);
+    store.db.prepare('UPDATE place_images SET source_url=? WHERE place_id=?')
+      .run('https://example.com/bildkalla', created.id);
 
     const edited = store.editPlace(created.id, {
       name: 'Importerad plats', category: 'natur', lat: 57.6, lng: 18.3,
-      isActive: true, contacts: {}, images: [],
+      isActive: true,
+      contacts: { website: ['https://example.com/importerad'] },
+      images: [{ url: 'https://example.com/importerad.jpg', altText: 'Ny alt-text' }],
     });
     assert.equal(Object.keys(edited.errors).length, 0);
 
@@ -432,6 +479,14 @@ test('editing imported items preserves category provenance and one primary categ
       { category_id: 'natur', is_primary: 1, source_type: 'OpenStreetMap' },
       { category_id: 'strand', is_primary: 0, source_type: 'OpenStreetMap' },
     ]);
+    assert.equal(
+      store.db.prepare('SELECT label FROM place_contacts WHERE place_id=?').get(created.id).label,
+      'Officiell webbplats',
+    );
+    assert.equal(
+      store.db.prepare('SELECT source_url FROM place_images WHERE place_id=?').get(created.id).source_url,
+      'https://example.com/bildkalla',
+    );
   } finally {
     store.close();
     fs.rmSync(directory, { recursive: true, force: true });

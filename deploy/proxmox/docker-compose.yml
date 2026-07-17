@@ -19,8 +19,10 @@ services:
     container_name: gutafinn_web
     restart: unless-stopped
     depends_on:
-      - backend
-      - cms
+      backend:
+        condition: service_healthy
+      cms:
+        condition: service_healthy
     ports:
       - "${WEB_PORT:-3003}:80"
     volumes:
@@ -31,6 +33,9 @@ services:
       context: ../../cms
     container_name: gutafinn_cms
     restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
     env_file:
       - ./.env
     environment:

@@ -3,6 +3,27 @@ import crypto from 'node:crypto';
 import { schema } from './schema.js';
 
 const PAGE_SIZE = 30;
+const PUBLIC_CATEGORY_IDS = [
+  'mat', 'sevardhet', 'strand', 'smultronstallen',
+  'natur', 'aktivitet', 'familj', 'shopping',
+];
+const PUBLIC_CATEGORY_SQL = PUBLIC_CATEGORY_IDS.map((category) => `'${category}'`).join(', ');
+const REQUIRED_DOMAIN_TABLES = [
+  'categories', 'places', 'place_details', 'place_contacts', 'place_images', 'place_categories',
+];
+
+function assertDomainSchema(db) {
+  const tables = new Set(db.prepare("SELECT name FROM sqlite_master WHERE type='table'").all()
+    .map((row) => row.name));
+  const missing = REQUIRED_DOMAIN_TABLES.filter((table) => !tables.has(table));
+  if (missing.length) {
+    throw new Error(`Gutafinn domain database is not initialized; missing: ${missing.join(', ')}`);
+  }
+  const placeColumns = new Set(db.prepare('PRAGMA table_info(places)').all().map((row) => row.name));
+  if (!placeColumns.has('is_active')) {
+    throw new Error('Gutafinn domain database is not initialized; places.is_active is missing');
+  }
+}
 
 function slugify(value) {
   return value.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
@@ -55,10 +76,17 @@ function validate(input, categories) {
 
 export function openDatabase(databasePath) {
   const db = new DatabaseSync(databasePath);
-  db.exec('PRAGMA foreign_keys = ON; PRAGMA busy_timeout = 5000;');
-  db.exec(schema);
+  try {
+    db.exec('PRAGMA foreign_keys = ON; PRAGMA busy_timeout = 5000;');
+    assertDomainSchema(db);
+    db.exec(schema);
+  } catch (error) {
+    db.close();
+    throw error;
+  }
 
-  const categories = () => db.prepare('SELECT * FROM categories ORDER BY sort_order, label').all();
+  const categories = () => db.prepare(`SELECT * FROM categories
+    WHERE id IN (${PUBLIC_CATEGORY_SQL}) ORDER BY sort_order, label`).all();
 
   function stats() {
     return db.prepare(`SELECT COUNT(*) total,
@@ -120,12 +148,26 @@ export function openDatabase(databasePath) {
     upsertDetails.run(id, clean(values.streetAddress), clean(values.postalCode), clean(values.locality),
       clean(values.municipality), clean(values.accessibility), values.priceLevel ? Number(values.priceLevel) : null,
       clean(values.openingHoursRaw), clean(values.openingHoursNote));
+    const contactLabels = new Map(db.prepare(
+      'SELECT type, value, label FROM place_contacts WHERE place_id=?',
+    ).all(id).map((item) => [`${item.type}\u0000${item.value}`, item.label]));
     db.prepare('DELETE FROM place_contacts WHERE place_id=?').run(id);
-    const addContact = db.prepare('INSERT OR IGNORE INTO place_contacts (place_id,type,value) VALUES (?,?,?)');
-    for (const item of contacts) addContact.run(id, item.type, item.value);
+    const addContact = db.prepare(
+      'INSERT OR IGNORE INTO place_contacts (place_id,type,value,label) VALUES (?,?,?,?)',
+    );
+    for (const item of contacts) {
+      addContact.run(id, item.type, item.value, contactLabels.get(`${item.type}\u0000${item.value}`) || null);
+    }
+    const imageSources = new Map(db.prepare(
+      'SELECT url, source_url FROM place_images WHERE place_id=?',
+    ).all(id).map((image) => [image.url, image.source_url]));
     db.prepare('DELETE FROM place_images WHERE place_id=?').run(id);
-    const addImage = db.prepare('INSERT OR IGNORE INTO place_images (place_id,url,alt_text,sort_order) VALUES (?,?,?,?)');
-    for (const image of images) addImage.run(id, image.url, image.altText, image.sortOrder);
+    const addImage = db.prepare(
+      'INSERT OR IGNORE INTO place_images (place_id,url,alt_text,source_url,sort_order) VALUES (?,?,?,?,?)',
+    );
+    for (const image of images) {
+      addImage.run(id, image.url, image.altText, imageSources.get(image.url) || null, image.sortOrder);
+    }
     db.prepare('DELETE FROM place_categories WHERE place_id=? AND source_type=? AND category_id<>?')
       .run(id, 'cms', values.category);
     db.prepare('UPDATE place_categories SET is_primary=0 WHERE place_id=?').run(id);
@@ -173,7 +215,10 @@ export function openDatabase(databasePath) {
   }
 
   function publicPlaces({ category = '', query = '' } = {}) {
-    const where = ['p.is_active = 1'];
+    const where = ['p.is_active = 1', `EXISTS (
+      SELECT 1 FROM place_categories pc
+      WHERE pc.place_id=p.id AND pc.category_id IN (${PUBLIC_CATEGORY_SQL})
+    )`];
     const params = {};
     if (query) {
       where.push('(p.name LIKE :query OR p.description LIKE :query OR d.locality LIKE :query)');
