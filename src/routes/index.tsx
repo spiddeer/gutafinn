@@ -44,6 +44,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { DayPlanner } from "@/components/day-planner"
 import { GutafinnMap } from "@/components/gutafinn-map"
 import { SurpriseAdventure } from "@/components/surprise-adventure"
 import { buildDiscoverySearch, parseDiscoverySearch } from "@/lib/discovery-url"
@@ -167,6 +168,7 @@ function GutafinnPage() {
   const [locationState, setLocationState] = useState<"idle" | "loading" | "ready" | "unavailable">("idle")
   const [routeTarget, setRouteTarget] = useState<string | null>(null)
   const [showSurprise, setShowSurprise] = useState(false)
+  const [showDayPlanner, setShowDayPlanner] = useState(false)
   const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(initialUrlState.selectedPlaceId)
   const [detailsPlaceId, setDetailsPlaceId] = useState<string | null>(null)
   const requestedLocation = useRef(false)
@@ -230,6 +232,7 @@ function GutafinnPage() {
       setActiveNav(next.mapView ? "Karta" : "Hem")
       setFeedMode("Hem")
       setShowSurprise(false)
+      setShowDayPlanner(false)
     }
 
     window.addEventListener("popstate", applyUrlState)
@@ -265,6 +268,13 @@ function GutafinnPage() {
     () => (position ? countWithinRadius(places, position, 5) : null),
     [places, position],
   )
+  const savedPlaces = useMemo(() => {
+    const placeById = new Map(places.map((place) => [place.id, place]))
+    return [...saved].flatMap((placeId) => {
+      const place = placeById.get(placeId)
+      return place ? [place] : []
+    })
+  }, [places, saved])
   const featuredPlace = visiblePlaces[0] ?? null
   const selectedPlace = selectedPlaceId
     ? visiblePlaces.find((place) => place.id === selectedPlaceId) ?? null
@@ -314,6 +324,18 @@ function GutafinnPage() {
     setRouteTarget(place.name)
   }
 
+  function openPlanLeg(origin: Coordinates | null, place: ApiPlace, travelMode: TravelMode) {
+    const url = origin
+      ? buildOpenStreetMapDirectionsUrl(origin, { lat: place.lat, lng: place.lng }, travelMode)
+      : null
+    window.open(
+      url ?? `https://www.openstreetmap.org/?mlat=${place.lat}&mlon=${place.lng}#map=15/${place.lat}/${place.lng}`,
+      "_blank",
+      "noopener,noreferrer",
+    )
+    setRouteTarget(place.name)
+  }
+
   function showPlaceDetails(placeId: string) {
     setSelectedPlaceId(placeId)
     setDetailsPlaceId(placeId)
@@ -321,6 +343,7 @@ function GutafinnPage() {
 
   function selectNavigation(label: string) {
     setShowSurprise(false)
+    setShowDayPlanner(false)
     setActiveNav(label)
     if (label !== "Karta") setFeedMode(label)
     if (label === "Nära") requestLocation()
@@ -348,9 +371,18 @@ function GutafinnPage() {
           id="discovery-content"
           tabIndex={-1}
           className="gutafinn-feed"
-          aria-label={showSurprise ? "Överraska mig" : "Upptäck platser"}
+          aria-label={showDayPlanner ? "Planera dagen" : showSurprise ? "Överraska mig" : "Upptäck platser"}
         >
-          {showSurprise ? (
+          {showDayPlanner ? (
+            <DayPlanner
+              places={savedPlaces}
+              position={position}
+              locationState={locationState}
+              onBack={() => setShowDayPlanner(false)}
+              onRequestLocation={requestLocation}
+              onNavigate={openPlanLeg}
+            />
+          ) : showSurprise ? (
             <SurpriseAdventure
               places={places}
               position={position}
@@ -376,6 +408,9 @@ function GutafinnPage() {
                 <SearchBar query={query} onQueryChange={setQuery} onRequestLocation={requestLocation} />
                 <CategoryFilter selected={category} onSelect={setCategory} />
                 {feedMode === "Hem" && <SurpriseCallout onOpen={() => setShowSurprise(true)} />}
+                {feedMode === "Sparat" && (
+                  <DayPlannerCallout savedCount={savedPlaces.length} onOpen={() => setShowDayPlanner(true)} />
+                )}
 
                 {apiState === "error" ? (
                   <ApiUnavailable onRetry={loadPlaces} />
@@ -450,7 +485,7 @@ function GutafinnPage() {
         )}
       </div>
 
-      {!showSurprise && <BottomNavigation active={activeNav} onSelect={selectNavigation} />}
+      {!showSurprise && !showDayPlanner && <BottomNavigation active={activeNav} onSelect={selectNavigation} />}
       {detailsPlace && (
         <PlaceDetailsDialog
           place={detailsPlace}
@@ -523,6 +558,29 @@ function SurpriseCallout({ onOpen }: { onOpen: () => void }) {
         <span className="block font-display text-xl font-semibold">Överraska mig</span>
         <span className="mt-1 block text-xs leading-5 text-sea-deep-foreground/75">
           Hitta något nära som du annars hade missat.
+        </span>
+      </span>
+      <ArrowRight className="size-5 shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+    </button>
+  )
+}
+
+function DayPlannerCallout({ savedCount, onOpen }: { savedCount: number; onOpen: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className="group flex min-h-24 w-full items-center gap-4 rounded-3xl bg-sea-deep p-5 text-left text-sea-deep-foreground shadow-[var(--shadow-card)] outline-none transition-transform focus-visible:ring-[3px] focus-visible:ring-ring/40 active:scale-[0.99]"
+    >
+      <span className="grid size-12 shrink-0 place-items-center rounded-full bg-sand text-sand-foreground">
+        <Navigation className="size-5" aria-hidden="true" />
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block font-display text-xl font-semibold">Planera min dag</span>
+        <span className="mt-1 block text-xs leading-5 text-sea-deep-foreground/75">
+          {savedCount > 0
+            ? `Ordna ${savedCount.toLocaleString("sv-SE")} sparade stopp i en smidig följd.`
+            : "Spara platser först, så bygger vi en praktisk ordning."}
         </span>
       </span>
       <ArrowRight className="size-5 shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />

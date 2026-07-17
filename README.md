@@ -43,6 +43,8 @@ Produkten kombinerar:
   Natur, Aktiviteter, Familj och Lokalt
 - `Overraska mig` skapar ett GPS-baserat mikroaventyr fran vald tid och fardsatt
   med faktabaserade skal, adaptiv sokradie och repetitionsskydd
+- `Planera min dag` ordnar upp till atta sparade platser i en narsta-stopp-rutt
+  for gang, cykel eller bil och oppnar varje etapp i OpenStreetMap
 - Featured-kort med verifieringsdatum, GPS-avstand, gangtid, oppetstatus och `Ta mig hit`
 - Varje platskort oppnar en informationspanel med all tillganglig adress,
   kontakt, oppettid, tillganglighet, position, kalla och aktualitet
@@ -169,6 +171,15 @@ Sokning, publik kategori, kartfokus och vald plats speglas i adressfaltet med
 kategorier eller ogiltiga plats-id:n ignoreras. Browserns bakat-/framatknappar
 aterstaller lankens state. Sparade plats-id:n och GPS-koordinater ingar aldrig i
 URL:en.
+
+## Dagsplanerare
+
+Fran `Sparat` kan anvandaren bygga en lokal dagsplan med hogst atta stopp.
+Med GPS startar ordningen vid den verkliga positionen; utan GPS anvands platsen
+som sparades forst som start. Darefter valjs narmaste aterstaende stopp stegvis.
+Raknade avstand ar fagelvag och restider ar uppskattningar for gang, cykel eller
+bil. Varje etapp oppnas separat med ratt OpenStreetMap-motor for faktisk vag.
+Planen och GPS-positionen lagras inte.
 
 ## API
 
